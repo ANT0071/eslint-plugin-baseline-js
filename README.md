@@ -2,17 +2,13 @@
 
 # eslint-plugin-baseline-js
 
-![baseline](./docs/assets/baseline-wordmark-dark.svg)
+![baseline](https://web-platform-dx.github.io/web-features/assets/img/baseline-wordmark-dark.svg)
 
 Enforce the JavaScript Baseline (`widely` / `newly` / `year`) with a single ESLint rule powered by web‑features.
 This plugin delegates detection to eslint-plugin-es-x and ESLint core (plus a few small gap‑filling rules) and reports with one consistent Baseline message.
 
-<a href="https://github.com/3ru/eslint-plugin-baseline-js/actions/workflows/ci.yml">
-  <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/3ru/eslint-plugin-baseline-js/ci.yml?label=CI&logo=github" />
-</a>
-<a href="https://github.com/3ru/eslint-plugin-baseline-js/actions/workflows/release.yml">
-  <img alt="Release" src="https://img.shields.io/github/actions/workflow/status/3ru/eslint-plugin-baseline-js/release.yml?label=release&logo=github" />
-</a>
+[![CI](https://github.com/3ru/eslint-plugin-baseline-js/actions/workflows/ci.yml/badge.svg)](https://github.com/3ru/eslint-plugin-baseline-js/actions/workflows/ci.yml)
+[![Release](https://github.com/3ru/eslint-plugin-baseline-js/actions/workflows/release.yml/badge.svg)](https://github.com/3ru/eslint-plugin-baseline-js/actions/workflows/release.yml)
 <img alt="License" src="https://img.shields.io/badge/license-MIT-blue" />
 
 </div>
