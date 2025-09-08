@@ -1,0 +1,17 @@
+import type { Rule } from "eslint";
+import { baselineConfigs } from "./configs/baseline";
+import useBaseline from "./orchestrator/use-baseline";
+import noBigint64array from "./rules/no-bigint64array";
+import noFunctionCallerArguments from "./rules/no-function-caller-arguments";
+import noMathSumPrecise from "./rules/no-math-sum-precise";
+import noTemporal from "./rules/no-temporal";
+
+const rules: Record<string, Rule.RuleModule> = {
+  "use-baseline": useBaseline,
+  "no-bigint64array": noBigint64array,
+  "no-function-caller-arguments": noFunctionCallerArguments,
+  "no-math-sum-precise": noMathSumPrecise,
+  "no-temporal": noTemporal,
+};
+
+export default { rules, configs: { baseline: baselineConfigs } } as const;

@@ -1,0 +1,63 @@
+{
+  "name": "eslint-plugin-baseline-js",
+  "version": "0.0.0",
+  "description": "ESLint plugin to check JS/TS syntax against Baseline",
+  "keywords": ["eslint", "eslintplugin", "baseline", "javascript"],
+  "homepage": "https://github.com/3ru/eslint-plugin-baseline-js#readme",
+  "bugs": {
+    "url": "https://github.com/3ru/eslint-plugin-baseline-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3ru/eslint-plugin-baseline-js.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "files": ["dist/index.cjs", "dist/index.mjs", "dist/index.d.mts", "dist/index.d.cts"],
+  "scripts": {
+    "build": "tsdown",
+    "check:mapping": "node scripts/check-mapping.mjs --out drift-report.json",
+    "dev": "tsdown --watch",
+    "format": "biome format --write .",
+    "format:check": "biome check --formatter-enabled=true --linter-enabled=false .",
+    "format:imports": "biome check --fix --unsafe .",
+    "gen:coverage": "node scripts/generate-coverage.mjs",
+    "gen:features": "node scripts/build-features.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "verify:features": "node scripts/verify-features.mjs"
+  },
+  "dependencies": {
+    "eslint-plugin-es-x": "^7.7.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@types/eslint": "^8.56.10",
+    "@types/node": "^20.11.0",
+    "semantic-release": "^24.2.7",
+    "tsdown": "v0.14.2",
+    "typescript": "^5.4.0",
+    "vitest": "^1.5.0",
+    "web-features": "^2.47.0"
+  },
+  "peerDependencies": {
+    "eslint": ">=8.57.0 <10"
+  },
+  "packageManager": "pnpm@10.15.1",
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}
