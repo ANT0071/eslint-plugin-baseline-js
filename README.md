@@ -17,7 +17,6 @@ This plugin delegates detection to eslint-plugin-es-x and ESLint core (plus a fe
 > Alpha testing: Behavior and options may change.
 > Questions or ideas? Please open an [issue](https://github.com/3ru/eslint-plugin-baseline-js/issues)
 
-
 ## Install
 
 - npm: `npm i -D eslint-plugin-baseline-js`
@@ -85,6 +84,11 @@ export default [
 | `"widely"`       | the feature is not in Baseline “high” |
 | `"newly"`        | the feature is marked as limited (`false`) |
 | `year` (number)  | the feature’s Baseline year is greater than `year` |
+
+
+### Demo
+<img width="963" height="192" alt="getYear is deprecated" src="https://github.com/user-attachments/assets/e04e4a5c-c104-4945-96d6-889a47b7bcde" />
+
 
 ## How It Works
 
