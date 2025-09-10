@@ -13,7 +13,7 @@ This plugin delegates detection to eslint-plugin-es-x and ESLint core (plus a fe
 
 </div>
 
-> [!WARNING]
+> [!NOTE]
 > Alpha testing: Behavior and options may change.
 > Questions or ideas? Please open an [issue](https://github.com/3ru/eslint-plugin-baseline-js/issues)
 
