@@ -15,26 +15,13 @@ const rule: Rule.RuleModule = {
   },
   create(context) {
     function report(node: unknown) {
-      context.report({ node: node as any, messageId: "forbidden" });
+      context.report({ node: node as unknown as Rule.Node, messageId: "forbidden" });
     }
     function isTemporalIdent(node: unknown): boolean {
       const n = node as Record<string, unknown>;
       return n && n.type === "Identifier" && n.name === "Temporal";
     }
     return {
-      Identifier(node: unknown) {
-        if (!isTemporalIdent(node)) return;
-        const p = (node as Record<string, unknown>).parent as Record<string, unknown> | undefined;
-        if (!p) return;
-        // report only when used as callee/object/new target or member base
-        if (
-          (p.type === "MemberExpression" && p.object === node) ||
-          (p.type === "CallExpression" && p.callee === node) ||
-          (p.type === "NewExpression" && p.callee === node)
-        ) {
-          report(node);
-        }
-      },
       MemberExpression(node: unknown) {
         const m = node as Record<string, unknown>;
         if (m.computed === false && isTemporalIdent(m.object)) {

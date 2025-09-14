@@ -13,10 +13,6 @@ This plugin delegates detection to eslint-plugin-es-x and ESLint core (plus a fe
 
 </div>
 
-> [!NOTE]
-> Alpha testing: Behavior and options may change.
-> Questions or ideas? Please open an [issue](https://github.com/3ru/eslint-plugin-baseline-js/issues)
-
 ## Install
 
 - npm: `npm i -D eslint-plugin-baseline-js`
@@ -43,6 +39,32 @@ export default [
   },
 ];
 ```
+
+## Preset Configs
+
+This plugin ships Flat Config presets you can call from `configs`:
+
+```js
+import baselineJs from "eslint-plugin-baseline-js";
+
+export default [
+  // Register the plugin once (required for Flat Config)
+  { plugins: { "baseline-js": baselineJs } },
+
+  // Recommended: enables Web APIs & JS builtins detection with `preset: 'auto'`.
+  // Level defaults to 'error'; pass level to change severity
+  ...baselineJs.configs.recommended({ baseline: "widely", level: "warn" }),
+
+  // TypeScript-aware: requires type info for instance-member checks (`preset: 'type-aware'`).
+  // Works best with @typescript-eslint/parser and a proper tsconfig.
+  // ...baselineJs.configs["recommended-ts"]({ baseline: "widely", level: "error" }),
+];
+```
+
+Note on plugin key
+- Presets assume the plugin is registered under the key `"baseline-js"`.
+
+See more real-world configs in [`examples/`](https://github.com/3ru/eslint-plugin-baseline-js/tree/main/examples)
 
 ## Common Configurations
 

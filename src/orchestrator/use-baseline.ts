@@ -1,10 +1,12 @@
 import type { Rule } from "eslint";
 import { builtinRules } from "eslint/use-at-your-own-risk"; // Access ESLint builtin rules to delegate core rules
 import esx from "eslint-plugin-es-x";
-import mapping from "../baseline/mapping.mjs";
+import { getIncludedDescriptors } from "../baseline/loader";
+import mapping from "../baseline/mapping/syntax";
 import { parseDelegateRuleKey } from "../baseline/plugins";
 import { getFeatureRecord, isBeyondBaseline } from "../baseline/resolve";
 import { type CommonRuleOptions, getBaselineValue } from "../config";
+import featureUsage from "../rules/feature-usage";
 import noBigint64array from "../rules/no-bigint64array";
 import noFunctionCallerArguments from "../rules/no-function-caller-arguments";
 import noMathSumPrecise from "../rules/no-math-sum-precise";
@@ -63,6 +65,38 @@ const rule: Rule.RuleModule = {
           },
           ignoreFeatures: { type: "array", items: { type: "string" } },
           ignoreNodeTypes: { type: "array", items: { type: "string" } },
+          includeWebApis: {
+            anyOf: [
+              { type: "boolean" },
+              {
+                type: "object",
+                properties: {
+                  preset: { enum: ["auto", "safe", "type-aware", "heuristic"] },
+                  useTypes: { enum: ["off", "auto", "require"] },
+                  heuristics: { enum: ["off", "conservative", "aggressive"] },
+                  only: { type: "array", items: { type: "string" } },
+                  ignore: { type: "array", items: { type: "string" } },
+                },
+                additionalProperties: false,
+              },
+            ],
+          },
+          includeJsBuiltins: {
+            anyOf: [
+              { type: "boolean" },
+              {
+                type: "object",
+                properties: {
+                  preset: { enum: ["auto", "safe", "type-aware", "heuristic"] },
+                  useTypes: { enum: ["off", "auto", "require"] },
+                  heuristics: { enum: ["off", "conservative", "aggressive"] },
+                  only: { type: "array", items: { type: "string" } },
+                  ignore: { type: "array", items: { type: "string" } },
+                },
+                additionalProperties: false,
+              },
+            ],
+          },
         },
         additionalProperties: false,
       },
@@ -73,6 +107,8 @@ const rule: Rule.RuleModule = {
     const baseline = getBaselineValue(opt);
     const ignoreFeaturePatterns = (opt.ignoreFeatures ?? []) as string[];
     const ignoreNodeTypePatterns = (opt.ignoreNodeTypes ?? []) as string[];
+    const includeWebApis = opt.includeWebApis ?? false;
+    const includeJsBuiltins = opt.includeJsBuiltins ?? false;
 
     function makeMatcher(patterns: string[]): ((s: string) => boolean) | null {
       if (!patterns.length) return null;
@@ -97,7 +133,7 @@ const rule: Rule.RuleModule = {
       string,
       {
         kind: "syntax" | "api" | "meta";
-        delegates: Array<{ plugin: string; rule: string; options?: unknown }>;
+        delegates: ReadonlyArray<{ plugin: string; rule: string; options?: unknown }>;
       }
     >;
     for (const [featureId, entry] of Object.entries(map)) {
@@ -111,6 +147,7 @@ const rule: Rule.RuleModule = {
     }
 
     const listeners: ListenerMap = {};
+    const mappedFeatureIds = new Set(entries.map((e) => e.featureId));
 
     for (const { featureId, delegateRule } of entries) {
       let impl: Rule.RuleModule | undefined;
@@ -118,7 +155,7 @@ const rule: Rule.RuleModule = {
 
       // Find mapping entry to pull options (if any)
       const mappingEntry = map[featureId] as
-        | { delegates: Array<{ plugin: string; options?: unknown }> }
+        | { delegates: ReadonlyArray<{ plugin: string; options?: unknown }> }
         | undefined;
       if (mappingEntry) {
         const { plugin } = parseDelegateRuleKey(delegateRule);
@@ -205,6 +242,115 @@ const rule: Rule.RuleModule = {
 
       const l = impl.create(delegateCtx as unknown as Rule.RuleContext);
       mergeListeners(listeners, l);
+    }
+    // Attach generic feature-usage detector (Web API / JS builtins) if enabled and we have descriptors.
+    let descriptors = getIncludedDescriptors({
+      webApis: includeWebApis,
+      jsBuiltins: includeJsBuiltins,
+    });
+    // Filter to features that actually exceed the configured Baseline
+    descriptors = descriptors
+      .filter((d) => isBeyondBaseline(d.featureId, baseline))
+      // Avoid double-reporting when a feature is covered by mapping delegates
+      .filter((d) => !mappedFeatureIds.has(d.featureId));
+
+    // Resolve typed mode
+    function resolveUseTypes(opt: unknown): "off" | "auto" | "require" {
+      if (!opt) return "off";
+      if (opt === true) return "off"; // boolean true defaults to safe
+      if (typeof opt === "object") {
+        const o = opt as Record<string, unknown>;
+        if (o.useTypes === "off" || o.useTypes === "auto" || o.useTypes === "require")
+          return o.useTypes as "off" | "auto" | "require";
+        if (o.preset === "type-aware") return "require";
+        if (o.preset === "auto") return "auto";
+        return "off"; // safe or undefined
+      }
+      return "off";
+    }
+    type ParserServicesLike = { program?: unknown; esTreeNodeToTSNodeMap?: unknown };
+    type CtxLike = {
+      parserServices?: ParserServicesLike;
+      sourceCode?: { parserServices?: ParserServicesLike };
+    };
+    const cx = ctx as unknown as CtxLike;
+    const ps = cx.parserServices || cx.sourceCode?.parserServices;
+    const typedAvailable = !!ps?.program && !!ps?.esTreeNodeToTSNodeMap;
+    const useTypesWeb = resolveUseTypes(includeWebApis);
+    const useTypesJs = resolveUseTypes(includeJsBuiltins);
+    const wantTyped =
+      useTypesWeb === "require" ||
+      useTypesJs === "require" ||
+      useTypesWeb === "auto" ||
+      useTypesJs === "auto";
+    const typedEnabled = wantTyped && typedAvailable;
+
+    if (!typedEnabled) {
+      // Drop instanceMember descriptors if we cannot/should not run typed checks
+      descriptors = descriptors.filter((d) => d.kind !== "instanceMember");
+    }
+    if (descriptors.length > 0) {
+      const messages: Record<string, string> = {};
+      for (const d of descriptors) messages[d.featureId] = baselineMessage(d.featureId, baseline);
+      // Build a delegate context similar to other delegates
+      const delegateCtx: Record<string, unknown> = {};
+      const fwd = [
+        "getSourceCode",
+        "getCwd",
+        "getFilename",
+        "getPhysicalFilename",
+        "getAncestors",
+        "getDeclaredVariables",
+        "markVariableAsUsed",
+        "getScope",
+      ] as const;
+      for (const k of fwd) {
+        const v = (ctx as unknown as Record<string, unknown>)[k as string];
+        if (typeof v === "function") {
+          type AnyFn = (...args: unknown[]) => unknown;
+          const fn = v as unknown as AnyFn;
+          delegateCtx[k] = fn.bind(ctx);
+        }
+      }
+      for (const k of [
+        "settings",
+        "parserPath",
+        "parserOptions",
+        "parserServices",
+        "languageOptions",
+        "sourceCode",
+      ]) {
+        const src = ctx as unknown as Record<string, unknown>;
+        if (src[k] != null) delegateCtx[k] = src[k];
+      }
+      delegateCtx.options = [
+        typedEnabled ? { descriptors, messages, typed: true } : { descriptors, messages },
+      ];
+      // Ensure report is available to the generic detector (feature-usage)
+      // so it can forward to the primary rule context and respect ignoreNodeTypes.
+      (delegateCtx as unknown as { report: (arg: unknown) => void }).report = function report(
+        arg: unknown,
+      ) {
+        const isObj = typeof arg === "object" && arg !== null;
+        const node =
+          isObj && "node" in (arg as Record<string, unknown>)
+            ? (arg as Record<string, unknown>).node
+            : arg;
+        if (matchIgnoreNodeType) {
+          const t = (node as Record<string, unknown> | null | undefined)?.type as
+            | string
+            | undefined;
+          if (t && matchIgnoreNodeType(t)) return;
+        }
+        const msg = (isObj && (arg as any).message) || undefined;
+
+        (ctx as unknown as { report: (d: { node: unknown; message?: string }) => void }).report({
+          node,
+          message: msg,
+        });
+      };
+      const generic = featureUsage.create(delegateCtx as unknown as Rule.RuleContext);
+      mergeListeners(listeners, generic);
     }
 
     return listeners;

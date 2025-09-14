@@ -365,4 +365,4 @@ export default {
       },
     ],
   },
-};
+} as const;

@@ -1,0 +1,64 @@
+import type { Rule } from "eslint";
+import { RuleTester } from "eslint";
+import { describe, it } from "vitest";
+import plugin from "../dist/index.mjs";
+
+const rule = (plugin as unknown as { rules: Record<string, Rule.RuleModule> }).rules[
+  "use-baseline"
+] as Rule.RuleModule;
+
+const tester = new RuleTester({
+  languageOptions: { ecmaVersion: 2022, sourceType: "module" },
+});
+
+describe("use-baseline: JS builtins safe arg-based patterns", () => {
+  it("detects safe patterns and ignores dynamic ones", () => {
+    tester.run("baseline-js/use-baseline (jsbi safe)", rule, {
+      valid: [
+        {
+          code: "const opts={cause:e}; new Error('x', opts);",
+          options: [{ baseline: "widely", includeJsBuiltins: { preset: "safe" } }],
+        },
+        {
+          code: "const opts={maxByteLength:256}; new ArrayBuffer(n, opts);",
+          options: [{ baseline: "widely", includeJsBuiltins: { preset: "safe" } }],
+        },
+      ],
+      invalid: [
+        {
+          code: "new Error('x', { cause: err });",
+          options: [{ baseline: 2020, includeJsBuiltins: { preset: "safe" } }],
+          errors: [{ message: /Feature 'error-cause'.*Baseline/i }],
+        },
+        {
+          code: "new AggregateError([], 'x', { cause: err });",
+          options: [{ baseline: 2020, includeJsBuiltins: { preset: "safe" } }],
+          errors: [{ message: /Feature 'error-cause'.*Baseline/i }],
+        },
+        {
+          code: "new ArrayBuffer(10, { maxByteLength: 20 });",
+          options: [{ baseline: "widely", includeJsBuiltins: { preset: "safe" } }],
+          errors: [{ message: /Feature 'resizable-buffers'.*Baseline/i }],
+        },
+        {
+          code: "Error.isError({});",
+          options: [{ baseline: "widely", includeJsBuiltins: { preset: "safe" } }],
+          errors: [{ message: /Feature 'is-error'.*Baseline/i }],
+        },
+        {
+          code: "Uint8Array.fromBase64('');",
+          options: [{ baseline: "widely", includeJsBuiltins: { preset: "safe" } }],
+          errors: [{ message: /Feature 'uint8array-base64-hex'.*Baseline/i }],
+        },
+        {
+          code: "new WeakRef({}); new FinalizationRegistry(()=>{});",
+          options: [{ baseline: 2020, includeJsBuiltins: { preset: "safe" } }],
+          errors: [
+            { message: /Feature 'weak-references'.*Baseline/i },
+            { message: /Feature 'weak-references'.*Baseline/i },
+          ],
+        },
+      ],
+    });
+  });
+});

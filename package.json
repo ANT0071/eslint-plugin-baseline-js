@@ -1,21 +1,7 @@
 {
   "name": "eslint-plugin-baseline-js",
   "version": "0.0.1",
-  "description": "ESLint plugin to check JS/TS syntax against Baseline",
-  "keywords": [
-    "eslint",
-    "eslintplugin",
-    "baseline",
-    "javascript"
-  ],
-  "homepage": "https://github.com/3ru/eslint-plugin-baseline-js#readme",
-  "bugs": {
-    "url": "https://github.com/3ru/eslint-plugin-baseline-js/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/3ru/eslint-plugin-baseline-js.git"
-  },
+  "description": "Enforce JavaScript Baseline (widely/newly/year) browser compatibility with a single ESLint rule. Prevent runtime errors by catching unsupported JavaScript features during development.",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -43,8 +29,12 @@
     "format:imports": "biome check --fix --unsafe .",
     "gen:coverage": "node scripts/generate-coverage.mjs",
     "gen:features": "node scripts/build-features.mjs",
+    "gen:features:api": "node scripts/build-features-api.mjs",
+    "gen:features:jsbi": "node scripts/build-features-jsbi.mjs",
+    "gen:descriptors": "node scripts/build-descriptors.mjs",
+    "pretest": "pnpm -s build",
     "test": "vitest run",
-    "test:watch": "vitest",
+    "test:watch": "pnpm -s build && vitest",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "verify:features": "node scripts/verify-features.mjs"
   },
@@ -57,6 +47,7 @@
     "@semantic-release/git": "^10.0.1",
     "@types/eslint": "^9.6.1",
     "@types/node": "^24.3.1",
+    "@typescript-eslint/parser": "^8.43.0",
     "semantic-release": "^24.2.7",
     "tsdown": "v0.14.2",
     "typescript": "^5.4.0",
@@ -69,5 +60,27 @@
   "packageManager": "pnpm@10.15.1",
   "engines": {
     "node": ">=20.19.0"
+  },
+  "author": {
+    "name": "Ryuya",
+    "url": "https://github.com/3ru"
+  },
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "baseline",
+    "browser-compatibility",
+    "web-features",
+    "javascript",
+    "typescript",
+    "linting"
+  ],
+  "homepage": "https://github.com/3ru/eslint-plugin-baseline-js#readme",
+  "bugs": {
+    "url": "https://github.com/3ru/eslint-plugin-baseline-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3ru/eslint-plugin-baseline-js.git"
   }
 }

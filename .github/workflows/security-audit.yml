@@ -1,0 +1,31 @@
+name: Security Audit
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 9 * * 1" # Weekly, Mondays 09:00 UTC
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup Node LTS (22)
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install deps (workspace)
+        working-directory: eslint-plugin-baseline-js
+        run: pnpm install --frozen-lockfile
+
+      - name: Audit production deps (high severity)
+        working-directory: eslint-plugin-baseline-js
+        run: pnpm audit --prod --audit-level high
+

@@ -1,0 +1,26 @@
+{
+  "api": [
+    "canvas-2d-alpha",
+    "canvas-2d-desynchronized",
+    "canvas-2d-willreadfrequently",
+    "canvas-2d-color-management",
+    "webgl-desynchronized",
+    "webgl2-desynchronized",
+    "js-modules-workers",
+    "js-modules-shared-workers",
+    "transformstream-transformer-cancel",
+    "ext-srgb"
+  ],
+  "jsbi": [
+    "error-cause",
+    "explicit-resource-management",
+    "is-error",
+    "resizable-buffers",
+    "uint8array-base64-hex",
+    "weak-references",
+    "intl-locale-info",
+    "iterator-methods",
+    "typed-array-iterators",
+    "typed-array-iteration-methods"
+  ]
+}

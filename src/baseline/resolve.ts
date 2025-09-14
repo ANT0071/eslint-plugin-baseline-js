@@ -1,5 +1,7 @@
 import type { BaselineOption } from "../config";
-import raw from "./features";
+import apiRaw from "./data/features.api";
+import raw from "./data/features.javascript";
+import jsbiRaw from "./data/features.jsbi";
 
 type WebFeaturesBaseline = "high" | "low" | false;
 
@@ -16,10 +18,11 @@ export interface MinFeatureRecord {
   discouraged?: unknown;
 }
 
-const features: Record<string, MinFeatureRecord> = raw as unknown as Record<
-  string,
-  MinFeatureRecord
->;
+const features: Record<string, MinFeatureRecord> = {
+  ...(raw as unknown as Record<string, MinFeatureRecord>),
+  ...(apiRaw as unknown as Record<string, MinFeatureRecord>),
+  ...(jsbiRaw as unknown as Record<string, MinFeatureRecord>),
+};
 
 export type BaselineBucket = "widely" | "newly" | "limited" | "unknown";
 

@@ -1,0 +1,79 @@
+/**
+ * Coverage configuration for docs/coverage.md generation.
+ * - Provide per-domain exclusions with a short memo for why they are out-of-scope.
+ * - Keep this small and curated; prefer explicit IDs for clarity/maintainability.
+ */
+
+export default {
+  api: {
+    byId: {
+      // HTML domain — handled better by html-eslint (markup semantics/attributes)
+      "description-list": { memo: "HTML semantics — use `html-eslint`", exclude: true },
+      "link-rel-prefetch": { memo: "HTML link rel — use `html-eslint`", exclude: true },
+      "contenteditable-plaintextonly": {
+        memo: "HTML attribute — use `html-eslint`",
+        exclude: true,
+      },
+      "popover-hint": { memo: "HTML attribute — use `html-eslint`", exclude: true },
+
+      // CSS domain — handled by stylelint or css-dedicated linters
+      "starting-style": { memo: "CSS at-rule — use stylelint", exclude: true },
+
+      // Runtime/permission/context dependent — not robust for static AST detection
+      "clipboard-unsanitized-formats": {
+        memo: "Permissioned/unsanitized data — not static-detectable",
+        exclude: true,
+      },
+      "partitioned-cookies": {
+        memo: "Storage/partitioning semantics — not static-detectable",
+        exclude: true,
+      },
+      "webgl-sab": { memo: "SAB requires COOP/COEP — environment dependent", exclude: true },
+
+      // Avoid double counting: covered under JavaScript builtins
+      "structured-clone": { memo: "Covered in JS builtins (structuredClone)", exclude: true },
+    },
+  },
+  jsbi: {
+    byId: {
+      // Syntax-level features — covered by es-x/core or non-AST safe
+      "async-await": { memo: "Syntax — delegated to es-x", exclude: true, mappedVia: "delegate" },
+      "async-generators": {
+        memo: "Syntax — delegated to es-x",
+        exclude: true,
+        mappedVia: "delegate",
+      },
+      "async-iterators": {
+        memo: "Syntax — delegated to es-x",
+        exclude: true,
+        mappedVia: "delegate",
+      },
+      "escape-unescape": {
+        memo: "Legacy functions — delegated to es-x",
+        exclude: true,
+        mappedVia: "delegate",
+      },
+      "functions-caller-arguments": {
+        memo: "Deprecated caller/arguments — self rule",
+        exclude: true,
+        mappedVia: "self",
+      },
+      "stable-array-sort": {
+        memo: "Semantics not AST-detectable (stable behavior)",
+        exclude: true,
+      },
+
+      // Runtime/semantics dependent — static detection not robust
+      "serializable-errors": {
+        memo: "Structured clone semantics — not static-detectable",
+        exclude: true,
+      },
+      "transferable-arraybuffer": {
+        memo: "Transfer semantics — not static-detectable",
+        exclude: true,
+      },
+
+      // Typed array iteration coverage — now handled via typed member descriptors
+    },
+  },
+};

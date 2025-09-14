@@ -1,5 +1,5 @@
 import type { Rule } from "eslint";
-import { baselineConfigs } from "./configs/baseline";
+import { baselineConfigs, recommendedConfig, recommendedTsConfig } from "./configs/baseline";
 import useBaseline from "./orchestrator/use-baseline";
 import noBigint64array from "./rules/no-bigint64array";
 import noFunctionCallerArguments from "./rules/no-function-caller-arguments";
@@ -14,4 +14,11 @@ const rules: Record<string, Rule.RuleModule> = {
   "no-temporal": noTemporal,
 };
 
-export default { rules, configs: { baseline: baselineConfigs } } as const;
+export default {
+  rules,
+  configs: {
+    baseline: baselineConfigs,
+    recommended: recommendedConfig,
+    "recommended-ts": recommendedTsConfig,
+  },
+} as const;
