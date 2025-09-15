@@ -12,8 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Enable corepack
-        run: corepack enable
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.15.1 --activate
 
       - name: Setup Node LTS (22)
         uses: actions/setup-node@v5
@@ -21,11 +23,8 @@ jobs:
           node-version: 22
           cache: pnpm
 
-      - name: Install deps (workspace)
-        working-directory: eslint-plugin-baseline-js
+      - name: Install deps
         run: pnpm install --frozen-lockfile
 
       - name: Audit production deps (high severity)
-        working-directory: eslint-plugin-baseline-js
         run: pnpm audit --prod --audit-level high
-
