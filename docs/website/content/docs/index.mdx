@@ -1,0 +1,135 @@
+---
+title: Quick Start
+description: Get up and running with eslint-plugin-baseline-js.
+---
+
+## What is this plugin?
+
+`eslint-plugin-baseline-js` enforces the JavaScript Baseline using the
+web‑features dataset as the single source of truth. It flags usage that
+exceeds your chosen Baseline threshold (`widely`, `newly`, or a year).
+
+- Scope: JS Syntax / JS Builtins / Web APIs (web‑features `group: 'javascript'`)
+- One rule: `baseline-js/use-baseline`
+- Philosophy: report only when a feature exceeds the configured Baseline
+
+
+## Quick Start
+
+### Install
+
+Add the plugin to your project:
+
+```bash tab="pnpm"
+pnpm add -D eslint-plugin-baseline-js
+```
+
+```bash tab="npm"
+npm add -D eslint-plugin-baseline-js
+```
+
+```bash tab="yarn"
+yarn add -D eslint-plugin-baseline-js
+```
+
+```bash tab="bun"
+bun add -D eslint-plugin-baseline-js
+```
+
+### ESLint Config Setup
+
+Pick one of the following Flat Config setups to get started.
+
+
+<Callout title="Terminology" type="info">
+See <a href="/docs/concepts">Scope & Terms</a> for the difference between
+JS Syntax, JS Builtins, and Web APIs.
+</Callout>
+
+#### JS Syntax only (Web APIs / JS Builtins off)
+Checks only JS Syntax (delegated). Web APIs / JS Builtins are disabled.
+
+```ts title="eslint.config.ts"
+import baselineJs from 'eslint-plugin-baseline-js';
+
+export default [
+  { plugins: { 'baseline-js': baselineJs } }, //[!code ++]
+  ...baselineJs.configs.baseline({ available: 'widely', level: "warn" }), //[!code ++]
+];
+```
+
+```ts title="Using constants (optional)"
+import baselineJs, { BASELINE } from 'eslint-plugin-baseline-js';
+
+export default [
+  { plugins: { 'baseline-js': baselineJs } },//[!code ++]
+  ...baselineJs.configs.baseline({ available: BASELINE.WIDELY }),//[!code ++]
+];
+```
+
+#### Recommended (JavaScript projects)
+Enables Web APIs / JS Builtins detection (preset: `auto`). Works well without types.
+
+```ts title="eslint.config.ts"
+import baselineJs from 'eslint-plugin-baseline-js';
+
+export default [
+  { plugins: { 'baseline-js': baselineJs } }, //[!code ++]
+  ...baselineJs.configs.recommended({ available: "widely", level: "warn" }), //[!code ++]
+];
+```
+
+```ts title="Using constants (optional)"
+import baselineJs, { BASELINE } from 'eslint-plugin-baseline-js';
+
+export default [
+  { plugins: { 'baseline-js': baselineJs } },//[!code ++]
+  ...baselineJs.configs.recommended({ available: BASELINE.WIDELY }),//[!code ++]
+];
+```
+
+#### Recommended (TypeScript – type‑aware)
+Uses type information to detect instance members as well (preset: `type-aware`).
+```ts title="eslint.config.ts"
+import tsParser from '@typescript-eslint/parser';
+import baselineJs from 'eslint-plugin-baseline-js';
+
+export default [
+  // Enable type information (required for instance member detection)
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: { parser: tsParser, parserOptions: { project: ['./tsconfig.json'] } },
+  },
+  { plugins: { 'baseline-js': baselineJs } },
+  ...baselineJs.configs['recommended-ts']({ available: 'widely' }),
+];
+```
+
+```ts title="Using constants (optional)"
+import tsParser from '@typescript-eslint/parser';
+import baselineJs, { BASELINE } from 'eslint-plugin-baseline-js';
+
+export default [
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: { parser: tsParser, parserOptions: { project: ['./tsconfig.json'] } },
+  },
+  { plugins: { 'baseline-js': baselineJs } },
+  ...baselineJs.configs['recommended-ts']({ available: BASELINE.WIDELY }),
+];
+```
+
+### You’re all set
+If everything is wired correctly, deprecated/limited APIs are reported like this:
+```ts title="date.getYear()"
+const date = new Date();
+const year = date.getYear();
+             ^^^^^^^^^^^^^^^
+Feature 'date-get-year-set-year' is not a widely available Baseline feature. // [!code error]
+```
+
+
+## Further reading
+- W3C WebDX — Web Features (Baseline):
+  [What is Baseline?](https://web-platform-dx.github.io/web-features/)
+- Case study: [Bringing Baseline into Product Development — and Keeping It Safe in Practice](https://dev.to/ryuya/bringing-baseline-into-product-development-and-keeping-it-safe-in-practice-3pb8)

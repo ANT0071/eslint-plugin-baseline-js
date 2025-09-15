@@ -4,7 +4,7 @@
 // Requires @typescript-eslint/parser and a valid tsconfig.
 
 import tsParser from "@typescript-eslint/parser"; // Install separately
-import baselineJs from "eslint-plugin-baseline-js";
+import baselineJs, { BASELINE } from "eslint-plugin-baseline-js";
 
 export default [
   // Register the plugin so its rules are available across the config
@@ -25,5 +25,5 @@ export default [
   },
 
   // Baseline + type-aware detection
-  ...baselineJs.configs["recommended-ts"]({ available: "widely", level: "error" }),
+  ...baselineJs.configs["recommended-ts"]({ available: BASELINE.WIDELY, level: "error" }),
 ];

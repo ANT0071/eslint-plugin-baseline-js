@@ -8,7 +8,7 @@
 import css from "@eslint/css";
 import html from "@html-eslint/eslint-plugin";
 import htmlParser from "@html-eslint/parser";
-import baselineJs from "eslint-plugin-baseline-js";
+import baselineJs, { BASELINE } from "eslint-plugin-baseline-js";
 import globals from "globals";
 
 export default [
@@ -22,7 +22,7 @@ export default [
   // JavaScript (JS/TS)
   // Broad coverage with minimal config: Web APIs and JS builtins on preset: "auto".
   { plugins: { "baseline-js": baselineJs } },
-  ...baselineJs.configs.recommended({ available: "widely", level: "error" }),
+  ...baselineJs.configs.recommended({ available: BASELINE.WIDELY, level: "error" }),
 
   // CSS
   {
@@ -31,7 +31,7 @@ export default [
     language: "css/css",
     rules: {
       // Allow only widely available CSS features
-      "css/use-baseline": ["error", { available: "widely" }],
+      "css/use-baseline": ["error", { available: BASELINE.WIDELY }],
     },
   },
 
@@ -42,7 +42,7 @@ export default [
     languageOptions: { parser: htmlParser },
     rules: {
       // Allow only widely available HTML features
-      "@html-eslint/use-baseline": ["error", { available: "widely" }],
+      "@html-eslint/use-baseline": ["error", { available: BASELINE.WIDELY }],
     },
   },
 ];

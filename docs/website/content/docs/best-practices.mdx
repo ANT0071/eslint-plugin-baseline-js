@@ -1,0 +1,109 @@
+---
+title: Best Practices
+description: Flat Config recipes for running JS/CSS/HTML under one Baseline policy.
+---
+
+<Callout title="Goal" type="info">
+Align Baseline across an app/monorepo and lint JavaScript (including Web APIs /
+JS Builtins), CSS, and HTML using the same threshold (`widely` / `newly` /
+year).
+</Callout>
+
+
+## Install
+We’ll use sibling plugins for CSS and HTML, plus common globals.
+
+```bash tab="npm"
+npm i -D eslint eslint-plugin-baseline-js @eslint/css @html-eslint/eslint-plugin @html-eslint/parser globals
+```
+
+```bash tab="yarn"
+yarn add -D eslint eslint-plugin-baseline-js @eslint/css @html-eslint/eslint-plugin @html-eslint/parser globals
+```
+
+```bash tab="pnpm"
+pnpm add -D eslint eslint-plugin-baseline-js @eslint/css @html-eslint/eslint-plugin @html-eslint/parser globals
+```
+
+
+## Flat Config (full, TS‑aware)
+
+```ts title="eslint.config.ts (TS aware)"
+import baselineJs, { BASELINE } from "eslint-plugin-baseline-js";
+import css from "@eslint/css";
+import html from "@html-eslint/eslint-plugin";
+import htmlParser from "@html-eslint/parser";
+import globals from "globals";
+
+export default [
+  // Shared: browser globals (adjust per project: browser/worker/node)
+  {
+    languageOptions: {
+      globals: globals.browser,
+    },
+  },
+
+  // JavaScript / TypeScript
+  { plugins: { "baseline-js": baselineJs } },
+  { files: ["**/*.{ts,tsx}"], languageOptions: { parser: tsParser, parserOptions: { project: ["./tsconfig.json"] } } },
+  ...baselineJs.configs["recommended-ts"]({ level: "error", available: BASELINE.WIDELY }),
+
+  // CSS
+  {
+    files: ["**/*.css"],
+    plugins: { css },
+    language: "css/css",
+    rules: {
+      // Allow only widely available CSS features
+      "css/use-baseline": ["error", { available: BASELINE.WIDELY }],
+    },
+  },
+
+  // HTML
+  {
+    files: ["**/*.html"],
+    plugins: { "@html-eslint": html },
+    languageOptions: { parser: htmlParser },
+    rules: {
+      // Allow only widely available HTML features
+      "@html-eslint/use-baseline": ["error", { available: BASELINE.WIDELY }],
+    },
+  },
+];
+```
+
+## Variations (pick what fits)
+
+- Year‑based Baseline
+  - JavaScript: `...baselineJs.configs['recommended-ts']({ available: 2024 })`
+  - CSS/HTML: `{ available: 2024 }`
+- `newly`
+  - JavaScript: `{ available: BASELINE.NEWLY }`
+  - CSS/HTML: `{ available: 'newly' }`
+- TypeScript (more precise)
+  - Use `recommended-ts` and configure the parser for TS files
+  - See Quick Start → Recommended (TypeScript)
+
+### Extra: environment globals
+
+`languageOptions.globals` tells ESLint about runtime globals (`window`,
+`document`, …). It’s optional, but helps avoid `no-undef` noise. Set it to match
+your environment.
+
+```ts title="Node / Worker"
+import globals from 'globals';
+
+export default [
+  // Node project
+  { languageOptions: { globals: globals.node } },
+  // or Worker
+  // { languageOptions: { globals: globals.worker } },
+];
+```
+
+## Operational tips
+
+- Review <a href="/docs/concepts">Scope & Terms</a> (JS Syntax / JS Builtins /
+  Web APIs)
+- Use `ignoreFeatures` / `ignoreNodeTypes` for exceptions and phased rollout
+- Check coverage periodically to understand what’s mapped (/docs/meta/coverage)

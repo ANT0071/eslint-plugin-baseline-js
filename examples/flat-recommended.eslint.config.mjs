@@ -2,7 +2,7 @@
 // Enables Web APIs and JS builtins detection by default (preset: "auto").
 // Good default when you want broad Baseline coverage with minimal config.
 
-import baselineJs from "eslint-plugin-baseline-js";
+import baselineJs, { BASELINE } from "eslint-plugin-baseline-js";
 
 export default [
   // Register the plugin once so its rules are available below
@@ -10,5 +10,5 @@ export default [
 
   // Baseline: defaults to "widely"; override via function argument if needed.
   // Level defaults to "error"; switch to "warn" by passing level.
-  ...baselineJs.configs.recommended({ available: "widely", level: "warn" }),
+  ...baselineJs.configs.recommended({ available: BASELINE.WIDELY, level: "warn" }),
 ];

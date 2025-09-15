@@ -1,0 +1,56 @@
+---
+title: FAQ
+description: Frequently asked questions and troubleshooting.
+---
+
+If this page doesn’t help, please open an
+<a href="https://github.com/3ru/eslint-plugin-baseline-js/issues">issue on GitHub</a>
+with repro steps and a minimal sample.
+
+## Web APIs are not being detected
+
+- The minimal preset (`configs.baseline`) does not enable Web APIs / JS Builtins.
+  - Use <a href="/docs/config#presets-flat-config">presets</a>:
+  `configs.recommended` or `configs['recommended-ts']`.
+- Without TypeScript types, instance‑member checks (e.g. `element.animate()`) are skipped.
+  - Configure `@typescript-eslint/parser` and `parserOptions.project`.
+- Dynamic access / deep aliasing is intentionally conservative to avoid false positives.
+- Reports only happen when a feature exceeds your Baseline (`widely`/`newly`/year).
+
+<details>
+  <summary>Going from minimal → recommended (Flat Config)</summary>
+
+```ts
+import baselineJs, { BASELINE } from 'eslint-plugin-baseline-js';
+
+export default [
+  { plugins: { 'baseline-js': baselineJs } },
+  // Switch from minimal → recommended (auto)
+  ...baselineJs.configs.recommended({ available: BASELINE.WIDELY }),
+];
+```
+
+</details>
+
+## False positives / suppression
+
+Try the following first, then open an issue with a repro sample if needed.
+- `ignoreFeatures`: suppress by web‑features featureId (or `/regex/`)
+- `ignoreNodeTypes`: suppress by ESTree `node.type` (e.g. `WithStatement`)
+
+## Conflicts with other rules/presets
+
+- Use Flat Config `overrides` to scope, suppress, or override.
+- Recommended presets (`recommended` / `recommended-ts`) configure just this plugin’s rule; you can combine with other configs.
+
+<details>
+  <summary>Temporarily relax severity</summary>
+
+```ts
+rules: {
+  // Start with 'warn' to understand the impact
+  'baseline-js/use-baseline': ['warn', { available: 'widely' }],
+}
+```
+
+</details>

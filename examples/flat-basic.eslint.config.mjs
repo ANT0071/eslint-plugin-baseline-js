@@ -4,7 +4,7 @@
 // For broader detection, use the recommended preset or explicitly enable
 // includeWebApis/includeJsBuiltins.
 
-import baselineJs from "eslint-plugin-baseline-js";
+import baselineJs, { BASELINE } from "eslint-plugin-baseline-js";
 
 export default [
   {
@@ -12,10 +12,10 @@ export default [
     plugins: { "baseline-js": baselineJs },
     rules: {
       // Baseline policy: "widely" = allow only widely available features
-      "baseline-js/use-baseline": ["error", { available: "widely" }],
+      "baseline-js/use-baseline": ["error", { available: BASELINE.WIDELY }],
       // Example: also detect Web APIs/JS builtins (opt-in):
       // "baseline-js/use-baseline": ["error", {
-      //   available: "widely",
+      //   available: BASELINE.WIDELY,
       //   includeWebApis: { preset: "auto" },
       //   includeJsBuiltins: { preset: "auto" },
       // }],

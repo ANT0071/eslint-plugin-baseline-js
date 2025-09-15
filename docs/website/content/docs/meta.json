@@ -1,0 +1,16 @@
+{
+  "title": "Docs",
+  "pages": [
+    "---Introduction---",
+    "index",
+    "what-is",
+    "concepts",
+    "---Reference---",
+    "best-practices",
+    "config",
+    "examples",
+    "---Meta---",
+    "...meta"
+  ],
+  "defaultOpen": true
+}

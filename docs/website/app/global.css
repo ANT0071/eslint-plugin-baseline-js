@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+/* Twoslash styles (Shiki transformer) */
+@import "fumadocs-twoslash/twoslash.css";
+
+/* Dark mode tweaks (optional) */
+.dark .twoslash {
+  --twoslash-error-bg: color-mix(in oklab, #f43f5e 12%, transparent);
+  --color-twoslash-error-foreground: #fb7185;
+  /* slightly lighter */
+}
+
+/* Stronger overrides for Fumadocs/Shiki default highlighted rules */
+.shiki :is(.line.highlighted.error) {
+  background-color: rgba(244, 63, 94, 0.08);
+  border-left-color: #f43f5e;
+  border-left-width: 3px;
+}
+
+.shiki :is(.line.highlighted.warning) {
+  background-color: rgba(251, 191, 36, 0.1);
+  border-left-color: #fbbf24;
+  border-left-width: 3px;
+}
+
+.shiki :is(.line.highlighted.log) {
+  background-color: rgba(59, 130, 246, 0.08);
+  border-left-color: #3b82f6;
+  border-left-width: 3px;
+}
+
+.shiki .line.highlighted {
+  /* Hack: Forcefully shift upward */
+  margin-top: -0.4rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  padding-left: calc(var(--padding-left) - 2px);
+}
+
+.shiki .line.highlighted.warning * {
+  color: #fbbf24;
+}
+
+.shiki .line.highlighted.error * {
+  color: #f43f5e;
+}

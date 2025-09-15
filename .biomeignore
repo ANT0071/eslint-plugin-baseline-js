@@ -1,6 +1,0 @@
-dist/**
-coverage/**
-node_modules/**
-src/baseline/features.ts
-src/baseline/data/descriptors.api.ts
-src/baseline/data/descriptors.jsbi.ts

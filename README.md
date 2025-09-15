@@ -13,6 +13,9 @@ This plugin delegates detection to eslint-plugin-es-x and ESLint core (plus a fe
 
 </div>
 
+> [!NOTE]
+> This project hasn’t reached a major release yet, so behavior and options may change. Please feel free to report false negatives/positives and any rough edges as [issues](https://github.com/3ru/eslint-plugin-baseline-js/issues).
+
 ## Install
 
 - npm: `npm i -D eslint-plugin-baseline-js`
@@ -34,7 +37,7 @@ export default [
     plugins: { "baseline-js": baselineJs },
     rules: {
       // Allow only "widely available" Baseline features
-      "baseline-js/use-baseline": ["error", { baseline: "widely" }],
+      "baseline-js/use-baseline": ["error", { available: "widely" }],
     },
   },
 ];
@@ -53,11 +56,11 @@ export default [
 
   // Recommended: enables Web APIs & JS builtins detection with `preset: 'auto'`.
   // Level defaults to 'error'; pass level to change severity
-  ...baselineJs.configs.recommended({ baseline: "widely", level: "warn" }),
+  ...baselineJs.configs.recommended({ available: "widely", level: "warn" }),
 
   // TypeScript-aware: requires type info for instance-member checks (`preset: 'type-aware'`).
   // Works best with @typescript-eslint/parser and a proper tsconfig.
-  // ...baselineJs.configs["recommended-ts"]({ baseline: "widely", level: "error" }),
+  // ...baselineJs.configs["recommended-ts"]({ available: "widely", level: "error" }),
 ];
 ```
 
@@ -70,16 +73,16 @@ See more real-world configs in [`examples/`](https://github.com/3ru/eslint-plugi
 
 ```js
 // Newly available (more permissive)
-'baseline-js/use-baseline': ['warn', { baseline: 'newly' }];
+'baseline-js/use-baseline': ['warn', { available: 'newly' }];
 
 // Year-based – allow features that became Baseline in or before 2020
-'baseline-js/use-baseline': ['error', { baseline: 2020 }];
+'baseline-js/use-baseline': ['error', { available: 2020 }];
 
 // Ignore knobs for pragmatic adoption
 'baseline-js/use-baseline': [
   'error',
   {
-    baseline: 2018,
+    available: 2018,
     // Skip specific web-features by ID (or regex as '/.../')
     ignoreFeatures: ['nullish-coalescing', '/^optional-/'],
     // Skip reports produced on certain ESTree node types

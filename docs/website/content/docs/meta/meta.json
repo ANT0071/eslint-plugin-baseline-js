@@ -1,0 +1,5 @@
+{
+  "title": "Meta",
+  "pages": ["faq", "migration-from-compat", "coverage"],
+  "defaultOpen": true
+}

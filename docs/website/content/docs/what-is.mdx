@@ -1,0 +1,46 @@
+---
+title: What is eslint-plugin-baseline-js
+description: ✅ ESLint plugin that enforces the JavaScript Baseline across JS (Syntax / Builtins / Web APIs).
+---
+
+## Overview
+
+`eslint-plugin-baseline-js` rethinks compatibility checks (e.g. compared to
+`eslint-plugin-compat`) from the Baseline perspective.
+
+- Goal: a "Baseline" take on compat — evaluate JS/CSS/HTML with the same threshold
+- Threshold: set `available` to `'widely' | 'newly' | YYYY`
+- One rule: `baseline-js/use-baseline` (unified message, low noise)
+- Surfaces: see <a href="/docs/concepts">Scope & Terms</a> (JS Syntax / JS Builtins / Web APIs)
+
+
+## Single source of truth (data‑driven)
+
+- Primary dataset: **web‑features** (led by Web Platform DX)
+  - GitHub: https://github.com/web-platform-dx/web-features
+
+<Callout type="warn" title="Heads up: data‑driven">
+If a feature is missing from web‑features, we won’t detect it. Check the
+<a href="https://github.com/web-platform-dx/web-features/tree/main/features">dataset</a>
+and consider proposing an entry if needed.
+</Callout>
+
+## High‑precision detection (TypeScript)
+
+- Beyond vanilla AST scans, we use `@typescript-eslint/parser` **parserServices**
+  and the TypeChecker to resolve the receiver’s **actual type** before reporting.
+  This lets us distinguish real platform methods from user‑defined look‑alikes.
+  - Array by copy (feature: `array-by-copy`)
+    - Verify `a.toReversed()` / `a.toSorted()` are truly Array/TypedArray methods.
+      Same‑named methods on user classes won’t trigger.
+  - Intl.Locale (feature: `intl-locale-info`)
+    - For `new Intl.Locale('ja')`, only report `.maximize()` / `.minimize()` when
+      the receiver is actually `Locale`.
+  - Iterator methods (feature: `iterator-methods`)
+    - Report only when the receiver is an `Iterator` type (union/inheritance supported).
+  - Uint8Array base64/hex (feature: `uint8array-base64-hex`)
+    - Check both static/instance paths (`Uint8Array.fromBase64`, `u8.toBase64()`) and
+      confirm the type is `Uint8Array`.
+- It also works through generics and aliases, e.g.:
+  `function f<T extends Array<number>>(x: T) { x.toReversed() }` — we traverse the
+  **apparent type** and base types to make the right call.

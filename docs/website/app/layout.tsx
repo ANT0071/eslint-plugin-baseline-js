@@ -1,0 +1,31 @@
+import "@/app/global.css";
+import { RootProvider } from "fumadocs-ui/provider";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { baseUrl, createMetadata } from "@/lib/metadata";
+
+const inter = Inter({
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = createMetadata({
+  title: {
+    template: "%s | Baseline JS",
+    default: "Baseline JS Docs",
+  },
+  description: "Documentation for eslint-plugin-baseline-js",
+  icons: {
+    icon: "/logos/baseline-widely-icon.svg",
+  },
+  metadataBase: baseUrl, // ensure absolute URLs in OGP
+});
+
+export default function Layout({ children }: LayoutProps<"/">) {
+  return (
+    <html lang="en" className={inter.className} suppressHydrationWarning>
+      <body className="flex flex-col min-h-screen">
+        <RootProvider>{children}</RootProvider>
+      </body>
+    </html>
+  );
+}

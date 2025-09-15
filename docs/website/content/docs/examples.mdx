@@ -1,0 +1,230 @@
+---
+title: Examples
+description: Practical Flat Config and legacy (.eslintrc) samples.
+---
+
+
+
+<Callout type="info" title="Repository examples">
+This page mirrors key examples. See the full set in the
+[examples directory](https://github.com/3ru/eslint-plugin-baseline-js/tree/main/examples).
+</Callout>
+
+## Flat Config
+
+### Basic (JS Syntax only)
+
+```ts title="examples/flat-basic.eslint.config.mjs"
+// Flat config (basic)
+// Goal: enforce the JS Baseline at "widely".
+// Web APIs/JS builtins detection is off by default here.
+// For broader detection, use the recommended preset or explicitly enable
+// includeWebApis/includeJsBuiltins.
+
+import baselineJs, { BASELINE } from "eslint-plugin-baseline-js";
+
+export default [
+  {
+    files: ["**/*.{js,ts,mjs,cjs,jsx,tsx}"],
+    plugins: { "baseline-js": baselineJs },
+    rules: {
+      // Baseline policy: "widely" = allow only widely available features
+      "baseline-js/use-baseline": ["error", { available: BASELINE.WIDELY }],
+      // Example: also detect Web APIs/JS builtins (opt-in):
+      // "baseline-js/use-baseline": ["error", {
+      //   available: BASELINE.WIDELY,
+      //   includeWebApis: { preset: "auto" },
+      //   includeJsBuiltins: { preset: "auto" },
+      // }],
+    },
+  },
+];
+```
+
+### Recommended (Web APIs/JS Builtins on, auto)
+
+```ts title="examples/flat-recommended.eslint.config.mjs"
+// Flat config (recommended)
+// Enables Web APIs and JS builtins detection by default (preset: "auto").
+// Good default when you want broad Baseline coverage with minimal config.
+
+import baselineJs, { BASELINE } from "eslint-plugin-baseline-js";
+
+export default [
+  // Register the plugin once so its rules are available below
+  { plugins: { "baseline-js": baselineJs } },
+
+  // Baseline: defaults to "widely"; override via function argument if needed.
+  // Level defaults to "error"; switch to "warn" by passing level.
+  ...baselineJs.configs.recommended({ available: BASELINE.WIDELY, level: "warn" }),
+];
+```
+
+### Recommended‑TS (type‑aware; strict instance members)
+
+```ts title="examples/flat-recommended-ts.eslint.config.mjs"
+// Flat config (TypeScript recommended)
+// Uses type-required detection (preset: "type-aware").
+// Enables precise instance-member checks (e.g., Iterator helpers, TypedArray methods).
+// Requires @typescript-eslint/parser and a valid tsconfig.
+
+import tsParser from "@typescript-eslint/parser"; // Install separately
+import baselineJs, { BASELINE } from "eslint-plugin-baseline-js";
+
+export default [
+  // Register the plugin so its rules are available across the config
+  { plugins: { "baseline-js": baselineJs } },
+
+  // TypeScript parsing setup
+  {
+    files: ["**/*.{ts,tsx}"],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        // Simplest: auto-detect the nearest tsconfig.json
+        project: true,
+        // Or explicitly point to one or more configs (monorepo):
+        // project: ["./tsconfig.json"],
+      },
+    },
+  },
+
+  // Baseline + type-aware detection
+  ...baselineJs.configs["recommended-ts"]({ available: BASELINE.WIDELY, level: "error" }),
+];
+```
+
+### Year‑based (e.g., 2020)
+
+```ts title="examples/flat-year-2020.eslint.config.mjs"
+// Flat config (year-based)
+// Set a Baseline year (e.g., allow features that became Baseline by 2020).
+// Includes examples of ignore knobs and narrowing detection to specific features.
+
+import baselineJs from "eslint-plugin-baseline-js";
+
+export default [
+  {
+    files: ["**/*.{js,ts,mjs,cjs,jsx,tsx}"],
+    plugins: { "baseline-js": baselineJs },
+    rules: {
+      "baseline-js/use-baseline": [
+        "error",
+        {
+          available: 2020, // Allow only features Baseline'd in or before 2020
+          // Exclude specific features (web-features IDs or /.../ regex)
+          ignoreFeatures: ["nullish-coalescing", "/^optional-/"],
+          // Suppress by ESTree node.type (supports /.../ regex)
+          ignoreNodeTypes: ["WithStatement", "/Expression$/"],
+          // Explicitly enable Web APIs/JS builtins detection
+          includeWebApis: { preset: "auto" },
+          includeJsBuiltins: {
+            preset: "auto",
+            // Example: narrow to specific featureIds
+            // only: ["javascript.array-grouping"],
+          },
+        },
+      ],
+    },
+  },
+];
+```
+
+### Full (JS + CSS + HTML)
+
+```ts title="examples/flat-full-baseline.eslint.config.mjs"
+// Flat config (full) — JS + CSS + HTML Baseline
+// Goal: enforce Baseline consistently across JavaScript, CSS, and HTML.
+// Notes:
+// - JS uses this plugin with the "recommended" preset (Web APIs/JS builtins).
+// - CSS uses @eslint/css with its "use-baseline" rule.
+// - HTML uses @html-eslint/eslint-plugin with its "use-baseline" rule.
+
+import css from "@eslint/css";
+import html from "@html-eslint/eslint-plugin";
+import htmlParser from "@html-eslint/parser";
+import baselineJs, { BASELINE } from "eslint-plugin-baseline-js";
+import globals from "globals";
+
+export default [
+  // Shared: browser globals (adjust per project: browser/worker/node)
+  {
+    languageOptions: {
+      globals: globals.browser,
+    },
+  },
+
+  // JavaScript (JS/TS)
+  // Broad coverage with minimal config: Web APIs and JS builtins on preset: "auto".
+  { plugins: { "baseline-js": baselineJs } },
+  ...baselineJs.configs.recommended({ available: BASELINE.WIDELY, level: "error" }),
+
+  // CSS
+  {
+    files: ["**/*.css"],
+    plugins: { css },
+    language: "css/css",
+    rules: {
+      // Allow only widely available CSS features
+      "css/use-baseline": ["error", { available: BASELINE.WIDELY }],
+    },
+  },
+
+  // HTML
+  {
+    files: ["**/*.html"],
+    plugins: { "@html-eslint": html },
+    languageOptions: { parser: htmlParser },
+    rules: {
+      // Allow only widely available HTML features
+      "@html-eslint/use-baseline": ["error", { available: BASELINE.WIDELY }],
+    },
+  },
+];
+```
+
+## Legacy (.eslintrc.*)
+
+### Basic
+
+```js title="examples/legacy-basic.eslintrc.cjs"
+// Legacy config (.eslintrc.*) — basic
+// Note: The plugin recommends Flat Config, but legacy configs work too.
+
+const { BASELINE } = require('eslint-plugin-baseline-js');
+
+module.exports = {
+  // Limit target files via overrides as needed
+  plugins: ["baseline-js"],
+  rules: {
+    // Baseline: "newly" (more permissive than "widely")
+    "baseline-js/use-baseline": ["warn", { available: BASELINE.NEWLY }],
+  },
+};
+```
+
+### Year‑based (e.g., 2018)
+
+```js title="examples/legacy-year-2018.eslintrc.cjs"
+// Legacy config (.eslintrc.*) — year-based
+// Goal: allow only features that became Baseline in or before 2018.
+
+module.exports = {
+  plugins: ["baseline-js"],
+  rules: {
+    "baseline-js/use-baseline": [
+      "error",
+      {
+        available: 2018,
+        // Enable Web APIs/JS builtins detection
+        includeWebApis: { preset: "auto" },
+        includeJsBuiltins: { preset: "auto" },
+      },
+    ],
+  },
+};
+```
+
+<Callout type="info" title="Tip: constants">
+文字列の代わりに <code>BASELINE.WIDELY/NEWLY</code> を使うとタイプミスを防げます。
+</Callout>
