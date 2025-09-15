@@ -12,7 +12,7 @@ export default [
       "baseline-js/use-baseline": [
         "error",
         {
-          baseline: 2020, // Allow only features Baseline'd in or before 2020
+          available: 2020, // Allow only features Baseline'd in or before 2020
           // Exclude specific features (web-features IDs or /.../ regex)
           ignoreFeatures: ["nullish-coalescing", "/^optional-/"],
           // Suppress by ESTree node.type (supports /.../ regex)

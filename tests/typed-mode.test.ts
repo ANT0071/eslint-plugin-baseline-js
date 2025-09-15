@@ -81,7 +81,7 @@ describe("typed mode (TypeScript-aware) integration", () => {
             "baseline-js/use-baseline": [
               "error",
               {
-                baseline: "widely",
+                available: "widely",
                 includeJsBuiltins: { preset: "type-aware" },
               },
             ],
@@ -160,7 +160,7 @@ describe("typed mode (TypeScript-aware) integration", () => {
           rules: {
             "baseline-js/use-baseline": [
               "error",
-              { baseline: 2022, includeJsBuiltins: { preset: "type-aware" } },
+              { available: 2022, includeJsBuiltins: { preset: "type-aware" } },
             ],
           },
         },

@@ -2,14 +2,18 @@ import type { BaselineOption } from "../config";
 
 export function baselineConfigs(
   opts: {
-    baseline?: BaselineOption;
+    available?: BaselineOption; // preferred
+    baseline?: BaselineOption; // alias (back-compat)
     env?: "browser" | "worker" | "node";
     level?: "error" | "warn";
   } = {},
 ) {
-  const baseline: BaselineOption = opts.baseline ?? "widely";
+  const available: BaselineOption = opts.available ?? opts.baseline ?? "widely";
   const level = opts.level ?? "error";
-  const rules: Record<string, unknown> = { "baseline-js/use-baseline": [level, { baseline }] };
+  // Prefer available: to align with CSS/HTML ecosystems; baseline stays as user option but we emit available internally.
+  const rules: Record<string, unknown> = {
+    "baseline-js/use-baseline": [level, { available }],
+  };
   return [
     {
       rules,
@@ -24,18 +28,19 @@ export function baselineConfigs(
  */
 export function recommendedConfig(
   opts: {
+    available?: BaselineOption;
     baseline?: BaselineOption;
     env?: "browser" | "worker" | "node";
     level?: "error" | "warn";
   } = {},
 ) {
-  const baseline: BaselineOption = opts.baseline ?? "widely";
+  const available: BaselineOption = opts.available ?? opts.baseline ?? "widely";
   const level = opts.level ?? "error";
   const rules: Record<string, unknown> = {
     "baseline-js/use-baseline": [
       level,
       {
-        baseline,
+        available,
         includeWebApis: { preset: "auto" },
         includeJsBuiltins: { preset: "auto" },
       },
@@ -55,18 +60,19 @@ export function recommendedConfig(
  */
 export function recommendedTsConfig(
   opts: {
+    available?: BaselineOption;
     baseline?: BaselineOption;
     env?: "browser" | "worker" | "node";
     level?: "error" | "warn";
   } = {},
 ) {
-  const baseline: BaselineOption = opts.baseline ?? "widely";
+  const available: BaselineOption = opts.available ?? opts.baseline ?? "widely";
   const level = opts.level ?? "error";
   const rules: Record<string, unknown> = {
     "baseline-js/use-baseline": [
       level,
       {
-        baseline,
+        available,
         includeWebApis: { preset: "type-aware" },
         includeJsBuiltins: { preset: "type-aware" },
       },

@@ -22,7 +22,7 @@ const tester = new RuleTester({
 
 describe("use-baseline e2e", () => {
   it("runs representative RuleTester suites", () => {
-    tester.run("baseline-js/use-baseline (syntax, baseline: widely)", rule, {
+    tester.run("baseline-js/use-baseline (syntax, available: widely)", rule, {
       valid: [
         {
           // nullish coalescing is Baseline widely → no report
@@ -34,19 +34,19 @@ describe("use-baseline e2e", () => {
           // Temporal is Baseline limited → should report
           code: "Temporal.Now.instant();",
           errors: [{ message: /Feature 'temporal'.*Baseline/i }],
-          options: [{ baseline: "widely" }],
+          options: [{ available: "widely" }],
         },
         {
           // Atomics.waitAsync is Baseline limited → should report
           code: "Atomics.waitAsync();",
           errors: [{ message: /Feature 'atomics-wait-async'.*Baseline/i }],
-          options: [{ baseline: "widely" }],
+          options: [{ available: "widely" }],
         },
         {
           // with statement is discouraged/limited → should report
           code: "with (obj) { const a = 1; }",
           errors: [{ message: /Feature 'with'.*Baseline/i }],
-          options: [{ baseline: "widely" }],
+          options: [{ available: "widely" }],
         },
       ],
     });
@@ -56,14 +56,14 @@ describe("use-baseline e2e", () => {
         {
           // By default (no includeWebApis), AbortSignal.any is not checked → no report
           code: "AbortSignal.any([]);",
-          options: [{ baseline: "widely" }],
+          options: [{ available: "widely" }],
         },
       ],
       invalid: [
         {
           // includeWebApis: safe → AbortSignal.any() is Baseline newly → should report
           code: "AbortSignal.any([]);",
-          options: [{ baseline: "widely", includeWebApis: { preset: "safe" } }],
+          options: [{ available: "widely", includeWebApis: { preset: "safe" } }],
           errors: [{ message: /Feature 'abortsignal-any'.*Baseline/i }],
         },
       ],

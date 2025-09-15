@@ -18,7 +18,7 @@ describe("Baseline messages are unified across delegates", () => {
       invalid: [
         {
           code: "Atomics.waitAsync();",
-          options: [{ baseline: "widely" }],
+          options: [{ available: "widely" }],
           errors: [
             {
               message: "Feature 'atomics-wait-async' is not a widely available Baseline feature.",
@@ -35,7 +35,7 @@ describe("Baseline messages are unified across delegates", () => {
       invalid: [
         {
           code: "with (obj) { const a = 1; }",
-          options: [{ baseline: "widely" }],
+          options: [{ available: "widely" }],
           errors: [{ message: "Feature 'with' is not a widely available Baseline feature." }],
         },
       ],
@@ -48,7 +48,7 @@ describe("Baseline messages are unified across delegates", () => {
       invalid: [
         {
           code: "Temporal.Now.instant();",
-          options: [{ baseline: "widely" }],
+          options: [{ available: "widely" }],
           errors: [{ message: "Feature 'temporal' is not a widely available Baseline feature." }],
         },
       ],

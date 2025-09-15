@@ -1,5 +1,18 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.2.3/schema.json",
+  "files": {
+    "includes": [
+      "**",
+      "!dist",
+      "!coverage",
+      "!node_modules",
+      "!docs/website/.next",
+      "!src/baseline/features.ts",
+      "!src/baseline/data/descriptors.api.ts",
+      "!src/baseline/data/descriptors.jsbi.ts"
+    ],
+    "ignoreUnknown": true
+  },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",

@@ -7,7 +7,7 @@ module.exports = {
     "baseline-js/use-baseline": [
       "error",
       {
-        baseline: 2018,
+        available: 2018,
         // Enable Web APIs/JS builtins detection
         includeWebApis: { preset: "auto" },
         includeJsBuiltins: { preset: "auto" },

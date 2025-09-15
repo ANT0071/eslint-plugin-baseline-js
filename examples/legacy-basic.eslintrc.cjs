@@ -6,6 +6,6 @@ module.exports = {
   plugins: ["baseline-js"],
   rules: {
     // Baseline: "newly" (more permissive than "widely")
-    "baseline-js/use-baseline": ["warn", { baseline: "newly" }],
+    "baseline-js/use-baseline": ["warn", { available: "newly" }],
   },
 };

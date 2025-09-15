@@ -22,7 +22,7 @@ export default [
   // JavaScript (JS/TS)
   // Broad coverage with minimal config: Web APIs and JS builtins on preset: "auto".
   { plugins: { "baseline-js": baselineJs } },
-  ...baselineJs.configs.recommended({ baseline: "widely", level: "error" }),
+  ...baselineJs.configs.recommended({ available: "widely", level: "error" }),
 
   // CSS
   {

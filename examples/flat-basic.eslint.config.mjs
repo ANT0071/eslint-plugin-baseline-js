@@ -12,10 +12,10 @@ export default [
     plugins: { "baseline-js": baselineJs },
     rules: {
       // Baseline policy: "widely" = allow only widely available features
-      "baseline-js/use-baseline": ["error", { baseline: "widely" }],
+      "baseline-js/use-baseline": ["error", { available: "widely" }],
       // Example: also detect Web APIs/JS builtins (opt-in):
       // "baseline-js/use-baseline": ["error", {
-      //   baseline: "widely",
+      //   available: "widely",
       //   includeWebApis: { preset: "auto" },
       //   includeJsBuiltins: { preset: "auto" },
       // }],

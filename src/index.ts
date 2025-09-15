@@ -1,5 +1,6 @@
 import type { Rule } from "eslint";
 import { baselineConfigs, recommendedConfig, recommendedTsConfig } from "./configs/baseline";
+export { BASELINE } from "./config";
 import useBaseline from "./orchestrator/use-baseline";
 import noBigint64array from "./rules/no-bigint64array";
 import noFunctionCallerArguments from "./rules/no-function-caller-arguments";

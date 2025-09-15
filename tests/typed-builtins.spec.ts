@@ -100,7 +100,7 @@ describe("typed builtins detection (Intl.Locale, Iterator, Uint8Array instance)"
           rules: {
             "baseline-js/use-baseline": [
               "error",
-              { baseline: "widely", includeJsBuiltins: { preset: "type-aware" } },
+              { available: "widely", includeJsBuiltins: { preset: "type-aware" } },
             ],
           },
         },

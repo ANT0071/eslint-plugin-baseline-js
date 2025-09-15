@@ -1,5 +1,19 @@
-export type BaselineOption = "widely" | "newly" | number; // YYYY
 export type EnvOption = "browser" | "worker" | "node";
+
+/**
+ * Named constants for Baseline string options.
+ * Prefer using these to avoid typos in user configs.
+ */
+export const BASELINE = {
+  WIDELY: "widely",
+  NEWLY: "newly",
+} as const;
+
+/** String-only Baseline names*/
+export type BaselineName = (typeof BASELINE)[keyof typeof BASELINE];
+
+/** Final option type: the named baseline or a year (YYYY) */
+export type BaselineOption = BaselineName | number; // YYYY
 
 export interface CommonRuleOptions {
   baseline?: BaselineOption;
@@ -32,6 +46,8 @@ export interface CommonRuleOptions {
 }
 
 export function getBaselineValue(opt: CommonRuleOptions | undefined): BaselineOption {
-  if (!opt) return "widely";
-  return opt.baseline ?? opt.available ?? "widely";
+  if (!opt) return BASELINE.WIDELY;
+  // Prefer the new 'available' option name; keep 'baseline' as a backward-compatible alias.
+  // TODO: Remove 'baseline' in the next major version.
+  return opt.available ?? opt.baseline ?? BASELINE.WIDELY;
 }

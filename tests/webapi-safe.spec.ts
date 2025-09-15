@@ -24,7 +24,7 @@ describe("use-baseline: Web API safe arg-based patterns", () => {
           // Ensure Web API detectors are enabled explicitly for this suite
           options: [
             {
-              baseline: "widely",
+              available: "widely",
               includeWebApis: { preset: "safe" },
               includeJsBuiltins: false,
             },
@@ -35,7 +35,7 @@ describe("use-baseline: Web API safe arg-based patterns", () => {
           code: "const o = { type: 'module' }; new Worker('w.js', o);",
           options: [
             {
-              baseline: "widely",
+              available: "widely",
               includeWebApis: { preset: "safe" },
               includeJsBuiltins: false,
             },
@@ -50,7 +50,7 @@ describe("use-baseline: Web API safe arg-based patterns", () => {
           code: "const canvas = document.createElement('canvas'); canvas.getContext('2d', { alpha: true });",
           options: [
             {
-              baseline: "widely",
+              available: "widely",
               includeWebApis: { preset: "safe", only: ["canvas-2d-alpha"] },
               includeJsBuiltins: false,
             },
@@ -69,7 +69,7 @@ describe("use-baseline: Web API safe arg-based patterns", () => {
         //   code: "const canvas = document.createElement('canvas'); canvas.getContext('webgl2', { desynchronized: true });",
         //   options: [
         //     {
-        //       baseline: "widely",
+        //       available: "widely",
         //       includeWebApis: { preset: "safe", only: ["webgl2-desynchronized"] },
         //       includeJsBuiltins: false,
         //     },
@@ -81,7 +81,7 @@ describe("use-baseline: Web API safe arg-based patterns", () => {
         //   code: "new Worker('x.js', { type: 'module' });",
         //   options: [
         //     {
-        //       baseline: "widely",
+        //       available: "widely",
         //       includeWebApis: { preset: "safe", only: ["js-modules-workers"] },
         //       includeJsBuiltins: false,
         //     },
@@ -93,7 +93,7 @@ describe("use-baseline: Web API safe arg-based patterns", () => {
         //   code: "new TransformStream({ cancel() {} });",
         //   options: [
         //     {
-        //       baseline: "widely",
+        //       available: "widely",
         //       includeWebApis: { preset: "safe", only: ["transformstream-transformer-cancel"] },
         //       includeJsBuiltins: false,
         //     },
@@ -105,7 +105,7 @@ describe("use-baseline: Web API safe arg-based patterns", () => {
         //   code: "gl.getSupportedExtensions()?.includes('EXT_sRGB');",
         //   options: [
         //     {
-        //       baseline: "widely",
+        //       available: "widely",
         //       includeWebApis: { preset: "safe", only: ["ext-srgb"] },
         //       includeJsBuiltins: false,
         //     },
