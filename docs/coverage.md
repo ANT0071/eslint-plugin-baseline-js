@@ -8,34 +8,46 @@
 
 ## JavaScript Language (syntax)
 
-- total: `22`
-- mapped: `22`
-- coverage: `100.0%`
+- total: `34`
+- mapped: `33`
+- coverage: `97.1%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Mechanism | Delegates |
 | --- | --- | --- | --- | --- | --- | --- |
-| arguments-callee | `arguments.callee` | limited | - | ✅ | `delegate` | `core:no-caller` |
-| async-await | `Async functions` | widely | 2017 | ✅ | `delegate` | `es-x:no-async-functions` |
-| async-generators | `Async generators` | widely | 2020 | ✅ | `delegate` | `es-x:no-async-iteration` |
-| atomics-wait-async | `Atomics.waitAsync` | limited | - | ✅ | `delegate` | `es-x:no-atomics-waitasync` |
-| class-syntax | `Classes` | widely | 2016 | ✅ | `delegate` | `es-x:no-classes` |
-| date-get-year-set-year | `getYear() and setYear()` | limited | - | ✅ | `delegate` | `es-x:no-date-prototype-getyear-setyear` |
-| escape-unescape | `escape() and unescape()` | limited | - | ✅ | `delegate` | `es-x:no-escape-unescape` |
-| functions-caller-arguments | `Function caller and arguments` | limited | - | ✅ | `self` | `self:no-function-caller-arguments` |
-| hashbang-comments | `Hashbang comments` | widely | 2020 | ✅ | `delegate` | `es-x:no-hashbang` |
-| html-wrapper-methods | `HTML wrapper methods` | limited | - | ✅ | `delegate` | `es-x:no-string-create-html-methods` |
-| let-const | `Let and const` | widely | 2016 | ✅ | `delegate` | `es-x:no-block-scoped-variables` |
-| logical-assignments | `Logical assignments` | widely | 2020 | ✅ | `delegate` | `es-x:no-logical-assignment-operators` |
-| math-sum-precise | `Math.sumPrecise()` | limited | - | ✅ | `self` | `self:no-math-sum-precise` |
-| nullish-coalescing | `Nullish coalescing` | widely | 2020 | ✅ | `delegate` | `es-x:no-nullish-coalescing-operators` |
-| numeric-seperators | `Numeric separators` | widely | 2020 | ✅ | `delegate` | `es-x:no-numeric-separators` |
-| optional-catch-binding | `Optional catch binding` | widely | 2020 | ✅ | `delegate` | `es-x:no-optional-catch-binding` |
-| proxy-reflect | `Proxy and Reflect` | widely | 2016 | ✅ | `delegate` | `es-x:no-proxy`, `es-x:no-reflect` |
-| shared-memory | `SharedArrayBuffer and Atomics` | widely | 2021 | ✅ | `delegate` | `es-x:no-shared-array-buffer`, `es-x:no-atomics` |
-| template-literals | `Template literals` | widely | 2020 | ✅ | `delegate` | `es-x:no-template-literals` |
-| top-level-await | `Top-level await` | widely | 2021 | ✅ | `delegate` | `es-x:no-top-level-await` |
-| unicode-point-escapes | `Unicode point escapes` | widely | 2015 | ✅ | `delegate` | `es-x:no-unicode-codepoint-escapes` |
-| weak-references | `Weak references` | widely | 2021 | ✅ | `delegate` | `es-x:no-weakrefs` |
+| arguments-callee | `arguments-callee` | unknown | - | ✅ | `delegate` | `core:no-caller` |
+| async-await | `async-await` | unknown | - | ✅ | `delegate` | `es-x:no-async-functions` |
+| async-generators | `async-generators` | unknown | - | ✅ | `delegate` | `es-x:no-async-iteration` |
+| atomics-wait-async | `atomics-wait-async` | unknown | - | ✅ | `delegate` | `es-x:no-atomics-waitasync` |
+| bigint | `bigint` | unknown | - | ✅ | `delegate` | `es-x:no-bigint` |
+| bigint64array | `bigint64array` | unknown | - | ✅ | `self` | `self:no-bigint64array` |
+| class-syntax | `class-syntax` | unknown | - | ✅ | `delegate` | `es-x:no-classes` |
+| date-get-year-set-year | `date-get-year-set-year` | unknown | - | ✅ | `delegate` | `es-x:no-date-prototype-getyear-setyear` |
+| destructuring | `destructuring` | unknown | - | ✅ | `delegate` | `es-x:no-destructuring` |
+| discouraged | `discouraged` | unknown | - | ❌ | `-` | - |
+| escape-unescape | `escape-unescape` | unknown | - | ✅ | `delegate` | `es-x:no-escape-unescape` |
+| exponentiation | `exponentiation` | unknown | - | ✅ | `delegate` | `es-x:no-exponential-operators` |
+| functions | `functions` | unknown | - | ✅ | `delegate` | - |
+| functions-caller-arguments | `functions-caller-arguments` | unknown | - | ✅ | `self` | `self:no-function-caller-arguments` |
+| generators | `generators` | unknown | - | ✅ | `delegate` | `es-x:no-generators` |
+| globalthis | `globalthis` | unknown | - | ✅ | `delegate` | `es-x:no-global-this` |
+| hashbang-comments | `hashbang-comments` | unknown | - | ✅ | `delegate` | `es-x:no-hashbang` |
+| html-wrapper-methods | `html-wrapper-methods` | unknown | - | ✅ | `delegate` | `es-x:no-string-create-html-methods` |
+| javascript | `javascript` | unknown | - | ✅ | `delegate` | - |
+| let-const | `let-const` | unknown | - | ✅ | `delegate` | `es-x:no-block-scoped-variables` |
+| logical-assignments | `logical-assignments` | unknown | - | ✅ | `delegate` | `es-x:no-logical-assignment-operators` |
+| math-sum-precise | `math-sum-precise` | unknown | - | ✅ | `self` | `self:no-math-sum-precise` |
+| nullish-coalescing | `nullish-coalescing` | unknown | - | ✅ | `delegate` | `es-x:no-nullish-coalescing-operators` |
+| numeric-seperators | `numeric-seperators` | unknown | - | ✅ | `delegate` | `es-x:no-numeric-separators` |
+| optional-catch-binding | `optional-catch-binding` | unknown | - | ✅ | `delegate` | `es-x:no-optional-catch-binding` |
+| proxy-reflect | `proxy-reflect` | unknown | - | ✅ | `delegate` | `es-x:no-proxy`, `es-x:no-reflect` |
+| shared-memory | `shared-memory` | unknown | - | ✅ | `delegate` | `es-x:no-shared-array-buffer`, `es-x:no-atomics` |
+| spread | `spread` | unknown | - | ✅ | `delegate` | `es-x:no-spread-elements`, `es-x:no-rest-spread-properties` |
+| template-literals | `template-literals` | unknown | - | ✅ | `delegate` | `es-x:no-template-literals` |
+| temporal | `temporal` | unknown | - | ✅ | `self` | `self:no-temporal` |
+| top-level-await | `top-level-await` | unknown | - | ✅ | `delegate` | `es-x:no-top-level-await` |
+| unicode-point-escapes | `unicode-point-escapes` | unknown | - | ✅ | `delegate` | `es-x:no-unicode-codepoint-escapes` |
+| weak-references | `weak-references` | unknown | - | ✅ | `delegate` | `es-x:no-weakrefs` |
+| with | `with` | unknown | - | ✅ | `delegate` | `core:no-with` |
 
 ## Web APIs (api.*)
 
