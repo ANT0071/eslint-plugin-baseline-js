@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
 import { source } from "@/lib/source";
 
-export async function GET(_request: Request, ctx: { params: { slug?: string[] } }) {
-  const slug = ctx.params.slug ?? [];
+export async function GET(_request: Request, { params }: { params: Promise<{ slug?: string[] }> }) {
+  const { slug = [] } = await params;
   const page = source.getPage(slug);
   if (!page) notFound();
 
-  return new Response(page.data.raw ?? "", {
+  return new Response(page.data.content ?? "", {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   });
 }

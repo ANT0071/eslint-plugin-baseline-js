@@ -20,10 +20,12 @@ export default defineConfig({
   lastModifiedTime: "git",
   mdxOptions: {
     rehypeCodeOptions: {
+      // Inherit sane defaults (includes required `themes` field)
+      ...rehypeCodeDefaultOptions,
       // ensure required languages are loaded for Shiki
       langs: ["ts", "js", "html", "tsx", "mdx"],
       inline: "tailing-curly-colon",
-      // inherit sane defaults from Fumadocs
+      // extend transformers
       transformers: [
         ...(rehypeCodeDefaultOptions.transformers ?? []),
         transformerTwoslash({
