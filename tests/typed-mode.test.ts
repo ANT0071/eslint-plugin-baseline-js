@@ -170,6 +170,8 @@ describe("typed mode (TypeScript-aware) integration", () => {
     const results = await eslint.lintFiles([samplePath]);
     const messages = results.flatMap((r) => r.messages);
     const msg = messages.find((m) => (m.ruleId || "").includes("baseline-js/use-baseline"));
-    expect(msg?.message).toBe("Feature 'array-by-copy' became Baseline in 2023 and exceeds 2022.");
+    expect(msg?.message).toBe(
+      "Feature 'Array by copy' (array-by-copy) became Baseline in 2023 and exceeds 2022.",
+    );
   }, 15000);
 });

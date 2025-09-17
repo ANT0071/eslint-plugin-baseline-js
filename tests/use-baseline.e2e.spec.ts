@@ -33,19 +33,19 @@ describe("use-baseline e2e", () => {
         {
           // Temporal is Baseline limited → should report
           code: "Temporal.Now.instant();",
-          errors: [{ message: /Feature 'temporal'.*Baseline/i }],
+          errors: [{ message: /Feature '.*' \(temporal\).*Baseline/i }],
           options: [{ available: "widely" }],
         },
         {
           // Atomics.waitAsync is Baseline limited → should report
           code: "Atomics.waitAsync();",
-          errors: [{ message: /Feature 'atomics-wait-async'.*Baseline/i }],
+          errors: [{ message: /Feature '.*' \(atomics-wait-async\).*Baseline/i }],
           options: [{ available: "widely" }],
         },
         {
           // with statement is discouraged/limited → should report
           code: "with (obj) { const a = 1; }",
-          errors: [{ message: /Feature 'with'.*Baseline/i }],
+          errors: [{ message: /Feature '.*' \(with\).*Baseline/i }],
           options: [{ available: "widely" }],
         },
       ],
@@ -64,7 +64,7 @@ describe("use-baseline e2e", () => {
           // includeWebApis: safe → AbortSignal.any() is Baseline newly → should report
           code: "AbortSignal.any([]);",
           options: [{ available: "widely", includeWebApis: { preset: "safe" } }],
-          errors: [{ message: /Feature 'abortsignal-any'.*Baseline/i }],
+          errors: [{ message: /Feature '.*' \(abortsignal-any\).*Baseline/i }],
         },
       ],
     });

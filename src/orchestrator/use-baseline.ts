@@ -33,18 +33,20 @@ function mergeListeners(target: ListenerMap, add: ListenerMap) {
 }
 
 function baselineMessage(featureId: string, baseline: ReturnType<typeof getBaselineValue>) {
+  const rec = getFeatureRecord(featureId);
+  const label = rec?.name || featureId;
+  const idSuffix = rec?.name ? ` (${featureId})` : "";
   if (baseline === "widely") {
-    return `Feature '${featureId}' is not a widely available Baseline feature.`;
+    return `Feature '${label}'${idSuffix} is not a widely available Baseline feature.`;
   }
   if (baseline === "newly") {
-    return `Feature '${featureId}' is not a newly available Baseline feature.`;
+    return `Feature '${label}'${idSuffix} is not a newly available Baseline feature.`;
   }
-  const rec = getFeatureRecord(featureId);
   const year =
     rec?.status?.baseline_low_date?.slice(0, 4) ||
     rec?.status?.baseline_high_date?.slice(0, 4) ||
     "unknown";
-  return `Feature '${featureId}' became Baseline in ${year} and exceeds ${baseline}.`;
+  return `Feature '${label}'${idSuffix} became Baseline in ${year} and exceeds ${baseline}.`;
 }
 
 const rule: Rule.RuleModule = {

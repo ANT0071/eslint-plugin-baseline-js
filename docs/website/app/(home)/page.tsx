@@ -51,10 +51,8 @@ export default function HomePage() {
               <span className="mt-1 inline-block h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-rose-500" />
               <span>
                 Feature{" "}
-                <code className="font-mono bg-fd-muted px-2 py-1 rounded border">
-                  date-get-year-set-year
-                </code>{" "}
-                is not a widely available Baseline feature.
+                <code className="font-mono bg-fd-muted px-2 py-1 rounded border">getYear()</code> is
+                not a widely available Baseline feature.
               </span>
             </p>
           </div>

@@ -11,7 +11,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline("const a = x ?? y;", 2018, { sourceType: "module" });
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'nullish-coalescing' became Baseline in 2020 and exceeds 2018."),
+        m.includes(
+          "Feature 'Nullish coalescing' (nullish-coalescing) became Baseline in 2020 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -25,7 +27,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline("a &&= b; a ||= c; a ??= d;", 2018);
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'logical-assignments' became Baseline in 2020 and exceeds 2018."),
+        m.includes(
+          "Feature 'Logical assignments' (logical-assignments) became Baseline in 2020 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -71,7 +75,9 @@ describe("orchestrator (es-x delegates)", () => {
     });
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'top-level-await' became Baseline in 2021 and exceeds 2018."),
+        m.includes(
+          "Feature 'Top-level await' (top-level-await) became Baseline in 2021 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -80,7 +86,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline("const n = 1_000_000;", 2018);
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'numeric-seperators' became Baseline in 2020 and exceeds 2018."),
+        m.includes(
+          "Feature 'Numeric separators' (numeric-seperators) became Baseline in 2020 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -93,7 +101,9 @@ describe("orchestrator (es-x delegates)", () => {
     });
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'hashbang-comments' became Baseline in 2020 and exceeds 2018."),
+        m.includes(
+          "Feature 'Hashbang comments' (hashbang-comments) became Baseline in 2020 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -103,7 +113,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2018, { sourceType: "module" });
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'weak-references' became Baseline in 2021 and exceeds 2018."),
+        m.includes(
+          "Feature 'Weak references' (weak-references) became Baseline in 2021 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -113,7 +125,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2016, { sourceType: "module" });
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'async-await' became Baseline in 2017 and exceeds 2016."),
+        m.includes(
+          "Feature 'Async functions' (async-await) became Baseline in 2017 and exceeds 2016.",
+        ),
       ),
     ).toBe(true);
   });
@@ -124,7 +138,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2018, { sourceType: "module" });
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'async-generators' became Baseline in 2020 and exceeds 2018."),
+        m.includes(
+          "Feature 'Async generators' (async-generators) became Baseline in 2020 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -134,7 +150,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, "widely", { sourceType: "module" });
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'atomics-wait-async' is not a widely available Baseline feature."),
+        m.includes(
+          "Feature 'Atomics.waitAsync' (atomics-wait-async) is not a widely available Baseline feature.",
+        ),
       ),
     ).toBe(true);
   });
@@ -143,7 +161,9 @@ describe("orchestrator (es-x delegates)", () => {
     const code = "const a = 1n; const b = BigInt(2);";
     const msgs = await lintWithBaseline(code, 2018, { sourceType: "module" });
     expect(
-      msgs.some((m) => m.includes("Feature 'bigint' became Baseline in 2020 and exceeds 2018.")),
+      msgs.some((m) =>
+        m.includes("Feature 'BigInt' (bigint) became Baseline in 2020 and exceeds 2018."),
+      ),
     ).toBe(true);
   });
 
@@ -152,7 +172,7 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2015, { sourceType: "module" });
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'class-syntax' became Baseline in 2016 and exceeds 2015."),
+        m.includes("Feature 'Classes' (class-syntax) became Baseline in 2016 and exceeds 2015."),
       ),
     ).toBe(true);
   });
@@ -162,7 +182,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2018);
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'destructuring' became Baseline in 2020 and exceeds 2018."),
+        m.includes(
+          "Feature 'Destructuring' (destructuring) became Baseline in 2020 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -172,7 +194,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2016);
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'exponentiation' became Baseline in 2017 and exceeds 2016."),
+        m.includes(
+          "Feature 'Exponentiation operator' (exponentiation) became Baseline in 2017 and exceeds 2016.",
+        ),
       ),
     ).toBe(true);
   });
@@ -182,7 +206,7 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2015);
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'generators' became Baseline in 2016 and exceeds 2015."),
+        m.includes("Feature 'Generators' (generators) became Baseline in 2016 and exceeds 2015."),
       ),
     ).toBe(true);
   });
@@ -192,7 +216,7 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2018, { sourceType: "module" });
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'globalthis' became Baseline in 2020 and exceeds 2018."),
+        m.includes("Feature 'globalThis' (globalthis) became Baseline in 2020 and exceeds 2018."),
       ),
     ).toBe(true);
   });
@@ -202,7 +226,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, "widely");
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'html-wrapper-methods' is not a widely available Baseline feature."),
+        m.includes(
+          "Feature 'HTML wrapper methods' (html-wrapper-methods) is not a widely available Baseline feature.",
+        ),
       ),
     ).toBe(true);
   });
@@ -211,7 +237,9 @@ describe("orchestrator (es-x delegates)", () => {
     const code = "let a = 1; const b = 2;";
     const msgs = await lintWithBaseline(code, 2015);
     expect(
-      msgs.some((m) => m.includes("Feature 'let-const' became Baseline in 2016 and exceeds 2015.")),
+      msgs.some((m) =>
+        m.includes("Feature 'Let and const' (let-const) became Baseline in 2016 and exceeds 2015."),
+      ),
     ).toBe(true);
   });
 
@@ -220,7 +248,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2018);
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'optional-catch-binding' became Baseline in 2020 and exceeds 2018."),
+        m.includes(
+          "Feature 'Optional catch binding' (optional-catch-binding) became Baseline in 2020 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -230,7 +260,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2015);
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'proxy-reflect' became Baseline in 2016 and exceeds 2015."),
+        m.includes(
+          "Feature 'Proxy and Reflect' (proxy-reflect) became Baseline in 2016 and exceeds 2015.",
+        ),
       ),
     ).toBe(true);
   });
@@ -240,7 +272,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2018, { sourceType: "module" });
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'shared-memory' became Baseline in 2021 and exceeds 2018."),
+        m.includes(
+          "Feature 'SharedArrayBuffer and Atomics' (shared-memory) became Baseline in 2021 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -249,7 +283,9 @@ describe("orchestrator (es-x delegates)", () => {
     const code = "const a = [...b]; const o = { ...obj };";
     const msgs = await lintWithBaseline(code, 2018);
     expect(
-      msgs.some((m) => m.includes("Feature 'spread' became Baseline in 2020 and exceeds 2018.")),
+      msgs.some((m) =>
+        m.includes("Feature 'Spread syntax' (spread) became Baseline in 2020 and exceeds 2018."),
+      ),
     ).toBe(true);
   });
 
@@ -258,7 +294,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2018);
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'template-literals' became Baseline in 2020 and exceeds 2018."),
+        m.includes(
+          "Feature 'Template literals' (template-literals) became Baseline in 2020 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -268,7 +306,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2014);
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'unicode-point-escapes' became Baseline in 2015 and exceeds 2014."),
+        m.includes(
+          "Feature 'Unicode point escapes' (unicode-point-escapes) became Baseline in 2015 and exceeds 2014.",
+        ),
       ),
     ).toBe(true);
   });
@@ -301,7 +341,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2018);
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'bigint64array' became Baseline in 2021 and exceeds 2018."),
+        m.includes(
+          "Feature 'BigInt64Array' (bigint64array) became Baseline in 2021 and exceeds 2018.",
+        ),
       ),
     ).toBe(true);
   });
@@ -312,7 +354,7 @@ describe("orchestrator (es-x delegates)", () => {
     expect(
       msgs.some((m) =>
         m.includes(
-          "Feature 'functions-caller-arguments' is not a widely available Baseline feature.",
+          "Feature 'Function caller and arguments' (functions-caller-arguments) is not a widely available Baseline feature.",
         ),
       ),
     ).toBe(true);
@@ -323,7 +365,9 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, "widely");
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'math-sum-precise' is not a widely available Baseline feature."),
+        m.includes(
+          "Feature 'Math.sumPrecise()' (math-sum-precise) is not a widely available Baseline feature.",
+        ),
       ),
     ).toBe(true);
   });
@@ -332,7 +376,9 @@ describe("orchestrator (es-x delegates)", () => {
     const code = "Math.sumPrecise(1,2)";
     const msgs = await lintWithBaseline(code, "widely");
     const count = msgs.filter((m) =>
-      m.includes("Feature 'math-sum-precise' is not a widely available Baseline feature."),
+      m.includes(
+        "Feature 'Math.sumPrecise()' (math-sum-precise) is not a widely available Baseline feature.",
+      ),
     ).length;
     expect(count).toBe(1);
   });
@@ -342,7 +388,7 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, "widely");
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'temporal' is not a widely available Baseline feature."),
+        m.includes("Feature 'Temporal' (temporal) is not a widely available Baseline feature."),
       ),
     ).toBe(true);
   });

@@ -5,7 +5,9 @@ describe("orchestrator (ESLint core delegates)", () => {
   it("[with] widely: 'with' (limited) should be flagged", async () => {
     const msgs = await lintWithBaseline("with ({} ) {}", "widely");
     expect(
-      msgs.some((m) => m.includes("Feature 'with' is not a widely available Baseline feature.")),
+      msgs.some((m) =>
+        m.includes("Feature 'with' (with) is not a widely available Baseline feature."),
+      ),
     ).toBe(true);
   });
 
@@ -13,7 +15,9 @@ describe("orchestrator (ESLint core delegates)", () => {
     const msgs = await lintWithBaseline("function f(){ return arguments.callee }", "widely");
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'arguments-callee' is not a widely available Baseline feature."),
+        m.includes(
+          "Feature 'arguments.callee' (arguments-callee) is not a widely available Baseline feature.",
+        ),
       ),
     ).toBe(true);
   });
@@ -22,7 +26,9 @@ describe("orchestrator (ESLint core delegates)", () => {
     const msgs = await lintWithBaseline('escape("x")', "widely");
     expect(
       msgs.some((m) =>
-        m.includes("Feature 'escape-unescape' is not a widely available Baseline feature."),
+        m.includes(
+          "Feature 'escape() and unescape()' (escape-unescape) is not a widely available Baseline feature.",
+        ),
       ),
     ).toBe(true);
   });
@@ -32,12 +38,16 @@ describe("orchestrator (ESLint core delegates)", () => {
     const msgs2 = await lintWithBaseline("(new Date()).setYear(99)", "widely");
     expect(
       msgs1.some((m) =>
-        m.includes("Feature 'date-get-year-set-year' is not a widely available Baseline feature."),
+        m.includes(
+          "Feature 'getYear() and setYear()' (date-get-year-set-year) is not a widely available Baseline feature.",
+        ),
       ),
     ).toBe(true);
     expect(
       msgs2.some((m) =>
-        m.includes("Feature 'date-get-year-set-year' is not a widely available Baseline feature."),
+        m.includes(
+          "Feature 'getYear() and setYear()' (date-get-year-set-year) is not a widely available Baseline feature.",
+        ),
       ),
     ).toBe(true);
   });

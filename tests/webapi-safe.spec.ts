@@ -55,7 +55,7 @@ describe("use-baseline: Web API safe arg-based patterns", () => {
               includeJsBuiltins: false,
             },
           ],
-          errors: [{ message: /Feature 'canvas-2d-alpha'.*Baseline/i }],
+          errors: [{ message: /Feature '2D canvas opacity' \(canvas-2d-alpha\).*Baseline/i }],
         },
         // TODO(restore): The following representative cases are valid, but currently
         // fail intermittently in RuleTester due to pending coverage or scoping nuance.
