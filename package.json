@@ -75,7 +75,7 @@
     "typescript",
     "linting"
   ],
-  "homepage": "https://github.com/3ru/eslint-plugin-baseline-js#readme",
+  "homepage": "https://baselinejs.vercel.app/",
   "bugs": {
     "url": "https://github.com/3ru/eslint-plugin-baseline-js/issues"
   },
