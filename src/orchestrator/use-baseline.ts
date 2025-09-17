@@ -42,6 +42,11 @@ function baselineMessage(featureId: string, baseline: ReturnType<typeof getBasel
   if (baseline === "newly") {
     return `Feature '${label}'${idSuffix} is not a newly available Baseline feature.`;
   }
+  // Year-based messaging
+  const isLimited = rec?.status?.baseline === false;
+  if (isLimited) {
+    return `Feature '${label}'${idSuffix} has Limited availability and exceeds ${baseline}.`;
+  }
   const year =
     rec?.status?.baseline_low_date?.slice(0, 4) ||
     rec?.status?.baseline_high_date?.slice(0, 4) ||

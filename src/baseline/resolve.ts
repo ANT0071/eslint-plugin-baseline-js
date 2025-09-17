@@ -59,6 +59,9 @@ export function isBeyondBaseline(featureId: string, baseline: BaselineOption): b
     return bucket === "limited";
   }
   if (typeof baseline === "number") {
+    // Year-based policy: anything that hasn't entered Baseline yet (limited)
+    // should be considered beyond the configured year.
+    if (bucket === "limited") return true;
     const y = yearFrom(rec.status?.baseline_low_date) ?? yearFrom(rec.status?.baseline_high_date);
     if (y == null) return false;
     return y > baseline;
