@@ -4,21 +4,24 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 // Lightweight TS object literal parser tailored for features.*.ts structure
+// - Accepts quoted and unquoted keys
+// - Matches properties with or without a leading newline
 function parseDefaultObject(tsPath) {
   const src = readFileSync(tsPath, "utf8");
   const obj = {};
-  const entryRe = /\n\s*"([^"]+)"\s*:\s*\{([\s\S]*?)\n\s*\},/g;
+  // Match entries like: "feature-id": { ... } OR featureId: { ... }
+  const entryRe = /\n\s*(?:"([^"]+)"|([A-Za-z_][A-Za-z0-9_-]*))\s*:\s*\{([\s\S]*?)\n\s*\},/g;
   for (const m of src.matchAll(entryRe)) {
-    const id = m[1];
-    const block = m[2];
+    const id = m[1] || m[2];
+    const block = m[3];
     const get = (re) => {
       const mm = re.exec(block);
       return mm ? mm[1] : undefined;
     };
-    const name = get(/\n\s*name:\s*"([^"]+)"/);
-    const baseline = get(/\n\s*baseline:\s*("high"|"low"|false)/);
-    const baseline_low_date = get(/baseline_low_date:\s*"(\d{4}-[^"]*)"/);
-    const baseline_high_date = get(/baseline_high_date:\s*"(\d{4}-[^"]*)"/);
+    const name = get(/(?:^|\n)\s*name:\s*"([^"]+)"/);
+    const baseline = get(/(?:^|\n)\s*baseline:\s*("high"|"low"|false)/);
+    const baseline_low_date = get(/(?:^|\n)\s*baseline_low_date:\s*"(\d{4}-[^"]*)"/);
+    const baseline_high_date = get(/(?:^|\n)\s*baseline_high_date:\s*"(\d{4}-[^"]*)"/);
     obj[id] = {
       id,
       name,
