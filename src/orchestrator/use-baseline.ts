@@ -105,6 +105,20 @@ const rule: Rule.RuleModule = {
     ],
   },
   create(ctx) {
+    // Guard: run only for JS/TS files. This prevents initialization on non-JS
+    // languages (e.g., CSS/HTML) where delegate rules may assume ESTree/TS services.
+    const getFilename = (ctx as unknown as { getFilename?: () => string }).getFilename;
+    let filename: string | null = null;
+    if (typeof getFilename === "function") {
+      try {
+        filename = getFilename();
+      } catch {}
+    }
+    if (filename) {
+      // Accept common JS/TS extensions
+      const isJsLike = /\.(?:[mc]?[jt]s|[jt]sx)$/i.test(filename);
+      if (!isJsLike) return {};
+    }
     const opt = (ctx.options[0] ?? {}) as CommonRuleOptions;
     const baseline = getBaselineValue(opt);
     const ignoreFeaturePatterns = (opt.ignoreFeatures ?? []) as string[];

@@ -188,7 +188,7 @@ We currently provide three presets; start here in most cases.
     export default [
       { plugins: { 'baseline-js': baselineJs } },
       // opts: { available?: 'widely'|'newly'|YYYY; level?: 'error'|'warn' }
-      ...baselineJs.configs.baseline({ available: 'widely', level: 'error' }),
+      baselineJs.configs.baseline({ available: 'widely', level: 'error' }),
     ]
     ```
     ```ts title="Internal: generated rules"
@@ -204,7 +204,7 @@ We currently provide three presets; start here in most cases.
     export default [
       { plugins: { 'baseline-js': baselineJs } },
       // opts: { available?: 'widely'|'newly'|YYYY; level?: 'error'|'warn' }
-      ...baselineJs.configs.recommended({ available: 'widely' }),
+      baselineJs.configs.recommended({ available: 'widely' }),
     ]
     ```
     ```ts title="Internal: generated rules"
@@ -229,7 +229,7 @@ We currently provide three presets; start here in most cases.
       { files: ['**/*.{ts,tsx}'], languageOptions: { parser: tsParser, parserOptions: { project: ['./tsconfig.json'] } } },
       { plugins: { 'baseline-js': baselineJs } },
       // opts: { available?: 'widely'|'newly'|YYYY; level?: 'error'|'warn' }
-      ...baselineJs.configs['recommended-ts']({ available: 'widely' }),
+      baselineJs.configs['recommended-ts']({ available: 'widely' }),
     ]
     ```
     ```ts title="Internal: generated rules"
@@ -312,7 +312,7 @@ const baselineJs = require('eslint-plugin-baseline-js');
 module.exports = {
   plugins: ['baseline-js'],
   // baseline / recommended のいずれか
-  ...baselineJs.configs.recommended({ available: 'widely' })[0],
+  baselineJs.configs.recommended({ available: 'widely' }),
 };
 ```
 
@@ -327,7 +327,7 @@ module.exports = {
       files: ['**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',
       parserOptions: { project: ['./tsconfig.json'] },
-      ...baselineJs.configs['recommended-ts']({ available: 'widely' })[0],
+      baselineJs.configs['recommended-ts']({ available: 'widely' }),
     },
   ],
 };

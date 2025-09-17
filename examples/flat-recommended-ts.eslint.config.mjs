@@ -25,5 +25,5 @@ export default [
   },
 
   // Baseline + type-aware detection
-  ...baselineJs.configs["recommended-ts"]({ available: BASELINE.WIDELY, level: "error" }),
+  baselineJs.configs["recommended-ts"]({ available: BASELINE.WIDELY, level: "error" }),
 ];

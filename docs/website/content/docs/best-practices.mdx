@@ -46,7 +46,7 @@ export default [
   // JavaScript / TypeScript
   { plugins: { "baseline-js": baselineJs } },
   { files: ["**/*.{ts,tsx}"], languageOptions: { parser: tsParser, parserOptions: { project: ["./tsconfig.json"] } } },
-  ...baselineJs.configs["recommended-ts"]({ level: "error", available: BASELINE.WIDELY }),
+  baselineJs.configs["recommended-ts"]({ level: "error", available: BASELINE.WIDELY }),
 
   // CSS
   {
@@ -75,7 +75,7 @@ export default [
 ## Variations (pick what fits)
 
 - Year‑based Baseline
-  - JavaScript: `...baselineJs.configs['recommended-ts']({ available: 2024 })`
+  - JavaScript: `baselineJs.configs['recommended-ts']({ available: 2024 })`
   - CSS/HTML: `{ available: 2024 }`
 - `newly`
   - JavaScript: `{ available: BASELINE.NEWLY }`

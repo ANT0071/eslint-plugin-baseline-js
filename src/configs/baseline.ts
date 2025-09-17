@@ -16,6 +16,7 @@ export function baselineConfigs(
   };
   return [
     {
+      files: ["**/*.{js,cjs,mjs,jsx,ts,tsx}"],
       rules,
     },
   ];
@@ -46,11 +47,11 @@ export function recommendedConfig(
       },
     ],
   };
-  return [
-    {
-      rules,
-    },
-  ];
+  // Return single object for easy in-object composition
+  return {
+    files: ["**/*.{js,cjs,mjs,jsx}"],
+    rules,
+  } as const;
 }
 
 /**
@@ -78,9 +79,8 @@ export function recommendedTsConfig(
       },
     ],
   };
-  return [
-    {
-      rules,
-    },
-  ];
+  return {
+    files: ["**/*.{ts,tsx}"],
+    rules,
+  } as const;
 }

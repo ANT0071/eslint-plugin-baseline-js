@@ -10,5 +10,5 @@ export default [
 
   // Baseline: defaults to "widely"; override via function argument if needed.
   // Level defaults to "error"; switch to "warn" by passing level.
-  ...baselineJs.configs.recommended({ available: BASELINE.WIDELY, level: "warn" }),
+  baselineJs.configs.recommended({ available: BASELINE.WIDELY, level: "warn" }),
 ];

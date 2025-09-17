@@ -54,7 +54,7 @@ import baselineJs from 'eslint-plugin-baseline-js';
 
 export default [
   { plugins: { 'baseline-js': baselineJs } }, //[!code ++]
-  ...baselineJs.configs.baseline({ available: 'widely', level: "warn" }), //[!code ++]
+  baselineJs.configs.baseline({ available: 'widely', level: "warn" }), //[!code ++]
 ];
 ```
 
@@ -63,7 +63,7 @@ import baselineJs, { BASELINE } from 'eslint-plugin-baseline-js';
 
 export default [
   { plugins: { 'baseline-js': baselineJs } },//[!code ++]
-  ...baselineJs.configs.baseline({ available: BASELINE.WIDELY }),//[!code ++]
+  baselineJs.configs.baseline({ available: BASELINE.WIDELY }),//[!code ++]
 ];
 ```
 
@@ -75,7 +75,7 @@ import baselineJs from 'eslint-plugin-baseline-js';
 
 export default [
   { plugins: { 'baseline-js': baselineJs } }, //[!code ++]
-  ...baselineJs.configs.recommended({ available: "widely", level: "warn" }), //[!code ++]
+  baselineJs.configs.recommended({ available: "widely", level: "warn" }), //[!code ++]
 ];
 ```
 
@@ -84,7 +84,7 @@ import baselineJs, { BASELINE } from 'eslint-plugin-baseline-js';
 
 export default [
   { plugins: { 'baseline-js': baselineJs } },//[!code ++]
-  ...baselineJs.configs.recommended({ available: BASELINE.WIDELY }),//[!code ++]
+  baselineJs.configs.recommended({ available: BASELINE.WIDELY }),//[!code ++]
 ];
 ```
 
@@ -101,7 +101,7 @@ export default [
     languageOptions: { parser: tsParser, parserOptions: { project: ['./tsconfig.json'] } },
   },
   { plugins: { 'baseline-js': baselineJs } },
-  ...baselineJs.configs['recommended-ts']({ available: 'widely' }),
+  baselineJs.configs['recommended-ts']({ available: 'widely' }),
 ];
 ```
 
@@ -115,7 +115,7 @@ export default [
     languageOptions: { parser: tsParser, parserOptions: { project: ['./tsconfig.json'] } },
   },
   { plugins: { 'baseline-js': baselineJs } },
-  ...baselineJs.configs['recommended-ts']({ available: BASELINE.WIDELY }),
+  baselineJs.configs['recommended-ts']({ available: BASELINE.WIDELY }),
 ];
 ```
 

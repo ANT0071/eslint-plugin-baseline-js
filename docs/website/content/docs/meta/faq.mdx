@@ -26,7 +26,7 @@ import baselineJs, { BASELINE } from 'eslint-plugin-baseline-js';
 export default [
   { plugins: { 'baseline-js': baselineJs } },
   // Switch from minimal → recommended (auto)
-  ...baselineJs.configs.recommended({ available: BASELINE.WIDELY }),
+  baselineJs.configs.recommended({ available: BASELINE.WIDELY }),
 ];
 ```
 

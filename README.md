@@ -57,11 +57,11 @@ export default [
 
   // Recommended: enables Web APIs & JS builtins detection with `preset: 'auto'`.
   // Level defaults to 'error'; pass level to change severity
-  ...baselineJs.configs.recommended({ available: "widely", level: "warn" }),
+  baselineJs.configs.recommended({ available: "widely", level: "warn" }),
 
   // TypeScript-aware: requires type info for instance-member checks (`preset: 'type-aware'`).
   // Works best with @typescript-eslint/parser and a proper tsconfig.
-  // ...baselineJs.configs["recommended-ts"]({ available: "widely", level: "error" }),
+  // baselineJs.configs["recommended-ts"]({ available: "widely", level: "error" }),
 ];
 ```
 
