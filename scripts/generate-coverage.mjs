@@ -18,6 +18,10 @@ function parseDefaultObject(tsPath) {
       const mm = re.exec(block);
       return mm ? mm[1] : undefined;
     };
+    // Robustness: ensure we're capturing a real top-level feature entry by
+    // validating that the inner block declares the same `id` value.
+    const innerId = get(/(?:^|\n)\s*id:\s*"([^"]+)"/);
+    if (!innerId || innerId !== id) continue; // skip nested blocks like `discouraged: { ... }`
     const name = get(/(?:^|\n)\s*name:\s*"([^"]+)"/);
     const baseline = get(/(?:^|\n)\s*baseline:\s*("high"|"low"|false)/);
     const baseline_low_date = get(/(?:^|\n)\s*baseline_low_date:\s*"(\d{4}-[^"]*)"/);

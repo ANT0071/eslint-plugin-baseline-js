@@ -8,9 +8,9 @@
 
 ## JavaScript Language (syntax)
 
-- total: `34`
+- total: `33`
 - mapped: `33`
-- coverage: `97.1%`
+- coverage: `100.0%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Mechanism | Delegates |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -23,7 +23,6 @@
 | class-syntax | `Classes` | widely | 2016 | ✅ | `delegate` | `es-x:no-classes` |
 | date-get-year-set-year | `getYear() and setYear()` | limited | - | ✅ | `delegate` | `es-x:no-date-prototype-getyear-setyear` |
 | destructuring | `Destructuring` | widely | 2020 | ✅ | `delegate` | `es-x:no-destructuring` |
-| discouraged | `discouraged` | unknown | - | ❌ | `-` | - |
 | escape-unescape | `escape() and unescape()` | limited | - | ✅ | `delegate` | `es-x:no-escape-unescape` |
 | exponentiation | `Exponentiation operator` | widely | 2017 | ✅ | `delegate` | `es-x:no-exponential-operators` |
 | functions | `Functions` | widely | 2015 | ✅ | `delegate` | - |
@@ -51,11 +50,11 @@
 
 ## Web APIs (api.*)
 
-- total: `487`
+- total: `486`
 - excluded (out-of-scope): `9`
-- included (in-scope): `478`
+- included (in-scope): `477`
 - mapped: `465`
-- coverage: `97.3%`
+- coverage: `97.5%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Patterns | Descriptors | Memo |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -170,7 +169,6 @@
 | dialog-closedby | `<dialog closedby>` | limited | - | ✅ | `typed` | 1 | - |
 | digital-goods | `Digital goods` | limited | - | ✅ | `safe` | 1 | - |
 | dirname | `dirname` | newly | 2023 | ✅ | `typed` | 2 | - |
-| discouraged | `discouraged` | unknown | - | ❌ | - | - | - |
 | div | `<div>` | widely | 2015 | ❌ | - | - | - |
 | document-caretpositionfrompoint | `document.caretPositionFromPoint()` | limited | - | ✅ | `typed` | 4 | - |
 | document-colors | `Document colors` | limited | - | ✅ | `typed` | 5 | - |
@@ -549,11 +547,11 @@
 
 ## JavaScript Builtins (javascript.*)
 
-- total: `100`
+- total: `99`
 - excluded (out-of-scope): `8`
-- included (in-scope): `92`
+- included (in-scope): `91`
 - mapped: `86`
-- coverage: `93.5%`
+- coverage: `94.5%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Patterns | Descriptors | Memo |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -585,7 +583,6 @@
 | date | `Date` | widely | 2015 | ✅ | `typed` | 45 | - |
 | date-get-year-set-year | `getYear() and setYear()` | limited | - | ✅ | `typed` | 2 | - |
 | date-to-gmt-string | `toGMTString()` | limited | - | ✅ | `typed` | 1 | - |
-| discouraged | `discouraged` | unknown | - | ❌ | - | - | - |
 | error-cause | `Error cause` | widely | 2021 | ✅ | `safe` | 2 | - |
 | escape-unescape | `escape() and unescape()` | limited | - | ✅ | - | 0 | Legacy functions — delegated to es-x |
 | explicit-resource-management | `Explicit resource management` | limited | - | ✅ | `safe` | 3 | - |
