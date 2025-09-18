@@ -8,45 +8,12 @@
 
 ## JavaScript Language (syntax)
 
-- total: `33`
-- mapped: `33`
-- coverage: `100.0%`
+- total: `0`
+- mapped: `0`
+- coverage: `0.0%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Mechanism | Delegates |
 | --- | --- | --- | --- | --- | --- | --- |
-| arguments-callee | `arguments.callee` | limited | - | ✅ | `delegate` | `core:no-caller` |
-| async-await | `Async functions` | widely | 2017 | ✅ | `delegate` | `es-x:no-async-functions` |
-| async-generators | `Async generators` | widely | 2020 | ✅ | `delegate` | `es-x:no-async-iteration` |
-| atomics-wait-async | `Atomics.waitAsync` | limited | - | ✅ | `delegate` | `es-x:no-atomics-waitasync` |
-| bigint | `BigInt` | widely | 2020 | ✅ | `delegate` | `es-x:no-bigint` |
-| bigint64array | `BigInt64Array` | widely | 2021 | ✅ | `self` | `self:no-bigint64array` |
-| class-syntax | `Classes` | widely | 2016 | ✅ | `delegate` | `es-x:no-classes` |
-| date-get-year-set-year | `getYear() and setYear()` | limited | - | ✅ | `delegate` | `es-x:no-date-prototype-getyear-setyear` |
-| destructuring | `Destructuring` | widely | 2020 | ✅ | `delegate` | `es-x:no-destructuring` |
-| escape-unescape | `escape() and unescape()` | limited | - | ✅ | `delegate` | `es-x:no-escape-unescape` |
-| exponentiation | `Exponentiation operator` | widely | 2017 | ✅ | `delegate` | `es-x:no-exponential-operators` |
-| functions | `Functions` | widely | 2015 | ✅ | `delegate` | - |
-| functions-caller-arguments | `Function caller and arguments` | limited | - | ✅ | `self` | `self:no-function-caller-arguments` |
-| generators | `Generators` | widely | 2016 | ✅ | `delegate` | `es-x:no-generators` |
-| globalthis | `globalThis` | widely | 2020 | ✅ | `delegate` | `es-x:no-global-this` |
-| hashbang-comments | `Hashbang comments` | widely | 2020 | ✅ | `delegate` | `es-x:no-hashbang` |
-| html-wrapper-methods | `HTML wrapper methods` | limited | - | ✅ | `delegate` | `es-x:no-string-create-html-methods` |
-| javascript | `JavaScript (initial core language support)` | widely | 2015 | ✅ | `delegate` | - |
-| let-const | `Let and const` | widely | 2016 | ✅ | `delegate` | `es-x:no-block-scoped-variables` |
-| logical-assignments | `Logical assignments` | widely | 2020 | ✅ | `delegate` | `es-x:no-logical-assignment-operators` |
-| math-sum-precise | `Math.sumPrecise()` | limited | - | ✅ | `self` | `self:no-math-sum-precise` |
-| nullish-coalescing | `Nullish coalescing` | widely | 2020 | ✅ | `delegate` | `es-x:no-nullish-coalescing-operators` |
-| numeric-seperators | `Numeric separators` | widely | 2020 | ✅ | `delegate` | `es-x:no-numeric-separators` |
-| optional-catch-binding | `Optional catch binding` | widely | 2020 | ✅ | `delegate` | `es-x:no-optional-catch-binding` |
-| proxy-reflect | `Proxy and Reflect` | widely | 2016 | ✅ | `delegate` | `es-x:no-proxy`, `es-x:no-reflect` |
-| shared-memory | `SharedArrayBuffer and Atomics` | widely | 2021 | ✅ | `delegate` | `es-x:no-shared-array-buffer`, `es-x:no-atomics` |
-| spread | `Spread syntax` | widely | 2020 | ✅ | `delegate` | `es-x:no-spread-elements`, `es-x:no-rest-spread-properties` |
-| template-literals | `Template literals` | widely | 2020 | ✅ | `delegate` | `es-x:no-template-literals` |
-| temporal | `Temporal` | limited | - | ✅ | `self` | `self:no-temporal` |
-| top-level-await | `Top-level await` | widely | 2021 | ✅ | `delegate` | `es-x:no-top-level-await` |
-| unicode-point-escapes | `Unicode point escapes` | widely | 2015 | ✅ | `delegate` | `es-x:no-unicode-codepoint-escapes` |
-| weak-references | `Weak references` | widely | 2021 | ✅ | `delegate` | `es-x:no-weakrefs` |
-| with | `with` | limited | - | ✅ | `delegate` | `core:no-with` |
 
 ## Web APIs (api.*)
 
