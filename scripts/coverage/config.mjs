@@ -9,6 +9,13 @@ export default {
     byId: {
       // HTML root/structure elements — JS rule does not parse markup; use html-eslint?
       head: { memo: "HTML element — use `html-eslint`", exclude: true },
+      body: { memo: "HTML element — use `html-eslint`", exclude: true },
+      br: { memo: "HTML element — use `html-eslint`", exclude: true },
+      div: { memo: "HTML element — use `html-eslint`", exclude: true },
+      menu: { memo: "HTML element — use `html-eslint`", exclude: true },
+      p: { memo: "HTML element — use `html-eslint`", exclude: true },
+      picture: { memo: "HTML element — use `html-eslint`", exclude: true },
+      pre: { memo: "HTML element — use `html-eslint`", exclude: true },
       headings: { memo: "HTML headings — use `html-eslint`", exclude: true },
       hr: { memo: "HTML element — use `html-eslint`", exclude: true },
       html: { memo: "HTML element — use `html-eslint`", exclude: true },
@@ -64,7 +71,7 @@ export default {
         mappedVia: "delegate",
       },
       "functions-caller-arguments": {
-        memo: "Covered by JS Language (syntax) mapping via our self rule;",
+        memo: "Covered by JS Language (syntax);",
         exclude: true,
         mappedVia: "self",
       },

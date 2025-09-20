@@ -8,20 +8,53 @@
 
 ## JavaScript Language (syntax)
 
-- total: `0`
-- mapped: `0`
-- coverage: `0.0%`
+- total: `33`
+- mapped: `33`
+- coverage: `100.0%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Mechanism | Delegates |
 | --- | --- | --- | --- | --- | --- | --- |
+| arguments-callee | `arguments.callee` | limited | - | ✅ | `delegate` | `core:no-caller` |
+| async-await | `Async functions` | widely | 2017 | ✅ | `delegate` | `es-x:no-async-functions` |
+| async-generators | `Async generators` | widely | 2020 | ✅ | `delegate` | `es-x:no-async-iteration` |
+| atomics-wait-async | `Atomics.waitAsync` | limited | - | ✅ | `delegate` | `es-x:no-atomics-waitasync` |
+| bigint | `BigInt` | widely | 2020 | ✅ | `delegate` | `es-x:no-bigint` |
+| bigint64array | `BigInt64Array` | widely | 2021 | ✅ | `self` | `self:no-bigint64array` |
+| class-syntax | `Classes` | widely | 2016 | ✅ | `delegate` | `es-x:no-classes` |
+| date-get-year-set-year | `getYear() and setYear()` | limited | - | ✅ | `delegate` | `es-x:no-date-prototype-getyear-setyear` |
+| destructuring | `Destructuring` | widely | 2020 | ✅ | `delegate` | `es-x:no-destructuring` |
+| escape-unescape | `escape() and unescape()` | limited | - | ✅ | `delegate` | `es-x:no-escape-unescape` |
+| exponentiation | `Exponentiation operator` | widely | 2017 | ✅ | `delegate` | `es-x:no-exponential-operators` |
+| functions | `Functions` | widely | 2015 | ✅ | `delegate` | - |
+| functions-caller-arguments | `Function caller and arguments` | limited | - | ✅ | `self` | `self:no-function-caller-arguments` |
+| generators | `Generators` | widely | 2016 | ✅ | `delegate` | `es-x:no-generators` |
+| globalthis | `globalThis` | widely | 2020 | ✅ | `delegate` | `es-x:no-global-this` |
+| hashbang-comments | `Hashbang comments` | widely | 2020 | ✅ | `delegate` | `es-x:no-hashbang` |
+| html-wrapper-methods | `HTML wrapper methods` | limited | - | ✅ | `delegate` | `es-x:no-string-create-html-methods` |
+| javascript | `JavaScript (initial core language support)` | widely | 2015 | ✅ | `delegate` | - |
+| let-const | `Let and const` | widely | 2016 | ✅ | `delegate` | `es-x:no-block-scoped-variables` |
+| logical-assignments | `Logical assignments` | widely | 2020 | ✅ | `delegate` | `es-x:no-logical-assignment-operators` |
+| math-sum-precise | `Math.sumPrecise()` | limited | - | ✅ | `self` | `self:no-math-sum-precise` |
+| nullish-coalescing | `Nullish coalescing` | widely | 2020 | ✅ | `delegate` | `es-x:no-nullish-coalescing-operators` |
+| numeric-separators | `Numeric separators` | widely | 2020 | ✅ | `delegate` | `es-x:no-numeric-separators` |
+| optional-catch-binding | `Optional catch binding` | widely | 2020 | ✅ | `delegate` | `es-x:no-optional-catch-binding` |
+| proxy-reflect | `Proxy and Reflect` | widely | 2016 | ✅ | `delegate` | `es-x:no-proxy`, `es-x:no-reflect` |
+| shared-memory | `SharedArrayBuffer and Atomics` | widely | 2021 | ✅ | `delegate` | `es-x:no-shared-array-buffer`, `es-x:no-atomics` |
+| spread | `Spread syntax` | widely | 2020 | ✅ | `delegate` | `es-x:no-spread-elements`, `es-x:no-rest-spread-properties` |
+| template-literals | `Template literals` | widely | 2020 | ✅ | `delegate` | `es-x:no-template-literals` |
+| temporal | `Temporal` | limited | - | ✅ | `self` | `self:no-temporal` |
+| top-level-await | `Top-level await` | widely | 2021 | ✅ | `delegate` | `es-x:no-top-level-await` |
+| unicode-point-escapes | `Unicode point escapes` | widely | 2015 | ✅ | `delegate` | `es-x:no-unicode-codepoint-escapes` |
+| weak-references | `Weak references` | widely | 2021 | ✅ | `delegate` | `es-x:no-weakrefs` |
+| with | `with` | limited | - | ✅ | `delegate` | `core:no-with` |
 
 ## Web APIs (api.*)
 
 - total: `486`
-- excluded (out-of-scope): `14`
-- included (in-scope): `472`
+- excluded (out-of-scope): `21`
+- included (in-scope): `465`
 - mapped: `465`
-- coverage: `98.5%`
+- coverage: `100.0%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Patterns | Descriptors | Memo |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -64,8 +97,8 @@
 | beforeunload | `beforeunload` | limited | - | ✅ | `safe`, `typed` | 2 | - |
 | bfcache-blocking-reasons | `Back/forward cache blocking reasons` | limited | - | ✅ | `typed` | 10 | - |
 | blocking-render | `blocking-render` | limited | - | ✅ | `typed` | 3 | - |
-| body | `<body>` | widely | 2015 | ❌ | - | - | - |
-| br | `<br>` | widely | 2015 | ❌ | - | - | - |
+| body | `<body>` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
+| br | `<br>` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | broadcast-channel | `BroadcastChannel` | widely | 2022 | ✅ | `safe`, `typed` | 6 | - |
 | button | `<button>` | widely | 2015 | ✅ | `typed` | 11 | - |
 | canvas | `<canvas>` | widely | 2015 | ✅ | `typed` | 5 | - |
@@ -136,7 +169,7 @@
 | dialog-closedby | `<dialog closedby>` | limited | - | ✅ | `typed` | 1 | - |
 | digital-goods | `Digital goods` | limited | - | ✅ | `safe` | 1 | - |
 | dirname | `dirname` | newly | 2023 | ✅ | `typed` | 2 | - |
-| div | `<div>` | widely | 2015 | ❌ | - | - | - |
+| div | `<div>` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | document-caretpositionfrompoint | `document.caretPositionFromPoint()` | limited | - | ✅ | `typed` | 4 | - |
 | document-colors | `Document colors` | limited | - | ✅ | `typed` | 5 | - |
 | document-picture-in-picture | `Document picture-in-picture` | limited | - | ✅ | `safe`, `typed` | 6 | - |
@@ -271,7 +304,7 @@
 | media-source | `Media source` | limited | - | ✅ | `safe`, `typed` | 45 | - |
 | mediacontroller | `MediaController` | limited | - | ✅ | `safe`, `typed` | 16 | - |
 | mediastream-recording | `MediaStream recording` | widely | 2021 | ✅ | `safe`, `typed` | 22 | - |
-| menu | `<menu>` | widely | 2015 | ❌ | - | - | - |
+| menu | `<menu>` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | messageerror | `messageerror` | newly | 2023 | ✅ | `safe`, `typed` | 6 | - |
 | meta | `<meta>` | widely | 2015 | ✅ | `typed` | 4 | - |
 | meter | `<meter>` | widely | 2018 | ✅ | `typed` | 7 | - |
@@ -305,7 +338,7 @@
 | origin-private-file-system | `Origin private file system` | newly | 2023 | ✅ | `typed` | 19 | - |
 | output | `<output>` | widely | - | ✅ | `safe`, `typed` | 8 | - |
 | ovr-multiview2 | `OVR_multiview2 WebGL extension` | limited | - | ✅ | `safe`, `typed` | 3 | - |
-| p | `<p>` | widely | 2015 | ❌ | - | - | - |
+| p | `<p>` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | page-lifecycle | `Page lifecycle` | limited | - | ✅ | `typed` | 3 | - |
 | page-transition-events | `Page transition events` | widely | 2015 | ✅ | `safe`, `typed` | 4 | - |
 | page-visibility | `Page visibility` | widely | 2015 | ✅ | `typed` | 3 | - |
@@ -322,7 +355,7 @@
 | performancetiming | `PerformanceTiming and PerformanceNavigation` | limited | - | ✅ | `typed` | 27 | - |
 | periodic-background-sync | `Periodic background sync` | limited | - | ✅ | `safe`, `typed` | 7 | - |
 | permissions | `Permissions` | widely | 2022 | ✅ | `safe`, `typed` | 7 | - |
-| picture | `<picture>` | widely | 2016 | ❌ | - | - | - |
+| picture | `<picture>` | widely | 2016 | ❌ | - | - | HTML element — use `html-eslint` |
 | picture-in-picture | `Picture-in-picture (video)` | limited | - | ✅ | `safe`, `typed` | 13 | - |
 | ping | `ping` | limited | - | ✅ | `typed` | 3 | - |
 | pointer-events-api | `Pointer Events` | widely | 2020 | ✅ | `safe`, `typed` | 31 | - |
@@ -330,7 +363,7 @@
 | popover | `Popover` | newly | 2025 | ✅ | `safe`, `typed` | 12 | - |
 | popover-hint | `popover-hint` | limited | - | ❌ | - | - | HTML attribute — use `html-eslint` |
 | postmessage | `postMessage` | widely | 2015 | ✅ | `safe`, `typed` | 11 | - |
-| pre | `<pre>` | widely | 2015 | ❌ | - | - | - |
+| pre | `<pre>` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | preloading-responsive-images | `Preloading responsive images` | newly | 2023 | ✅ | `typed` | 2 | - |
 | presentation-api | `Presentation API` | limited | - | ✅ | `safe`, `typed` | 30 | - |
 | preserves-pitch | `preservesPitch` | newly | 2023 | ✅ | `typed` | 1 | - |
@@ -540,9 +573,9 @@
 | array-iterators | `Array iterators` | widely | 2018 | ✅ | `typed` | 4 | - |
 | array-of | `Array.of()` | widely | 2016 | ✅ | `safe` | 1 | - |
 | array-splice | `Array splice()` | widely | 2015 | ✅ | `typed` | 1 | - |
-| async-await | `Async functions` | widely | 2017 | ✅ | - | 0 | Syntax — delegated to es-x |
-| async-generators | `Async generators` | widely | 2020 | ✅ | - | 0 | Syntax — delegated to es-x |
-| async-iterators | `Async iterators and the for await..of loop` | widely | 2020 | ✅ | - | 0 | Syntax — delegated to es-x |
+| async-await | `Async functions` | widely | 2017 | ✅ | - | 0 | Covered by JS Language (syntax); |
+| async-generators | `Async generators` | widely | 2020 | ✅ | - | 0 | Covered by JS Language (syntax); |
+| async-iterators | `Async iterators and the for await..of loop` | widely | 2020 | ✅ | - | 0 | Covered by JS Language (syntax); |
 | atomics-pause | `Atomics.pause()` | newly | 2025 | ✅ | `safe` | 1 | - |
 | atomics-wait-async | `Atomics.waitAsync` | limited | - | ✅ | `safe` | 1 | - |
 | bigint | `BigInt` | widely | 2020 | ✅ | - | 0 | - |
@@ -551,11 +584,11 @@
 | date-get-year-set-year | `getYear() and setYear()` | limited | - | ✅ | `typed` | 2 | - |
 | date-to-gmt-string | `toGMTString()` | limited | - | ✅ | `typed` | 1 | - |
 | error-cause | `Error cause` | widely | 2021 | ✅ | `safe` | 2 | - |
-| escape-unescape | `escape() and unescape()` | limited | - | ✅ | - | 0 | Legacy functions — delegated to es-x |
+| escape-unescape | `escape() and unescape()` | limited | - | ✅ | - | 0 | Covered by JS Language (syntax); |
 | explicit-resource-management | `Explicit resource management` | limited | - | ✅ | `safe` | 3 | - |
 | float16array | `Float16Array` | newly | 2025 | ✅ | `safe`, `typed` | 2 | - |
 | functions | `Functions` | widely | 2015 | ✅ | - | 0 | - |
-| functions-caller-arguments | `Function caller and arguments` | limited | - | ✅ | - | 0 | Deprecated caller/arguments — self rule |
+| functions-caller-arguments | `Function caller and arguments` | limited | - | ✅ | - | 0 | Covered by JS Language (syntax) mapping via our self rule; |
 | generators | `Generators` | widely | 2016 | ✅ | - | 0 | - |
 | globalthis | `globalThis` | widely | 2020 | ✅ | - | 0 | - |
 | html-wrapper-methods | `HTML wrapper methods` | limited | - | ✅ | `typed` | 14 | - |
