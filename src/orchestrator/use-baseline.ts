@@ -1,6 +1,4 @@
 import type { Rule } from "eslint";
-import { builtinRules } from "eslint/use-at-your-own-risk"; // Access ESLint builtin rules to delegate core rules
-import esx from "eslint-plugin-es-x";
 import { getIncludedDescriptors } from "../baseline/loader";
 import mapping from "../baseline/mapping/syntax";
 import { parseDelegateRuleKey } from "../baseline/plugins";
@@ -11,8 +9,22 @@ import noBigint64array from "../rules/no-bigint64array";
 import noFunctionCallerArguments from "../rules/no-function-caller-arguments";
 import noMathSumPrecise from "../rules/no-math-sum-precise";
 import noTemporal from "../rules/no-temporal";
+import {
+  listResolverPlugins,
+  registerSelfRules,
+  resolveDelegateRule,
+} from "../utils/delegate-resolver";
 
 type ListenerMap = Rule.RuleListener;
+
+// Register project-local rules once so they can be resolved via the 'self' plugin.
+const SELF_RULES: Record<string, Rule.RuleModule> = {
+  "no-bigint64array": noBigint64array,
+  "no-function-caller-arguments": noFunctionCallerArguments,
+  "no-math-sum-precise": noMathSumPrecise,
+  "no-temporal": noTemporal,
+};
+registerSelfRules(SELF_RULES);
 
 function mergeListeners(target: ListenerMap, add: ListenerMap) {
   type AnyFn = (...args: unknown[]) => void;
@@ -110,6 +122,7 @@ const rule: Rule.RuleModule = {
     ],
   },
   create(ctx) {
+    const _DEBUG = process.env.BASELINE_DEBUG === "1";
     // Guard: run only for JS/TS files. This prevents initialization on non-JS
     // languages (e.g., CSS/HTML) where delegate rules may assume ESTree/TS services.
     const getFilename = (ctx as unknown as { getFilename?: () => string }).getFilename;
@@ -170,6 +183,15 @@ const rule: Rule.RuleModule = {
     const listeners: ListenerMap = {};
     const mappedFeatureIds = new Set(entries.map((e) => e.featureId));
 
+    if (_DEBUG) {
+      try {
+        // eslint-disable-next-line no-console
+        console.log(
+          `[baseline-js] resolvers=${listResolverPlugins().join(",")} entries=${entries.length}`,
+        );
+      } catch {}
+    }
+
     for (const { featureId, delegateRule } of entries) {
       let impl: Rule.RuleModule | undefined;
       let delegateOptions: unknown[] = [];
@@ -188,23 +210,7 @@ const rule: Rule.RuleModule = {
       }
 
       const { plugin, name } = parseDelegateRuleKey(delegateRule);
-      if (plugin === "core") {
-        const coreName = name;
-        const coreImpl = (builtinRules as unknown as Map<string, Rule.RuleModule>).get(coreName);
-        impl = coreImpl as Rule.RuleModule;
-      } else if (plugin === "self") {
-        const selfName = name;
-        const selfRules: Record<string, Rule.RuleModule> = {
-          "no-bigint64array": noBigint64array,
-          "no-function-caller-arguments": noFunctionCallerArguments,
-          "no-math-sum-precise": noMathSumPrecise,
-          "no-temporal": noTemporal,
-        };
-        impl = selfRules[selfName];
-      } else {
-        const esxRules = (esx as unknown as { rules?: Record<string, Rule.RuleModule> }).rules;
-        impl = esxRules?.[name];
-      }
+      impl = resolveDelegateRule(plugin, name);
       if (!impl?.create) continue;
 
       // Create a minimal context wrapper that forwards necessary APIs and overrides report/options.
@@ -232,13 +238,18 @@ const rule: Rule.RuleModule = {
       for (const k of [
         "settings",
         "parserPath",
-        "parserOptions",
         "parserServices",
         "languageOptions",
         "sourceCode",
       ]) {
         const src = ctx as unknown as Record<string, unknown>;
         if (src[k] != null) delegateCtx[k] = src[k];
+      }
+      // Force es-x delegates to consider syntax as "unsupported" by lowering ecmaVersion.
+      {
+        const src = ctx as unknown as { parserOptions?: Record<string, unknown> };
+        const orig = src.parserOptions ?? {};
+        (delegateCtx as Record<string, unknown>).parserOptions = { ...orig, ecmaVersion: 3 };
       }
       // Provide options expected by the delegate rule
       delegateCtx.options = delegateOptions;
@@ -363,7 +374,9 @@ const rule: Rule.RuleModule = {
             | undefined;
           if (t && matchIgnoreNodeType(t)) return;
         }
-        const msg = (isObj && (arg as any).message) || undefined;
+        let msg: string | undefined;
+        if (isObj && typeof (arg as { message?: unknown }).message === "string")
+          msg = (arg as { message?: string }).message;
 
         (ctx as unknown as { report: (d: { node: unknown; message?: string }) => void }).report({
           node,

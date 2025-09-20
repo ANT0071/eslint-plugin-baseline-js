@@ -1,6 +1,7 @@
 /**
  * @fileoverview Mapping of web-features JavaScript feature IDs to delegate ESLint rules.
  */
+import type { SyntaxMapping } from "./types";
 
 export default {
   // TODO: Verify ??= is the target
@@ -48,8 +49,8 @@ export default {
     ],
   },
 
-  // TODO: rename https://github.com/web-platform-dx/web-features/pull/2484
-  "numeric-seperators": {
+  // Numeric separators (web-features id uses 'separators')
+  "numeric-separators": {
     kind: "syntax",
     delegates: [
       {
@@ -365,4 +366,4 @@ export default {
       },
     ],
   },
-} as const;
+} as const satisfies SyntaxMapping;
