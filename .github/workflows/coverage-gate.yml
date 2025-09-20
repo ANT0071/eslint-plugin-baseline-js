@@ -1,0 +1,85 @@
+name: Coverage Gate
+
+on:
+  pull_request:
+    branches: [ "**" ]
+  workflow_dispatch: {}
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    env:
+      # Mention handle for alerts when coverage drops below thresholds
+      MENTION: "@3ru"
+      THRESHOLD_SYNTAX: "100"
+      THRESHOLD_API: "98"
+      THRESHOLD_JSBI: "99"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.1
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.12.0
+          cache: 'pnpm'
+
+      - name: Install
+        run: pnpm i --frozen-lockfile
+
+      - name: Generate features/descriptors
+        run: |
+          pnpm gen:features
+          pnpm gen:features:api
+          pnpm gen:features:jsbi
+          pnpm gen:descriptors
+
+      - name: Generate coverage report
+        run: pnpm gen:coverage
+
+      - name: Evaluate coverage thresholds
+        id: eval
+        run: |
+          node scripts/coverage-gate.mjs \
+            --mention "${{ env.MENTION }}" \
+            --threshold-syntax "${{ env.THRESHOLD_SYNTAX }}" \
+            --threshold-api "${{ env.THRESHOLD_API }}" \
+            --threshold-jsbi "${{ env.THRESHOLD_JSBI }}" \
+            --out coverage-gate-output.json
+          echo "covSyntax=$(node -e \"process.stdout.write(String(JSON.parse(require('fs').readFileSync('coverage-gate-output.json','utf8')).covSyntax || ''))\")" >> $GITHUB_OUTPUT
+          echo "covApi=$(node -e \"process.stdout.write(String(JSON.parse(require('fs').readFileSync('coverage-gate-output.json','utf8')).covApi || ''))\")" >> $GITHUB_OUTPUT
+          echo "covJsbi=$(node -e \"process.stdout.write(String(JSON.parse(require('fs').readFileSync('coverage-gate-output.json','utf8')).covJsbi || ''))\")" >> $GITHUB_OUTPUT
+          echo "shouldComment=$(node -e \"process.stdout.write((JSON.parse(require('fs').readFileSync('coverage-gate-output.json','utf8')).shouldComment ? 'true' : 'false'))\")" >> $GITHUB_OUTPUT
+          {
+            echo 'commentBody<<EOF'
+            node -e "process.stdout.write(JSON.parse(require('fs').readFileSync('coverage-gate-output.json','utf8')).commentBody)"
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+
+      - name: Comment on PR (sticky)
+        if: ${{ steps.eval.outputs.shouldComment == 'true' && github.event_name == 'pull_request' }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const body = `${{ steps.eval.outputs.commentBody }}`;
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            // Try to find existing sticky comment
+            const { data: comments } = await github.rest.issues.listComments({ owner, repo, issue_number, per_page: 100 });
+            const marker = '<!-- baseline-coverage-gate -->';
+            const mine = comments.find(c => c.body && c.body.includes(marker));
+            if (mine) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: mine.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+
+      - name: Summary
+        run: |
+          echo "syntax=${{ steps.eval.outputs.covSyntax }} api=${{ steps.eval.outputs.covApi }} jsbi=${{ steps.eval.outputs.covJsbi }}"
