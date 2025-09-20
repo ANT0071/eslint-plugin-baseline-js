@@ -1,3 +1,17 @@
+# [0.3.0](https://github.com/3ru/eslint-plugin-baseline-js/compare/v0.2.0...v0.3.0) (2025-09-20)
+
+
+### Bug Fixes
+
+* **coverage:** add coverage configuration and generation script ([cefc7e9](https://github.com/3ru/eslint-plugin-baseline-js/commit/cefc7e9c2fba661af794921cbef48875abb0a960))
+
+
+### Features
+
+* **ci:** add coverage gate workflow ([a02a129](https://github.com/3ru/eslint-plugin-baseline-js/commit/a02a129c3b23247ac62a5470e3ba96deafe416ad))
+* **core,ci,scripts:** generalized delegate resolver + extension API; harden mapping drift + pipeline; pin Node; add tests; tidy lints ([a45fc3c](https://github.com/3ru/eslint-plugin-baseline-js/commit/a45fc3ccbb64199d22cd9063f7d20842366b9931))
+* **mapping:** add iterators; improve coverage cross-links and scope ([1d54855](https://github.com/3ru/eslint-plugin-baseline-js/commit/1d54855dea4736c47e510d36c9a8b2791967efb4))
+
 # [0.2.0](https://github.com/3ru/eslint-plugin-baseline-js/compare/v0.1.0...v0.2.0) (2025-09-18)
 
 
