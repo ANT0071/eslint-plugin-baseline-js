@@ -43,24 +43,28 @@ export default {
   jsbi: {
     byId: {
       // Syntax-level features — covered by es-x/core or non-AST safe
-      "async-await": { memo: "Syntax — delegated to es-x", exclude: true, mappedVia: "delegate" },
+      "async-await": {
+        memo: "Covered by JS Language (syntax);",
+        exclude: true,
+        mappedVia: "delegate",
+      },
       "async-generators": {
-        memo: "Syntax — delegated to es-x",
+        memo: "Covered by JS Language (syntax);",
         exclude: true,
         mappedVia: "delegate",
       },
       "async-iterators": {
-        memo: "Syntax — delegated to es-x",
+        memo: "Covered by JS Language (syntax);",
         exclude: true,
         mappedVia: "delegate",
       },
       "escape-unescape": {
-        memo: "Legacy functions — delegated to es-x",
+        memo: "Covered by JS Language (syntax);",
         exclude: true,
         mappedVia: "delegate",
       },
       "functions-caller-arguments": {
-        memo: "Deprecated caller/arguments — self rule",
+        memo: "Covered by JS Language (syntax) mapping via our self rule;",
         exclude: true,
         mappedVia: "self",
       },
