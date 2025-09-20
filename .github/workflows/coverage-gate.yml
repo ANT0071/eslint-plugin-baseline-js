@@ -45,7 +45,7 @@ jobs:
       - name: Evaluate coverage thresholds
         id: eval
         run: |
-          node scripts/coverage-gate.mjs \
+          node scripts/ci/coverage-gate.mjs \
             --mention "${{ env.MENTION }}" \
             --threshold-syntax "${{ env.THRESHOLD_SYNTAX }}" \
             --threshold-api "${{ env.THRESHOLD_API }}" \

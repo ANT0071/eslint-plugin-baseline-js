@@ -7,7 +7,7 @@ function readText(p: string): string {
 }
 
 function parseManualFeatureIdsFromScript(): { api: Set<string>; jsbi: Set<string> } {
-  const p = resolve(process.cwd(), "scripts/build-descriptors.mjs");
+  const p = resolve(process.cwd(), "scripts/data/build-descriptors.mjs");
   const src = readText(p);
   function collect(name: string): Set<string> {
     const out = new Set<string>();

@@ -22,21 +22,21 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "check:mapping": "node scripts/check-mapping.mjs --out drift-report.json",
+    "check:mapping": "node scripts/qa/check-mapping.mjs --out drift-report.json",
     "dev": "tsdown --watch",
     "format": "biome format --write .",
     "format:check": "biome check --formatter-enabled=true --linter-enabled=false .",
     "format:imports": "biome check --fix --unsafe .",
-    "gen:coverage": "node scripts/generate-coverage.mjs",
-    "gen:features": "node scripts/build-features.mjs",
-    "gen:features:api": "node scripts/build-features-api.mjs",
-    "gen:features:jsbi": "node scripts/build-features-jsbi.mjs",
-    "gen:descriptors": "node scripts/build-descriptors.mjs",
+    "gen:coverage": "node scripts/coverage/generate-coverage.mjs",
+    "gen:features": "node scripts/data/build-features.mjs",
+    "gen:features:api": "node scripts/data/build-features-api.mjs",
+    "gen:features:jsbi": "node scripts/data/build-features-jsbi.mjs",
+    "gen:descriptors": "node scripts/data/build-descriptors.mjs",
     "pretest": "pnpm -s build",
     "test": "vitest run",
     "test:watch": "pnpm -s build && vitest",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "verify:features": "node scripts/verify-features.mjs"
+    "verify:features": "node scripts/data/verify-features.mjs"
   },
   "dependencies": {
     "eslint-plugin-es-x": "^9.1.0"

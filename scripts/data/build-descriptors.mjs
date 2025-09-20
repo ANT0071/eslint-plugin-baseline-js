@@ -16,9 +16,9 @@ const LOWER_GLOBAL_INSTANCE = new Map([
   ["Window", "window"],
 ]);
 
-/** @type {import('../src/baseline/types').Descriptor[]} */
+/** @type {import('../../src/baseline/types').Descriptor[]} */
 const apiDescs = [];
-/** @type {import('../src/baseline/types').Descriptor[]} */
+/** @type {import('../../src/baseline/types').Descriptor[]} */
 const jsbiDescs = [];
 
 for (const [id, f] of Object.entries(wfFeatures)) {
@@ -30,11 +30,6 @@ for (const [id, f] of Object.entries(wfFeatures)) {
     for (const k of cfs) {
       if (!k.startsWith("api.")) continue;
       const parts = k.split(".");
-      // Examples:
-      // api.PaymentRequest.PaymentRequest           -> newIdent('PaymentRequest')
-      // api.AbortSignal.any_static                  -> callStatic('AbortSignal','any')
-      // api.Navigator.userActivation                -> member('navigator','userActivation')
-      // api.CSS.px                                  -> callStatic('CSS','px')  (method)
       if (parts.length === 3 && parts[1] === parts[2]) {
         apiDescs.push({ featureId: id, kind: "newIdent", name: parts[1] });
         continue;
@@ -47,7 +42,6 @@ for (const [id, f] of Object.entries(wfFeatures)) {
       if (parts.length === 3) {
         const iface = parts[1];
         const prop = parts[2];
-        // Restrict members to safe globals; other interfaces become instance members (typed mode can use them).
         if (iface === "Navigator" || iface === "Window") {
           const inst = LOWER_GLOBAL_INSTANCE.get(iface) ?? iface.toLowerCase();
           apiDescs.push({ featureId: id, kind: "member", base: inst, prop });
@@ -57,7 +51,6 @@ for (const [id, f] of Object.entries(wfFeatures)) {
           apiDescs.push({ featureId: id, kind: "callStatic", base: "CSS", prop });
           continue;
         }
-        // Otherwise: treat as instance member (to be enabled only in type-aware mode)
         apiDescs.push({ featureId: id, kind: "instanceMember", iface, prop });
       }
     }
@@ -68,12 +61,6 @@ for (const [id, f] of Object.entries(wfFeatures)) {
     for (const k of cfs) {
       if (!k.startsWith("javascript.builtins")) continue;
       const parts = k.split(".");
-      // Examples:
-      // javascript.builtins.Intl.Segmenter.Segmenter -> newMember('Intl','Segmenter')
-      // javascript.builtins.Atomics.waitAsync         -> callStatic('Atomics','waitAsync')
-      // javascript.builtins.Object.groupBy            -> callStatic('Object','groupBy')
-      // javascript.builtins.Array.fromAsync           -> callStatic('Array','fromAsync')
-      // keys look like: ['javascript','builtins','Intl','Segmenter','Segmenter']
       if (parts.length === 5 && parts[3] === parts[4]) {
         jsbiDescs.push({ featureId: id, kind: "newMember", base: parts[2], prop: parts[3] });
         continue;
@@ -81,14 +68,12 @@ for (const [id, f] of Object.entries(wfFeatures)) {
       if (parts.length === 4) {
         const base = parts[2];
         const prop = parts[3];
-        // Heuristic: restrict static namespaces to safe ones
         const STATIC_BASES = new Set(["Atomics", "Object", "Math", "JSON", "Reflect"]);
         const ARRAY_STATIC = new Set(["from", "fromAsync", "of", "isArray"]);
         if (STATIC_BASES.has(base) || (base === "Array" && ARRAY_STATIC.has(prop))) {
           jsbiDescs.push({ featureId: id, kind: "callStatic", base, prop });
           continue;
         }
-        // Typed instance members: only for known builtins (conservative allowlist)
         const ALLOWED_IFACE = new Set([
           "Array",
           "ReadonlyArray",
@@ -115,10 +100,9 @@ for (const [id, f] of Object.entries(wfFeatures)) {
   }
 }
 
-// --- Manual safe argument-based descriptors (data-driven, AST-only) ---
-/** @type {import('../src/baseline/types').Descriptor[]} */
+// Manual safe descriptors
+/** @type {import('../../src/baseline/types').Descriptor[]} */
 const manualApi = [
-  // Canvas 2D getContext options
   {
     featureId: "canvas-2d-alpha",
     kind: "callMemberWithArgs",
@@ -147,7 +131,6 @@ const manualApi = [
     stringArg: { index: 0, values: ["2d"] },
     objectArg: { index: 1, keyValues: [{ key: "colorSpace", values: ["display-p3", "srgb"] }] },
   },
-  // WebGL/WebGL2 desynchronized
   {
     featureId: "webgl-desynchronized",
     kind: "callMemberWithArgs",
@@ -162,7 +145,6 @@ const manualApi = [
     stringArg: { index: 0, values: ["webgl2"] },
     objectArg: { index: 1, hasKeys: ["desynchronized"] },
   },
-  // Workers module type
   {
     featureId: "js-modules-workers",
     kind: "newWithOptions",
@@ -175,14 +157,12 @@ const manualApi = [
     name: "SharedWorker",
     objectArg: { index: 1, keyValues: [{ key: "type", values: ["module"] }] },
   },
-  // TransformStream cancel in transformer
   {
     featureId: "transformstream-transformer-cancel",
     kind: "newWithOptions",
     name: "TransformStream",
     objectArg: { index: 0, hasKeys: ["cancel"] },
   },
-  // WebGL extensions: representative entry for EXT_sRGB
   {
     featureId: "ext-srgb",
     kind: "callMemberWithArgs",
@@ -197,14 +177,9 @@ const manualApi = [
     viaCall: { prop: "getSupportedExtensions" },
   },
 ];
-
 for (const d of manualApi) apiDescs.push(d);
 
-// --- Auto-generate WebGL extension descriptors ---
-// web-features entries with group 'webgl-extensions' typically have name like 'EXT_sRGB WebGL extension'.
-// We derive the extension token from the leading word in the name and emit:
-//   gl.getExtension('<EXT>')
-//   gl.getSupportedExtensions()?.includes('<EXT>')
+// Auto-generate WebGL extension descriptors
 const already = new Set(manualApi.filter((d) => d.featureId).map((d) => d.featureId));
 for (const [id, f] of Object.entries(wfFeatures)) {
   const group = f.group;
@@ -212,9 +187,9 @@ for (const [id, f] of Object.entries(wfFeatures)) {
     !(group === "webgl-extensions" || (Array.isArray(group) && group.includes("webgl-extensions")))
   )
     continue;
-  if (already.has(id)) continue; // avoid double-add
+  if (already.has(id)) continue;
   const name = String(f.name || "").trim();
-  const token = name.split(/\s+/)[0]; // e.g. 'EXT_sRGB'
+  const token = name.split(/\s+/)[0];
   if (!token || !/^[A-Z0-9_]+/.test(token)) continue;
   apiDescs.push({
     featureId: id,
@@ -231,10 +206,9 @@ for (const [id, f] of Object.entries(wfFeatures)) {
   });
 }
 
-// --- Manual JS builtins descriptors (safe + typed) ---
-/** @type {import('../src/baseline/types').Descriptor[]} */
+// Manual JS builtins descriptors
+/** @type {import('../../src/baseline/types').Descriptor[]} */
 const manualJsbi = [
-  // Error cause: Error(msg, { cause }), AggregateError(errors, msg, { cause })
   {
     featureId: "error-cause",
     kind: "newWithOptions",
@@ -247,7 +221,6 @@ const manualJsbi = [
     name: "AggregateError",
     objectArg: { index: 2, hasKeys: ["cause"] },
   },
-  // Explicit resource management
   { featureId: "explicit-resource-management", kind: "newIdent", name: "DisposableStack" },
   { featureId: "explicit-resource-management", kind: "member", base: "Symbol", prop: "dispose" },
   {
@@ -256,16 +229,13 @@ const manualJsbi = [
     base: "Symbol",
     prop: "asyncDispose",
   },
-  // Error.isError
   { featureId: "is-error", kind: "callStatic", base: "Error", prop: "isError" },
-  // Resizable ArrayBuffer: new ArrayBuffer(n, { maxByteLength })
   {
     featureId: "resizable-buffers",
     kind: "newWithOptions",
     name: "ArrayBuffer",
     objectArg: { index: 1, hasKeys: ["maxByteLength"] },
   },
-  // Uint8Array base64/hex
   {
     featureId: "uint8array-base64-hex",
     kind: "callStatic",
@@ -285,17 +255,14 @@ const manualJsbi = [
     iface: "Uint8Array",
     prop: "toHex",
   },
-  // Weak references
   { featureId: "weak-references", kind: "newIdent", name: "WeakRef" },
   { featureId: "weak-references", kind: "newIdent", name: "FinalizationRegistry" },
-  // Intl.Locale info — typed (representative set)
   { featureId: "intl-locale-info", kind: "newMember", base: "Intl", prop: "Locale" },
   { featureId: "intl-locale-info", kind: "instanceMember", iface: "Locale", prop: "maximize" },
   { featureId: "intl-locale-info", kind: "instanceMember", iface: "Locale", prop: "minimize" },
   { featureId: "intl-locale-info", kind: "instanceMember", iface: "Locale", prop: "hourCycle" },
   { featureId: "intl-locale-info", kind: "instanceMember", iface: "Locale", prop: "textInfo" },
   { featureId: "intl-locale-info", kind: "instanceMember", iface: "Locale", prop: "weekInfo" },
-  // Iterator helpers — typed (representative set)
   { featureId: "iterator-methods", kind: "instanceMember", iface: "Iterator", prop: "map" },
   { featureId: "iterator-methods", kind: "instanceMember", iface: "Iterator", prop: "filter" },
   { featureId: "iterator-methods", kind: "instanceMember", iface: "Iterator", prop: "take" },
@@ -304,10 +271,7 @@ const manualJsbi = [
   { featureId: "iterator-methods", kind: "instanceMember", iface: "Iterator", prop: "reduce" },
   { featureId: "iterator-methods", kind: "instanceMember", iface: "Iterator", prop: "toArray" },
 ];
-
 for (const d of manualJsbi) jsbiDescs.push(d);
-
-// Expand Iterator helpers (typed): add more commonly used helpers
 for (const prop of ["forEach", "some", "every", "find"]) {
   jsbiDescs.push({
     featureId: "iterator-methods",
@@ -316,13 +280,10 @@ for (const prop of ["forEach", "some", "every", "find"]) {
     prop,
   });
 }
-
-// Expand Intl.Locale info (typed): add list-type infos
 for (const prop of ["calendars", "collations", "numberingSystems"]) {
   jsbiDescs.push({ featureId: "intl-locale-info", kind: "instanceMember", iface: "Locale", prop });
 }
 
-// Typed arrays: iterators and iteration methods (typed)
 const TYPED_ARRAY_IFACES = [
   "Int8Array",
   "Uint8Array",
@@ -336,15 +297,11 @@ const TYPED_ARRAY_IFACES = [
   "BigInt64Array",
   "BigUint64Array",
 ];
-
-// Iterators: entries/keys/values
 for (const iface of TYPED_ARRAY_IFACES) {
   for (const prop of ["entries", "keys", "values"]) {
     jsbiDescs.push({ featureId: "typed-array-iterators", kind: "instanceMember", iface, prop });
   }
 }
-
-// Iteration methods: representative, widely used methods
 const TYPED_ITER_METHODS = [
   "every",
   "some",
@@ -375,12 +332,12 @@ function writeTs(outPath, name, arr) {
 }
 
 writeTs(
-  resolve(__dirname, "..", "src", "baseline", "data", "descriptors.api.ts"),
+  resolve(__dirname, "..", "..", "src", "baseline", "data", "descriptors.api.ts"),
   "descriptors",
   apiDescs,
 );
 writeTs(
-  resolve(__dirname, "..", "src", "baseline", "data", "descriptors.jsbi.ts"),
+  resolve(__dirname, "..", "..", "src", "baseline", "data", "descriptors.jsbi.ts"),
   "descriptors",
   jsbiDescs,
 );

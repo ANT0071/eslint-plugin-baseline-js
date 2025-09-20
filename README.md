@@ -118,7 +118,7 @@ export default [
 
 ## How It Works
 
-1. Data → `scripts/build-features.mjs`
+1. Data → `scripts/data/build-features.mjs`
    - Extracts the minimal JavaScript subset from [`web‑features`](https://github.com/web-platform-dx/web-features) into `src/baseline/data/features.javascript.ts`.
 2. Mapping → `src/baseline/mapping/syntax.ts`
    - Maps web‑features IDs to underlying rules (prefer `eslint-plugin-es-x` / ESLint core; custom rules only when necessary).
@@ -132,7 +132,7 @@ and shows which ones are currently mapped by this plugin.
 
 - Report: [docs/coverage.md](docs/coverage.md)
 - Regenerate locally: `pnpm gen:coverage`
-  - The release workflow also regenerates and commits this file.
+  - Generator: `scripts/coverage/generate-coverage.mjs`
 
 ## Options (rule)
 

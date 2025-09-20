@@ -17,8 +17,6 @@ const features = parseTsObjectLiteral(featuresTs);
 
 function extractMappingKeys(tsPath) {
   const src = readFileSync(tsPath, "utf8");
-  // Capture top-level string keys followed by a colon and opening brace.
-  // This is robust enough for our mapping file shape.
   const bodyMatch = src.match(/export default\s*\{[\s\S]*\}\s*as const;\n?$/);
   const body = bodyMatch ? bodyMatch[0] : src;
   const re = /^(?:\s*(?:"([^"]+)"|'([^']+)'|([A-Za-z_$][\w$-]*))\s*:\s*\{)/gm;
@@ -35,10 +33,7 @@ const mappedIds = extractMappingKeys(mappingTs);
 
 const missing = featureIds
   .filter((id) => !mappedIds.includes(id))
-  .map((id) => ({
-    id,
-    name: features[id]?.name || id,
-  }));
+  .map((id) => ({ id, name: features[id]?.name || id }));
 
 const unknown = mappedIds.filter((id) => !featureIds.includes(id)).map((id) => ({ id }));
 
@@ -51,9 +46,5 @@ if (outFlagIndex !== -1 && process.argv[outFlagIndex + 1]) {
 }
 
 console.log(`mapping check: missing=${missing.length}, unknown=${unknown.length}`);
-if (missing.length) {
-  console.log("Missing feature IDs:", missing.map((m) => m.id).join(", "));
-}
-if (unknown.length) {
-  console.log("Unknown mapping IDs:", unknown.map((u) => u.id).join(", "));
-}
+if (missing.length) console.log("Missing feature IDs:", missing.map((m) => m.id).join(", "));
+if (unknown.length) console.log("Unknown mapping IDs:", unknown.map((u) => u.id).join(", "));

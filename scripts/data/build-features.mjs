@@ -36,7 +36,7 @@ for (const [id, f] of jsEntries) {
   out[id] = entry;
 }
 
-const outDir = resolve(__dirname, "..", "src", "baseline", "data");
+const outDir = resolve(__dirname, "..", "..", "src", "baseline", "data");
 mkdirSync(outDir, { recursive: true });
 
 // Write TS with header banner (human-readable, do-not-edit notice)

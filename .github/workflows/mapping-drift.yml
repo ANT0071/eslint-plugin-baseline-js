@@ -34,7 +34,7 @@ jobs:
         run: pnpm gen:features
 
       - name: Check mapping vs features
-        run: node scripts/check-mapping.mjs --out drift-report.json
+        run: node scripts/qa/check-mapping.mjs --out drift-report.json
 
       - name: Upload report artifact
         uses: actions/upload-artifact@v4
