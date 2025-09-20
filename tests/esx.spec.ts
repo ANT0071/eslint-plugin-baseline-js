@@ -203,6 +203,18 @@ describe("orchestrator (es-x delegates)", () => {
     ).toBe(true);
   });
 
+  it("[iterators] year: 2015 > 2014 should be flagged", async () => {
+    const code = "for (const x of [1,2,3]) { console.log(x) }";
+    const msgs = await lintWithBaseline(code, 2014, { sourceType: "script" });
+    expect(
+      msgs.some((m) =>
+        m.includes(
+          "Feature 'Iterators and the for...of loop' (iterators) became Baseline in 2015 and exceeds 2014.",
+        ),
+      ),
+    ).toBe(true);
+  });
+
   it("[generators] year: 2016 > 2015 should be flagged", async () => {
     const code = "function* g(){ yield 1 }";
     const msgs = await lintWithBaseline(code, 2015);

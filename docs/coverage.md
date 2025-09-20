@@ -51,10 +51,10 @@
 ## Web APIs (api.*)
 
 - total: `486`
-- excluded (out-of-scope): `9`
-- included (in-scope): `477`
+- excluded (out-of-scope): `14`
+- included (in-scope): `472`
 - mapped: `465`
-- coverage: `97.5%`
+- coverage: `98.5%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Patterns | Descriptors | Memo |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -235,13 +235,13 @@
 | gyroscope | `Gyroscope` | limited | - | ✅ | `safe`, `typed` | 5 | - |
 | hardware-concurrency | `hardwareConcurrency` | widely | 2022 | ✅ | `safe`, `typed` | 2 | - |
 | hashchange | `hashchange` | widely | 2015 | ✅ | `safe`, `typed` | 4 | - |
-| head | `<head>` | widely | 2015 | ❌ | - | - | - |
-| headings | `<h1> through <h6>` | widely | 2015 | ❌ | - | - | - |
+| head | `<head>` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
+| headings | `<h1> through <h6>` | widely | 2015 | ❌ | - | - | HTML headings — use `html-eslint` |
 | hidden-until-found | `hidden-until-found` | limited | - | ✅ | `typed` | 1 | - |
 | highlight | `Custom highlights` | limited | - | ✅ | `safe`, `typed` | 26 | - |
 | history | `History` | widely | 2015 | ✅ | `safe`, `typed` | 13 | - |
-| hr | `<hr>` | widely | 2015 | ❌ | - | - | - |
-| html | `<html>` | widely | 2015 | ❌ | - | - | - |
+| hr | `<hr>` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
+| html | `<html>` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | html-media-capture | `HTML media capture` | limited | - | ✅ | `typed` | 1 | - |
 | idle-detection | `Idle detection` | limited | - | ✅ | `safe`, `typed` | 6 | - |
 | iframe | `<iframe>` | widely | 2015 | ✅ | `typed` | 8 | - |
@@ -427,7 +427,7 @@
 | slot | `<slot>` | widely | 2020 | ✅ | `typed` | 7 | - |
 | slot-assign | `Imperative slot assignment` | newly | 2023 | ✅ | `typed` | 2 | - |
 | smil-svg-animations | `SMIL SVG animations` | widely | 2020 | ✅ | `typed` | 45 | - |
-| span | `<span>` | widely | 2015 | ❌ | - | - | - |
+| span | `<span>` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | speculation-rules | `Speculation rules` | limited | - | ✅ | `typed` | 3 | - |
 | speech-recognition | `Speech recognition` | limited | - | ✅ | `safe`, `typed` | 32 | - |
 | speech-recognition-grammar | `Speech recognition grammar` | limited | - | ✅ | `safe`, `typed` | 8 | - |
@@ -550,8 +550,8 @@
 - total: `99`
 - excluded (out-of-scope): `8`
 - included (in-scope): `91`
-- mapped: `86`
-- coverage: `94.5%`
+- mapped: `91`
+- coverage: `100.0%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Patterns | Descriptors | Memo |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -578,7 +578,7 @@
 | async-iterators | `Async iterators and the for await..of loop` | widely | 2020 | ✅ | - | 0 | Syntax — delegated to es-x |
 | atomics-pause | `Atomics.pause()` | newly | 2025 | ✅ | `safe` | 1 | - |
 | atomics-wait-async | `Atomics.waitAsync` | limited | - | ✅ | `safe` | 1 | - |
-| bigint | `BigInt` | widely | 2020 | ❌ | - | - | - |
+| bigint | `BigInt` | widely | 2020 | ✅ | - | 0 | - |
 | bigint64array | `BigInt64Array` | widely | 2021 | ✅ | `typed` | 2 | - |
 | date | `Date` | widely | 2015 | ✅ | `typed` | 45 | - |
 | date-get-year-set-year | `getYear() and setYear()` | limited | - | ✅ | `typed` | 2 | - |
@@ -587,10 +587,10 @@
 | escape-unescape | `escape() and unescape()` | limited | - | ✅ | - | 0 | Legacy functions — delegated to es-x |
 | explicit-resource-management | `Explicit resource management` | limited | - | ✅ | `safe` | 3 | - |
 | float16array | `Float16Array` | newly | 2025 | ✅ | `safe`, `typed` | 2 | - |
-| functions | `Functions` | widely | 2015 | ❌ | - | - | - |
+| functions | `Functions` | widely | 2015 | ✅ | - | 0 | - |
 | functions-caller-arguments | `Function caller and arguments` | limited | - | ✅ | - | 0 | Deprecated caller/arguments — self rule |
-| generators | `Generators` | widely | 2016 | ❌ | - | - | - |
-| globalthis | `globalThis` | widely | 2020 | ❌ | - | - | - |
+| generators | `Generators` | widely | 2016 | ✅ | - | 0 | - |
+| globalthis | `globalThis` | widely | 2020 | ✅ | - | 0 | - |
 | html-wrapper-methods | `HTML wrapper methods` | limited | - | ✅ | `typed` | 14 | - |
 | intl | `Intl` | widely | 2017 | ✅ | `safe`, `typed` | 12 | - |
 | intl-display-names | `Intl.DisplayNames` | widely | 2021 | ✅ | `safe` | 1 | - |
@@ -603,7 +603,7 @@
 | intl-segmenter | `Intl.Segmenter` | newly | 2024 | ✅ | `safe` | 1 | - |
 | is-error | `Error.isError()` | limited | - | ✅ | `safe` | 1 | - |
 | iterator-methods | `Iterator methods` | newly | 2025 | ✅ | `typed` | 11 | - |
-| iterators | `Iterators and the for...of loop` | widely | 2015 | ❌ | - | - | - |
+| iterators | `Iterators and the for...of loop` | widely | 2015 | ✅ | - | 0 | - |
 | javascript | `JavaScript (initial core language support)` | widely | 2015 | ✅ | `typed` | 3 | - |
 | json | `JSON` | widely | 2015 | ✅ | `safe` | 3 | - |
 | json-raw | `JSON source text access` | limited | - | ✅ | `safe` | 2 | - |

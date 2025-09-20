@@ -317,6 +317,13 @@ export default {
     ],
   },
 
+  // Iterator protocol & for...of — map JS builtins feature id to syntax-level rule.
+  // Detects use of `for...of` loops which rely on iterator protocol support.
+  iterators: {
+    kind: "syntax",
+    delegates: [{ plugin: "es-x", rule: "no-for-of-loops", level: "error" }],
+  },
+
   bigint64array: {
     kind: "syntax",
     delegates: [

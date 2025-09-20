@@ -221,7 +221,8 @@ for (const id of jsbiIds.sort()) {
   const memo = entryCfg.memo || "";
   const exclude = !!entryCfg.exclude;
   const mappedVia = entryCfg.mappedVia || null; // 'delegate' | 'self' | null
-  const mapped = patterns.length > 0 || !!mappedVia;
+  const hasSyntaxDelegate = mappedSyntaxIds.includes(id);
+  const mapped = patterns.length > 0 || !!mappedVia || hasSyntaxDelegate;
   if (exclude) {
     excludedJsbi++;
   } else {

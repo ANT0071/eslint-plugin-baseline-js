@@ -7,6 +7,12 @@
 export default {
   api: {
     byId: {
+      // HTML root/structure elements — JS rule does not parse markup; use html-eslint?
+      head: { memo: "HTML element — use `html-eslint`", exclude: true },
+      headings: { memo: "HTML headings — use `html-eslint`", exclude: true },
+      hr: { memo: "HTML element — use `html-eslint`", exclude: true },
+      html: { memo: "HTML element — use `html-eslint`", exclude: true },
+      span: { memo: "HTML element — use `html-eslint`", exclude: true },
       // HTML domain — handled better by html-eslint (markup semantics/attributes)
       "description-list": { memo: "HTML semantics — use `html-eslint`", exclude: true },
       "link-rel-prefetch": { memo: "HTML link rel — use `html-eslint`", exclude: true },
