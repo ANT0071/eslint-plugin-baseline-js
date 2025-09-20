@@ -2,7 +2,7 @@
 node_modules/
 dist/
 build/
-coverage/
+/coverage/
 *.tsbuildinfo
 .env
 .env.*
