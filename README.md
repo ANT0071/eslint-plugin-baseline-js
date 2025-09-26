@@ -7,10 +7,12 @@
 Enforce the JavaScript Baseline (`widely` / `newly` / `year`) with a single ESLint rule powered by web‑features.
 This plugin delegates detection to eslint-plugin-es-x and ESLint core (plus a few small gap‑filling rules) and reports with one consistent Baseline message.
 
-[![npm](https://img.shields.io/npm/v/eslint-plugin-baseline-js?logoColor=green&color=green)](https://www.npmjs.com/package/eslint-plugin-baseline-js)
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![bundle][bundle-src]][bundle-href]
+[![JSDocs][jsdocs-src]][jsdocs-href]
+[![License][license-src]][license-href]
 [![CI](https://github.com/3ru/eslint-plugin-baseline-js/actions/workflows/ci.yml/badge.svg)](https://github.com/3ru/eslint-plugin-baseline-js/actions/workflows/ci.yml)
-[![Release](https://github.com/3ru/eslint-plugin-baseline-js/actions/workflows/release.yml/badge.svg)](https://github.com/3ru/eslint-plugin-baseline-js/actions/workflows/release.yml)
-<img alt="License" src="https://img.shields.io/badge/license-MIT-blue" />
 
 </div>
 
@@ -156,3 +158,15 @@ The Baseline name and logos are Google trademarks. Logo assets are licensed unde
 ## License
 
 MIT
+
+
+[npm-version-src]: https://img.shields.io/npm/v/eslint-plugin-baseline-js?style=flat&colorA=080f12&colorB=1ea446
+[npm-version-href]: https://npmjs.com/package/eslint-plugin-baseline-js
+[npm-downloads-src]: https://img.shields.io/npm/dm/eslint-plugin-baseline-js?style=flat&colorA=080f12&colorB=1ea446
+[npm-downloads-href]: https://npmjs.com/package/eslint-plugin-baseline-js
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/eslint-plugin-baseline-js?style=flat&colorA=080f12&colorB=1ea446&label=minzip
+[bundle-href]: https://bundlephobia.com/result?p=eslint-plugin-baseline-js
+[jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1ea446
+[jsdocs-href]: https://www.jsdocs.io/package/eslint-plugin-baseline-js
+[license-src]: https://img.shields.io/github/license/3ru/eslint-plugin-baseline-js.svg?style=flat&colorA=080f12&colorB=1ea446
+[license-href]: https://github.com/3ru/eslint-plugin-baseline-js/blob/main/LICENSE
