@@ -251,9 +251,16 @@ const covJsbi = pct1(mappedJsbi, includedJsbiTotal);
 function mdEscape(s) {
   return String(s).replace(/\|/g, "\\|");
 }
+// Produce a fenced inline code span that safely contains backticks.
+// If the content includes backticks, choose a fence length greater than any
+// backtick run inside and surround content with a leading/trailing space.
 function mdCode(s) {
-  const t = String(s).replace(/`/g, "\\`");
-  return `\`${t}\``;
+  const t = String(s);
+  const matches = t.match(/`+/g);
+  const maxTicks = matches ? Math.max(...matches.map((m) => m.length)) : 0;
+  const fence = "`".repeat(Math.max(1, maxTicks + 1));
+  // Surround with spaces per Markdown spec when using longer fences
+  return `${fence} ${t} ${fence}`;
 }
 function mdListCode(arr) {
   if (!arr || arr.length === 0) return "-";
