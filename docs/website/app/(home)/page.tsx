@@ -12,7 +12,8 @@ export default function HomePage() {
           ESLint Plugin for <span className="text-royal-texture">Baseline</span> JavaScript
         </h1>
         <p className="text-pretty mx-auto mt-4 max-w-2xl text-sm text-fd-muted-foreground sm:text-base md:text-lg">
-          Make Baseline your default. Ship code that works for everyone.
+          Default to the Web Platform Baseline, the cross‑browser compatibility standard. Ship code
+          that works for everyone.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
