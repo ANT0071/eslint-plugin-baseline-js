@@ -9,12 +9,12 @@
 ## JavaScript Language (syntax)
 
 - total: `42`
-- mapped: `33`
-- coverage: `78.6%`
+- mapped: `42`
+- coverage: `100.0%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Mechanism | Delegates |
 | --- | --- | --- | --- | --- | --- | --- |
-| accessor-methods | `Accessor methods` | limited | - | ❌ | `-` | - |
+| accessor-methods | `Accessor methods` | limited | - | ✅ | `delegate` | `es-x:no-legacy-object-prototype-accessor-methods` |
 | arguments-callee | `arguments.callee` | limited | - | ✅ | `delegate` | `core:no-caller` |
 | async-await | `Async functions` | widely | 2017 | ✅ | `delegate` | `es-x:no-async-functions` |
 | async-generators | `Async generators` | widely | 2020 | ✅ | `delegate` | `es-x:no-async-iteration` |
@@ -23,9 +23,9 @@
 | bigint64array | `BigInt64Array` | widely | 2021 | ✅ | `self` | `self:no-bigint64array` |
 | class-syntax | `Classes` | widely | 2016 | ✅ | `delegate` | `es-x:no-classes` |
 | date-get-year-set-year | `getYear() and setYear()` | limited | - | ✅ | `delegate` | `es-x:no-date-prototype-getyear-setyear` |
-| date-to-gmt-string | `toGMTString()` | limited | - | ❌ | `-` | - |
+| date-to-gmt-string | `toGMTString()` | limited | - | ✅ | `delegate` | `es-x:no-date-prototype-togmtstring` |
 | destructuring | `Destructuring` | widely | 2020 | ✅ | `delegate` | `es-x:no-destructuring` |
-| error-cause | `Error cause` | widely | 2021 | ❌ | `-` | - |
+| error-cause | `Error cause` | widely | 2021 | ✅ | `delegate` | `es-x:no-error-cause` |
 | escape-unescape | `escape() and unescape()` | limited | - | ✅ | `delegate` | `es-x:no-escape-unescape` |
 | exponentiation | `Exponentiation operator` | widely | 2017 | ✅ | `delegate` | `es-x:no-exponential-operators` |
 | functions | `Functions` | widely | 2015 | ✅ | `delegate` | - |
@@ -34,25 +34,25 @@
 | globalthis | `globalThis` | widely | 2020 | ✅ | `delegate` | `es-x:no-global-this` |
 | hashbang-comments | `Hashbang comments` | widely | 2020 | ✅ | `delegate` | `es-x:no-hashbang` |
 | html-wrapper-methods | `HTML wrapper methods` | limited | - | ✅ | `delegate` | `es-x:no-string-create-html-methods` |
-| is-error | `Error.isError()` | limited | - | ❌ | `-` | - |
+| is-error | `Error.isError()` | limited | - | ✅ | `delegate` | `es-x:no-error-iserror` |
 | javascript | `JavaScript (initial core language support)` | widely | 2015 | ✅ | `delegate` | - |
 | let-const | `Let and const` | widely | 2016 | ✅ | `delegate` | `es-x:no-block-scoped-variables` |
 | logical-assignments | `Logical assignments` | widely | 2020 | ✅ | `delegate` | `es-x:no-logical-assignment-operators` |
 | math-sum-precise | `Math.sumPrecise()` | limited | - | ✅ | `self` | `self:no-math-sum-precise` |
 | nullish-coalescing | `Nullish coalescing` | widely | 2020 | ✅ | `delegate` | `es-x:no-nullish-coalescing-operators` |
 | numeric-separators | `Numeric separators` | widely | 2020 | ✅ | `delegate` | `es-x:no-numeric-separators` |
-| object-hasown | `Object.hasOwn()` | widely | 2022 | ❌ | `-` | - |
-| object-object | `Object` | widely | 2015 | ❌ | `-` | - |
+| object-hasown | `Object.hasOwn()` | widely | 2022 | ✅ | `delegate` | `es-x:no-object-hasown` |
+| object-object | `Object` | widely | 2015 | ✅ | `delegate` | - |
 | optional-catch-binding | `Optional catch binding` | widely | 2020 | ✅ | `delegate` | `es-x:no-optional-catch-binding` |
-| proto | `__proto__` | limited | - | ❌ | `-` | - |
+| proto | `__proto__` | limited | - | ✅ | `delegate` | `core:no-proto` |
 | proxy-reflect | `Proxy and Reflect` | widely | 2016 | ✅ | `delegate` | `es-x:no-proxy`, `es-x:no-reflect` |
-| resizable-buffers | `Resizable buffers` | newly | 2024 | ❌ | `-` | - |
+| resizable-buffers | `Resizable buffers` | newly | 2024 | ✅ | `delegate` | - |
 | shared-memory | `SharedArrayBuffer and Atomics` | widely | 2021 | ✅ | `delegate` | `es-x:no-shared-array-buffer`, `es-x:no-atomics` |
 | spread | `Spread syntax` | widely | 2020 | ✅ | `delegate` | `es-x:no-spread-elements`, `es-x:no-rest-spread-properties` |
 | template-literals | `Template literals` | widely | 2020 | ✅ | `delegate` | `es-x:no-template-literals` |
 | temporal | `Temporal` | limited | - | ✅ | `self` | `self:no-temporal` |
 | top-level-await | `Top-level await` | widely | 2021 | ✅ | `delegate` | `es-x:no-top-level-await` |
-| transferable-arraybuffer | `Transferable ArrayBuffer` | newly | 2024 | ❌ | `-` | - |
+| transferable-arraybuffer | `Transferable ArrayBuffer` | newly | 2024 | ✅ | `delegate` | `es-x:no-arraybuffer-prototype-transfer` |
 | unicode-point-escapes | `Unicode point escapes` | widely | 2015 | ✅ | `delegate` | `es-x:no-unicode-codepoint-escapes` |
 | weak-references | `Weak references` | widely | 2021 | ✅ | `delegate` | `es-x:no-weakrefs` |
 | with | `with` | limited | - | ✅ | `delegate` | `core:no-with` |
@@ -563,9 +563,9 @@
 ## JavaScript Builtins (javascript.*)
 
 - total: `100`
-- excluded (out-of-scope): `8`
-- included (in-scope): `92`
-- mapped: `92`
+- excluded (out-of-scope): `9`
+- included (in-scope): `91`
+- mapped: `91`
 - coverage: `100.0%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Patterns | Descriptors | Memo |
@@ -619,7 +619,7 @@
 | intl-segmenter | `Intl.Segmenter` | newly | 2024 | ✅ | `safe` | 1 | - |
 | is-error | `Error.isError()` | limited | - | ✅ | `safe` | 1 | - |
 | iterator-methods | `Iterator methods` | newly | 2025 | ✅ | `typed` | 11 | - |
-| iterators | `Iterators and the for...of loop` | widely | 2015 | ✅ | - | 0 | - |
+| iterators | `Iterators and the for...of loop` | widely | 2015 | ❌ | - | - | Umbrella feature — treat as out-of-scope for JS builtins coverage |
 | javascript | `JavaScript (initial core language support)` | widely | 2015 | ✅ | `typed` | 3 | - |
 | json | `JSON` | widely | 2015 | ✅ | `safe` | 3 | - |
 | json-raw | `JSON source text access` | limited | - | ✅ | `safe` | 2 | - |
@@ -661,7 +661,7 @@
 | strings | `String (initial support)` | widely | 2015 | ✅ | `typed` | 21 | - |
 | symbol | `Symbol` | widely | 2015 | ✅ | `typed` | 1 | - |
 | temporal | `Temporal` | limited | - | ✅ | `safe`, `typed` | 9 | - |
-| transferable-arraybuffer | `Transferable ArrayBuffer` | newly | 2024 | ❌ | - | - | Transfer semantics — not static-detectable |
+| transferable-arraybuffer | `Transferable ArrayBuffer` | newly | 2024 | ✅ | - | 0 | Transfer semantics — not static-detectable |
 | typed-array-iteration-methods | `Typed array iteration methods` | widely | 2016 | ✅ | `typed` | 99 | - |
 | typed-array-iterators | `Typed array iterators` | widely | 2016 | ✅ | `typed` | 33 | - |
 | typed-arrays | `Typed arrays (initial support)` | widely | 2015 | ✅ | `typed` | 5 | - |

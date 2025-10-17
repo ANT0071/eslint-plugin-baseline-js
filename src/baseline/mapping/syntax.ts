@@ -317,13 +317,6 @@ export default {
     ],
   },
 
-  // Iterator protocol & for...of — map JS builtins feature id to syntax-level rule.
-  // Detects use of `for...of` loops which rely on iterator protocol support.
-  iterators: {
-    kind: "syntax",
-    delegates: [{ plugin: "es-x", rule: "no-for-of-loops", level: "error" }],
-  },
-
   bigint64array: {
     kind: "syntax",
     delegates: [
@@ -334,6 +327,59 @@ export default {
       },
     ],
   },
+
+  // https://eslint-community.github.io/eslint-plugin-es-x/rules/no-legacy-object-prototype-accessor-methods
+  "accessor-methods": {
+    kind: "syntax",
+    delegates: [
+      { plugin: "es-x", rule: "no-legacy-object-prototype-accessor-methods", level: "error" },
+    ],
+  },
+
+  // https://eslint-community.github.io/eslint-plugin-es-x/rules/no-date-prototype-togmtstring
+  "date-to-gmt-string": {
+    kind: "syntax",
+    delegates: [{ plugin: "es-x", rule: "no-date-prototype-togmtstring", level: "error" }],
+  },
+
+  // https://eslint-community.github.io/eslint-plugin-es-x/rules/no-error-cause
+  "error-cause": {
+    kind: "syntax",
+    delegates: [{ plugin: "es-x", rule: "no-error-cause", level: "error" }],
+  },
+
+  // https://eslint-community.github.io/eslint-plugin-es-x/rules/no-error-iserror
+  "is-error": {
+    kind: "syntax",
+    delegates: [{ plugin: "es-x", rule: "no-error-iserror", level: "error" }],
+  },
+
+  // https://eslint-community.github.io/eslint-plugin-es-x/rules/no-object-hasown
+  "object-hasown": {
+    kind: "syntax",
+    delegates: [{ plugin: "es-x", rule: "no-object-hasown", level: "error" }],
+  },
+
+  // https://eslint.org/docs/latest/rules/no-proto
+  proto: {
+    kind: "syntax",
+    delegates: [{ plugin: "core", rule: "no-proto", level: "error" }],
+  },
+
+  // Detection is covered by JS builtins descriptors (safe patterns only).
+  // TODO
+  "resizable-buffers": { kind: "meta", delegates: [] },
+
+  // https://eslint-community.github.io/eslint-plugin-es-x/rules/no-arraybuffer-prototype-transfer
+  "transferable-arraybuffer": {
+    kind: "syntax",
+    delegates: [
+      { plugin: "es-x", rule: "no-arraybuffer-prototype-transfer", level: "error" },
+    ],
+  },
+
+  // meta feature
+  "object-object": { kind: "meta", delegates: [] },
 
   // [functions] meta feature, no direct delegate
   functions: { kind: "meta", delegates: [] },

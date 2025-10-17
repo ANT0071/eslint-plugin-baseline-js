@@ -203,17 +203,88 @@ describe("orchestrator (es-x delegates)", () => {
     ).toBe(true);
   });
 
-  it("[iterators] year: 2015 > 2014 should be flagged", async () => {
-    const code = "for (const x of [1,2,3]) { console.log(x) }";
-    const msgs = await lintWithBaseline(code, 2014, { sourceType: "script" });
+  it("[accessor-methods] widely: legacy accessor methods should be flagged", async () => {
+    const code = "const o = {}; o.__defineGetter__('x', function(){});";
+    const msgs = await lintWithBaseline(code, "widely");
     expect(
       msgs.some((m) =>
         m.includes(
-          "Feature 'Iterators and the for...of loop' (iterators) became Baseline in 2015 and exceeds 2014.",
+          "Feature 'Accessor methods' (accessor-methods) is not a widely available Baseline feature.",
         ),
       ),
     ).toBe(true);
   });
+
+  it("[date-to-gmt-string] widely: Date#toGMTString (limited) should be flagged", async () => {
+    const msgs = await lintWithBaseline("(new Date()).toGMTString()", "widely");
+    expect(
+      msgs.some((m) =>
+        m.includes(
+          "Feature 'toGMTString()' (date-to-gmt-string) is not a widely available Baseline feature.",
+        ),
+      ),
+    ).toBe(true);
+  });
+
+  it("[error-cause] year: 2021 > 2020 should be flagged", async () => {
+    const code = "new Error('x', { cause: new Error('y') });";
+    const msgs = await lintWithBaseline(code, 2020);
+    expect(
+      msgs.some((m) =>
+        m.includes(
+          "Feature 'Error cause' (error-cause) became Baseline in 2021 and exceeds 2020.",
+        ),
+      ),
+    ).toBe(true);
+  });
+
+  it("[is-error] widely: Error.isError() (limited) should be flagged", async () => {
+    const msgs = await lintWithBaseline("Error.isError('x')", "widely");
+    expect(
+      msgs.some((m) =>
+        m.includes(
+          "Feature 'Error.isError()' (is-error) is not a widely available Baseline feature.",
+        ),
+      ),
+    ).toBe(true);
+  });
+
+  it("[object-hasown] year: 2022 > 2020 should be flagged", async () => {
+    const msgs = await lintWithBaseline("Object.hasOwn({a:1}, 'a')", 2020);
+    expect(
+      msgs.some((m) =>
+        m.includes(
+          "Feature 'Object.hasOwn()' (object-hasown) became Baseline in 2022 and exceeds 2020.",
+        ),
+      ),
+    ).toBe(true);
+  });
+
+  it("[proto] widely: __proto__ (limited) should be flagged", async () => {
+    const msgs = await lintWithBaseline("const o = {}; o.__proto__", "widely");
+    expect(
+      msgs.some((m) =>
+        m.includes(
+          "Feature '__proto__' (proto) is not a widely available Baseline feature.",
+        ),
+      ),
+    ).toBe(true);
+  });
+
+  // resizable-buffers: covered via JS builtins descriptors (safe patterns). No syntax delegate.
+
+  it("[transferable-arraybuffer] widely: ArrayBuffer.prototype.transfer should be flagged", async () => {
+    const msgs = await lintWithBaseline("(new ArrayBuffer(8)).transfer(4)", "widely");
+    expect(
+      msgs.some((m) =>
+        m.includes(
+          "Feature 'Transferable ArrayBuffer' (transferable-arraybuffer) is not a widely available Baseline feature.",
+        ),
+      ),
+    ).toBe(true);
+  });
+
+  // iterators: feature id no longer in JavaScript group — mapping entry removed.
 
   it("[generators] year: 2016 > 2015 should be flagged", async () => {
     const code = "function* g(){ yield 1 }";

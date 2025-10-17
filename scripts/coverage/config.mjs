@@ -49,6 +49,11 @@ export default {
   },
   jsbi: {
     byId: {
+      // Meta features — too broad for safe AST detection as builtins and conceptually covered by language syntax (e.g., for...of).
+      iterators: {
+        memo: "Meta feature",
+        exclude: true,
+      },
       // Syntax-level features — covered by es-x/core or non-AST safe
       "async-await": {
         memo: "Covered by JS Language (syntax);",
