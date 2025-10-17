@@ -84,5 +84,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/3ru/eslint-plugin-baseline-js.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
   }
 }
