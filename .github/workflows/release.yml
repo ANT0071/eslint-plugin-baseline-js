@@ -31,8 +31,6 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: 22
-          registry-url: 'https://registry.npmjs.org/'
-          always-auth: true
           cache: 'pnpm'
 
       - name: Install latest npm
@@ -59,8 +57,11 @@ jobs:
       - name: Generate coverage report (docs/coverage.md)
         run: pnpm gen:coverage
 
-      - name: Release with semantic-release (npm provenance)
+      - name: Release with semantic-release (Trusted Publishing)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release@24.2.9
+          NPM_CONFIG_PROVENANCE: true
+        run: |
+          if [ -n "${NPM_CONFIG_USERCONFIG}" ] && [ -f "${NPM_CONFIG_USERCONFIG}" ]; then rm -f "${NPM_CONFIG_USERCONFIG}" || true; fi
+          unset NODE_AUTH_TOKEN || true
+          npx semantic-release@24.2.9
