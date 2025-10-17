@@ -20,12 +20,17 @@ function parseDefaultObject(tsPath) {
     };
     // Robustness: ensure we're capturing a real top-level feature entry by
     // validating that the inner block declares the same `id` value.
-    const innerId = get(/(?:^|\n)\s*id:\s*"([^"]+)"/);
+    // Accept both quoted and unquoted property keys (our generators emit quoted keys)
+    const innerId = get(/(?:^|\n)\s*(?:"id"|id)\s*:\s*"([^"]+)"/);
     if (!innerId || innerId !== id) continue; // skip nested blocks like `discouraged: { ... }`
-    const name = get(/(?:^|\n)\s*name:\s*"([^"]+)"/);
-    const baseline = get(/(?:^|\n)\s*baseline:\s*("high"|"low"|false)/);
-    const baseline_low_date = get(/(?:^|\n)\s*baseline_low_date:\s*"(\d{4}-[^"]*)"/);
-    const baseline_high_date = get(/(?:^|\n)\s*baseline_high_date:\s*"(\d{4}-[^"]*)"/);
+    const name = get(/(?:^|\n)\s*(?:"name"|name)\s*:\s*"([^"]+)"/);
+    const baseline = get(/(?:^|\n)\s*(?:"baseline"|baseline)\s*:\s*("high"|"low"|false)/);
+    const baseline_low_date = get(
+      /(?:^|\n)\s*(?:"baseline_low_date"|baseline_low_date)\s*:\s*"(\d{4}-[^"]*)"/,
+    );
+    const baseline_high_date = get(
+      /(?:^|\n)\s*(?:"baseline_high_date"|baseline_high_date)\s*:\s*"(\d{4}-[^"]*)"/,
+    );
     obj[id] = {
       id,
       name,
