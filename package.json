@@ -32,7 +32,7 @@
     "gen:features:api": "node scripts/data/build-features-api.mjs",
     "gen:features:jsbi": "node scripts/data/build-features-jsbi.mjs",
     "gen:descriptors": "node scripts/data/build-descriptors.mjs",
-    "update:baseline": "pnpm gen:data && pnpm gen:coverage",
+    "update:baseline": "pnpm gen:data && pnpm gen:coverage && pnpm format",
     "pretest": "pnpm build",
     "test": "vitest run",
     "test:watch": "pnpm build && vitest",
