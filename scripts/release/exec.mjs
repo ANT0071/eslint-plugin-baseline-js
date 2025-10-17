@@ -3,8 +3,8 @@
 // - publish: run `npm publish --provenance --access public` with optional `--tag <channel>`
 // No tokens are used; requires GitHub Actions job with `permissions: { id-token: write }`.
 
-import { readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 function updatePkgVersion(cwd, version, logger) {
@@ -12,7 +12,7 @@ function updatePkgVersion(cwd, version, logger) {
   const raw = readFileSync(pkgPath, "utf8");
   const json = JSON.parse(raw);
   json.version = version;
-  writeFileSync(pkgPath, JSON.stringify(json, null, 2) + "\n", "utf8");
+  writeFileSync(pkgPath, `${JSON.stringify(json, null, 2)}\n`, "utf8");
   logger.log(`Updated package.json version to ${version}`);
 }
 
@@ -27,12 +27,12 @@ function npmPublish(channel, logger) {
 
 export default {
   // No special verifyConditions (avoid token-based checks)
-  async prepare(pluginConfig, context) {
+  async prepare(_pluginConfig, context) {
     const { nextRelease, logger, cwd } = context;
     updatePkgVersion(cwd, nextRelease.version, logger);
   },
 
-  async publish(pluginConfig, context) {
+  async publish(_pluginConfig, context) {
     const { nextRelease, logger } = context;
     npmPublish(nextRelease.channel, logger);
   },

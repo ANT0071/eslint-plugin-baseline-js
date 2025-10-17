@@ -31,7 +31,7 @@ function sectionCoverage(md, title) {
 function main() {
   const args = parseArgs(process.argv);
 
-  const mention = args["mention"] || process.env.MENTION || "@";
+  const mention = args.mention || process.env.MENTION || "@";
   const thSyntax = Number(args["threshold-syntax"] || process.env.THRESHOLD_SYNTAX || "100");
   const thApi = Number(args["threshold-api"] || process.env.THRESHOLD_API || "98");
   const thJsbi = Number(args["threshold-jsbi"] || process.env.THRESHOLD_JSBI || "99");
@@ -67,9 +67,9 @@ function main() {
     commentBody: body,
   };
 
-  const outPath = args["out"] ? resolve(process.cwd(), args["out"]) : null;
+  const outPath = args.out ? resolve(process.cwd(), args.out) : null;
   if (outPath) {
-    writeFileSync(outPath, JSON.stringify(out, null, 2) + "\n", "utf8");
+    writeFileSync(outPath, `${JSON.stringify(out, null, 2)}\n`, "utf8");
     console.log(`wrote ${outPath}`);
   } else {
     console.log(JSON.stringify(out, null, 2));

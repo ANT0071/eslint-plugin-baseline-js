@@ -1,7 +1,6 @@
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
-import { ArrowRight, Github, Layers, MessageSquareWarning, Puzzle } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 import Link from "next/link";
-import type { ComponentType, ReactNode } from "react";
 
 export default function HomePage() {
   return (

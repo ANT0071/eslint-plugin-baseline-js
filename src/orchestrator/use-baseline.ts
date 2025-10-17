@@ -193,7 +193,7 @@ const rule: Rule.RuleModule = {
     }
 
     for (const { featureId, delegateRule } of entries) {
-      let impl: Rule.RuleModule | undefined;
+      const { plugin, name } = parseDelegateRuleKey(delegateRule);
       let delegateOptions: unknown[] = [];
 
       // Find mapping entry to pull options (if any)
@@ -201,7 +201,6 @@ const rule: Rule.RuleModule = {
         | { delegates: ReadonlyArray<{ plugin: string; options?: unknown }> }
         | undefined;
       if (mappingEntry) {
-        const { plugin } = parseDelegateRuleKey(delegateRule);
         const d = mappingEntry.delegates.find((x) => x.plugin === plugin);
         if (d?.options) {
           // context.options is the array as provided after level
@@ -209,8 +208,7 @@ const rule: Rule.RuleModule = {
         }
       }
 
-      const { plugin, name } = parseDelegateRuleKey(delegateRule);
-      impl = resolveDelegateRule(plugin, name);
+      const impl = resolveDelegateRule(plugin, name);
       if (!impl?.create) continue;
 
       // Create a minimal context wrapper that forwards necessary APIs and overrides report/options.
