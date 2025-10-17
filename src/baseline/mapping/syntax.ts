@@ -373,9 +373,7 @@ export default {
   // https://eslint-community.github.io/eslint-plugin-es-x/rules/no-arraybuffer-prototype-transfer
   "transferable-arraybuffer": {
     kind: "syntax",
-    delegates: [
-      { plugin: "es-x", rule: "no-arraybuffer-prototype-transfer", level: "error" },
-    ],
+    delegates: [{ plugin: "es-x", rule: "no-arraybuffer-prototype-transfer", level: "error" }],
   },
 
   // meta feature

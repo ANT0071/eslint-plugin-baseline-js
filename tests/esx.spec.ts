@@ -231,9 +231,7 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline(code, 2020);
     expect(
       msgs.some((m) =>
-        m.includes(
-          "Feature 'Error cause' (error-cause) became Baseline in 2021 and exceeds 2020.",
-        ),
+        m.includes("Feature 'Error cause' (error-cause) became Baseline in 2021 and exceeds 2020."),
       ),
     ).toBe(true);
   });
@@ -264,9 +262,7 @@ describe("orchestrator (es-x delegates)", () => {
     const msgs = await lintWithBaseline("const o = {}; o.__proto__", "widely");
     expect(
       msgs.some((m) =>
-        m.includes(
-          "Feature '__proto__' (proto) is not a widely available Baseline feature.",
-        ),
+        m.includes("Feature '__proto__' (proto) is not a widely available Baseline feature."),
       ),
     ).toBe(true);
   });

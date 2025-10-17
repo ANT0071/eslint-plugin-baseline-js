@@ -30,6 +30,8 @@ export type DescriptorKind =
 export interface BaseDescriptor {
   featureId: string; // web-features ID (e.g. 'abortsignal-any')
   kind: DescriptorKind;
+  // When true, only enable this descriptor when typed mode is active
+  typedOnly?: boolean;
 }
 
 export interface NewIdentDescriptor extends BaseDescriptor {

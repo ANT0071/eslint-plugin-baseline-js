@@ -2529,6 +2529,19 @@ const descriptors: ReadonlyArray<Descriptor> = [
     }
   },
   {
+    "featureId": "resizable-buffers",
+    "kind": "newWithOptions",
+    "name": "SharedArrayBuffer",
+    "objectArg": {
+      "index": 1,
+      "hasKeys": [
+        "maxByteLength",
+        "growable"
+      ]
+    },
+    "typedOnly": true
+  },
+  {
     "featureId": "uint8array-base64-hex",
     "kind": "callStatic",
     "base": "Uint8Array",

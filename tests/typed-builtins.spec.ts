@@ -113,4 +113,93 @@ describe("typed builtins detection (Intl.Locale, Iterator, Uint8Array instance)"
       .filter((m) => (m.ruleId || "").includes("baseline-js/use-baseline"));
     expect(msgs.length).toBeGreaterThanOrEqual(2);
   }, 15000);
+
+  it("reports resizable-buffers (SharedArrayBuffer options) only when typed is available", async () => {
+    const tsParser = await ensureTsParser();
+    if (!tsParser) {
+      expect(true).toBe(true);
+      return;
+    }
+
+    const tmp = await fs.mkdtemp(join(os.tmpdir(), "baseline-js-typed-sab-"));
+    const tsconfigPath = join(tmp, "tsconfig.json");
+    const srcDir = join(tmp, "src");
+    await fs.mkdir(srcDir);
+    const samplePath = join(srcDir, "sample.ts");
+
+    const tsconfig = {
+      compilerOptions: {
+        target: "ES2023",
+        module: "ESNext",
+        moduleResolution: "Bundler",
+        lib: ["ES2023", "ESNext", "DOM"],
+        noEmit: true,
+        strict: true,
+        skipLibCheck: true,
+      },
+      include: ["src/**/*.ts"],
+    };
+    await fs.writeFile(tsconfigPath, JSON.stringify(tsconfig, null, 2), "utf8");
+
+    const code = `
+      // SharedArrayBuffer options (newWithOptions) → should report when typed
+      new SharedArrayBuffer(8, { maxByteLength: 16, growable: true });
+    `;
+    await fs.writeFile(samplePath, code, "utf8");
+
+    const plugin = (await import("../dist/index.mjs")).default;
+    const flatConfigPath = join(tmp, "eslint.config.mjs");
+    await fs.writeFile(flatConfigPath, "export default [{}]\n", "utf8");
+
+    // Typed-aware run → should report
+    const eslintTyped = new ESLint({
+      cwd: tmp,
+      overrideConfigFile: flatConfigPath,
+      overrideConfig: [
+        {
+          files: ["**/*.ts"],
+          languageOptions: {
+            parser: tsParser,
+            parserOptions: { project: [tsconfigPath], tsconfigRootDir: tmp },
+          },
+          plugins: { "baseline-js": plugin },
+          rules: {
+            "baseline-js/use-baseline": [
+              "error",
+              { available: "widely", includeJsBuiltins: { preset: "type-aware" } },
+            ],
+          },
+        },
+      ],
+    });
+    const resultsTyped = await eslintTyped.lintFiles([samplePath]);
+    const msgsTyped = resultsTyped
+      .flatMap((r) => r.messages)
+      .filter((m) => (m.ruleId || "").includes("baseline-js/use-baseline"));
+    expect(msgsTyped.some((m) => /Resizable buffers/.test(m.message))).toBe(true);
+
+    // Non-typed (safe preset) run → should not report due to typedOnly gating
+    const eslintUntyped = new ESLint({
+      cwd: tmp,
+      overrideConfigFile: flatConfigPath,
+      overrideConfig: [
+        {
+          files: ["**/*.ts"],
+          languageOptions: {},
+          plugins: { "baseline-js": plugin },
+          rules: {
+            "baseline-js/use-baseline": [
+              "error",
+              { available: "widely", includeJsBuiltins: { preset: "safe" } },
+            ],
+          },
+        },
+      ],
+    });
+    const resultsUntyped = await eslintUntyped.lintFiles([samplePath]);
+    const msgsUntyped = resultsUntyped
+      .flatMap((r) => r.messages)
+      .filter((m) => (m.ruleId || "").includes("baseline-js/use-baseline"));
+    expect(msgsUntyped.length).toBe(0);
+  }, 20000);
 });

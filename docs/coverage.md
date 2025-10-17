@@ -619,7 +619,7 @@
 | intl-segmenter | `Intl.Segmenter` | newly | 2024 | ✅ | `safe` | 1 | - |
 | is-error | `Error.isError()` | limited | - | ✅ | `safe` | 1 | - |
 | iterator-methods | `Iterator methods` | newly | 2025 | ✅ | `typed` | 11 | - |
-| iterators | `Iterators and the for...of loop` | widely | 2015 | ❌ | - | - | Umbrella feature — treat as out-of-scope for JS builtins coverage |
+| iterators | `Iterators and the for...of loop` | widely | 2015 | ❌ | - | - | Meta feature |
 | javascript | `JavaScript (initial core language support)` | widely | 2015 | ✅ | `typed` | 3 | - |
 | json | `JSON` | widely | 2015 | ✅ | `safe` | 3 | - |
 | json-raw | `JSON source text access` | limited | - | ✅ | `safe` | 2 | - |
@@ -640,7 +640,7 @@
 | regexp-compile | `RegExp compile()` | limited | - | ✅ | `typed` | 1 | - |
 | regexp-escape | `RegExp.escape()` | newly | 2025 | ✅ | `typed` | 1 | - |
 | regexp-static-properties | `RegExp static properties` | limited | - | ✅ | `typed` | 6 | - |
-| resizable-buffers | `Resizable buffers` | newly | 2024 | ✅ | `safe` | 1 | - |
+| resizable-buffers | `Resizable buffers` | newly | 2024 | ✅ | `safe` | 2 | - |
 | serializable-errors | `Serializable errors` | limited | - | ❌ | - | - | Structured clone semantics — not static-detectable |
 | set | `Set (initial support)` | widely | 2015 | ✅ | `typed` | 13 | - |
 | set-methods | `Set methods` | newly | 2024 | ✅ | `typed` | 7 | - |

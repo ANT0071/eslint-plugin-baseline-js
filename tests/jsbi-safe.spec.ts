@@ -23,6 +23,10 @@ describe("use-baseline: JS builtins safe arg-based patterns", () => {
           code: "const opts={maxByteLength:256}; new ArrayBuffer(n, opts);",
           options: [{ available: "widely", includeJsBuiltins: { preset: "safe" } }],
         },
+        {
+          code: "new SharedArrayBuffer(8, { maxByteLength: 16, growable: true });",
+          options: [{ available: "widely", includeJsBuiltins: { preset: "safe" } }],
+        },
       ],
       invalid: [
         {

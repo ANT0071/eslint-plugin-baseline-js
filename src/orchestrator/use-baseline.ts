@@ -318,8 +318,10 @@ const rule: Rule.RuleModule = {
     const typedEnabled = wantTyped && typedAvailable;
 
     if (!typedEnabled) {
-      // Drop instanceMember descriptors if we cannot/should not run typed checks
-      descriptors = descriptors.filter((d) => d.kind !== "instanceMember");
+      // Drop instanceMember descriptors and typedOnly descriptors if we cannot/should not run typed checks
+      descriptors = descriptors.filter(
+        (d) => d.kind !== "instanceMember" && !(d as { typedOnly?: boolean }).typedOnly,
+      );
     }
     if (descriptors.length > 0) {
       const messages: Record<string, string> = {};
