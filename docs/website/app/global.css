@@ -4,11 +4,356 @@
 /* Twoslash styles (Shiki transformer) */
 @import "fumadocs-twoslash/twoslash.css";
 
+/* Brand theme overrides (Baseline) */
+:root {
+  /* Brand Colors */
+  --color-fd-primary: #1ea446;
+  /* colorB */
+  --color-fd-primary-foreground: #f2fff7;
+  --color-fd-accent: color-mix(in oklab, #1ea446 18%, transparent);
+  --color-fd-accent-foreground: #e9fff0;
+}
+
+.dark {
+  --color-fd-primary: #1ea446;
+  --color-fd-primary-foreground: #f2fff7;
+  --color-fd-accent: color-mix(in oklab, #1ea446 22%, transparent);
+  --color-fd-accent-foreground: #f5fff9;
+}
+
+/* Text-only royal green texture */
+.text-royal-texture {
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* ensure visibility on Safari */
+  background-clip: text;
+  background-image:
+    linear-gradient(180deg, #28d4679c 30%, #17b857 52%, #0f8f428a 100%), url("/textures/noise.jpg");
+  background-repeat: no-repeat, repeat;
+  background-size:
+    100% 100%,
+    480px 480px;
+  background-position:
+    center,
+    0 0;
+  background-blend-mode: screen;
+  will-change: background-position;
+  animation: royal-noise-move 30s linear infinite;
+}
+
+/* Light theme tuning: keep texture visible and contrasted */
+html:not(.dark) .text-royal-texture {
+  background-image:
+    linear-gradient(180deg, #2bd46a 0%, #17b857 52%, #0f8f42 100%), url("/textures/noise.jpg");
+  background-blend-mode: multiply;
+  filter: saturate(1.06) contrast(1.06);
+}
+
+.panel-royal {
+  position: relative;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in oklab, #1ea446 14%, transparent);
+  background-color: var(--color-fd-card);
+  box-shadow: 0 30px 100px -10px rgba(30, 164, 70, 0.15);
+}
+
+/* Ensure stronger shadow only in light theme */
+html:not(.dark) .panel-royal {
+  box-shadow: 0 30px 100px -10px rgba(30, 164, 70, 0.25);
+}
+
+.panel-royal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      1200px 800px at 50% -20%,
+      color-mix(in oklab, #1ea446 12%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      circle_at_1px_1px,
+      color-mix(in oklab, #1ea446 12%, transparent) 1px,
+      transparent 1px
+    );
+  background-size:
+    auto,
+    18px 18px;
+  opacity: 0.08;
+}
+
+.panel-royal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("/textures/noise.jpg");
+  background-size: 420px 420px;
+  mix-blend-mode: soft-light;
+  opacity: 0.05;
+}
+
+.demo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--color-fd-primary) 14%, transparent);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.04), transparent);
+  color: var(--color-fd-muted-foreground);
+}
+
+.demo-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35) inset,
+    0 0 6px currentColor;
+}
+
+.demo-footer {
+  border-top: 1px solid color-mix(in oklab, #f43f5e 24%, transparent);
+  background: linear-gradient(to bottom, color-mix(in oklab, #f43f5e 6%, transparent), transparent);
+}
+
+/* Outline-only noise ring + white fill button */
+.btn-outline-noise {
+  position: relative;
+  isolation: isolate;
+  border-radius: 0.75rem;
+  /* match md rounded */
+  border: 5px solid transparent;
+  /* thicker ring */
+  /* Two layers: 1) white fill clipped to padding  2) noise clipped to border */
+  background-image: linear-gradient(#ffffff, #ffffff), url("/textures/noise.jpg");
+  background-repeat: no-repeat, repeat;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-size:
+    100% 100%,
+    360px 360px;
+  background-position:
+    center,
+    40% 50%;
+  /* animate only on hover to avoid constant motion */
+  animation: none;
+  color: #0b1215;
+  /* dark text on white */
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  transition:
+    transform 0.18s ease,
+    border-width 0.18s ease;
+}
+
+@keyframes outline-noise-move {
+  0%,
+  100% {
+    /* reversed direction: start from right side */
+    background-position:
+      center,
+      60% 50%;
+  }
+
+  50% {
+    /* and travel leftwards */
+    background-position:
+      center,
+      40% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-outline-noise {
+    animation: none;
+  }
+
+  .btn-outline-noise:hover {
+    animation: none;
+  }
+}
+
+@media (hover: hover) {
+  .btn-outline-noise:hover {
+    transform: scale(1.05);
+    border-width: 7px;
+    /* align initial frame to avoid a jump */
+    background-position:
+      center,
+      60% 50%;
+    /* pan noise slowly left-right while hovered (reversed) */
+    animation: outline-noise-move 10s ease-out infinite;
+  }
+
+  .btn-outline-noise:active {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes royal-noise-move {
+  0% {
+    background-position:
+      center,
+      0px 0px;
+  }
+
+  25% {
+    background-position:
+      center,
+      80px 40px;
+  }
+
+  50% {
+    background-position:
+      center,
+      160px 100px;
+  }
+
+  75% {
+    background-position:
+      center,
+      80px 160px;
+  }
+
+  100% {
+    background-position:
+      center,
+      0px 0px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-royal-texture {
+    animation: none;
+  }
+}
+
+/* Theme-aware page surface (light/dark) with subtle brand tint + noise */
+.bg-page-surface {
+  position: relative;
+  isolation: isolate;
+  /* Light theme: subtle royal tint + depth */
+  background-image:
+    radial-gradient(1200px 800px at 50% -10%, transparent 70%),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #ffffff 55%,
+      color-mix(in oklab, #ffffff 92%, var(--color-fd-primary) 8%) 100%
+    );
+  background-repeat: no-repeat, no-repeat;
+}
+
+.bg-page-surface::before,
+.bg-page-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Light-theme subtle royal pattern (dots) */
+.bg-page-surface::before {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in oklab, var(--color-fd-primary) 10%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  opacity: 0.06;
+}
+
+/* Soft noise overlay */
+.bg-page-surface::after {
+  background-image: url("/textures/noise.jpg");
+  background-size: 520px 520px;
+  background-repeat: repeat;
+  opacity: 0.06;
+  mix-blend-mode: soft-light;
+}
+
+/* Dark theme: revert to underlying site background (no extra layer) */
+.dark .bg-page-surface {
+  background: none;
+}
+
+.dark .bg-page-surface::after {
+  display: none;
+}
+
+/* Headline contrast tuning for both themes */
+.hero-heading {
+  color: #0b1215;
+}
+
+.dark .hero-heading {
+  color: #f4f6f8;
+}
+
+.baseline-lined {
+  position: relative;
+  border-radius: 0.75rem;
+}
+
+.baseline-lined::before,
+.baseline-lined::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--color-fd-primary) 18%, transparent) 15%,
+    color-mix(in oklab, var(--color-fd-primary) 65%, transparent) 50%,
+    color-mix(in oklab, var(--color-fd-primary) 18%, transparent) 85%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(180deg, transparent, black 30%, black 70%, transparent);
+}
+
+.baseline-lined::before {
+  top: -1px;
+}
+
+.baseline-lined::after {
+  bottom: -1px;
+}
+
+/* Optional subtle vertical rails */
+.baseline-lined > .baseline-rails {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      color-mix(in oklab, var(--color-fd-primary) 7%, transparent),
+      transparent
+    )
+    0 0 / 1px 100% no-repeat,
+    linear-gradient(
+      180deg,
+      transparent,
+      color-mix(in oklab, var(--color-fd-primary) 7%, transparent),
+      transparent
+    )
+    100% 0 / 1px 100% no-repeat;
+  opacity: 0.6;
+}
+
 /* Dark mode tweaks (optional) */
 .dark .twoslash {
   --twoslash-error-bg: color-mix(in oklab, #f43f5e 12%, transparent);
   --color-twoslash-error-foreground: #fb7185;
-  /* slightly lighter */
 }
 
 /* Stronger overrides for Fumadocs/Shiki default highlighted rules */
@@ -25,8 +370,8 @@
 }
 
 .shiki :is(.line.highlighted.log) {
-  background-color: rgba(59, 130, 246, 0.08);
-  border-left-color: #3b82f6;
+  background-color: color-mix(in oklab, #1ea446 14%, transparent);
+  border-left-color: #1ea446;
   border-left-width: 3px;
 }
 

@@ -2,7 +2,7 @@
 
 # eslint-plugin-baseline-js
 
-![baseline](https://web-platform-dx.github.io/web-features/assets/img/baseline-wordmark-dark.svg)
+![baseline](./docs/website/public/lp.png)
 
 Enforce the JavaScript Baseline (`widely` / `newly` / `year`) with a single ESLint rule powered by web‑features.
 This plugin delegates detection to eslint-plugin-es-x and ESLint core (plus a few small gap‑filling rules) and reports with one consistent Baseline message.

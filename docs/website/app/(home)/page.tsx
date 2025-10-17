@@ -1,43 +1,61 @@
 import { buttonVariants } from "fumadocs-ui/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Github, Layers, MessageSquareWarning, Puzzle } from "lucide-react";
 import Link from "next/link";
+import type { ComponentType, ReactNode } from "react";
 
 export default function HomePage() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center px-6 py-16 text-center gap-2">
-      <Image
-        src="/lp.png"
-        alt="Baseline JS"
-        width={300}
-        height={100}
-        className="w-full max-w-3xl"
-      />
-      <div className="mx-auto max-w-3xl">
-        <p className="text-pretty mx-auto mb-8 max-w-2xl text-fd-muted-foreground">
-          Enforce Baseline (widely/newly/year) across JS Syntax, JS Builtins, and Web APIs
+    <main className="flex flex-1 flex-col items-center px-6 py-20 md:py-28 bg-page-surface">
+      {/* Hero */}
+      <section className="relative z-0 w-full max-w-5xl text-center">
+        <h1 className="hero-heading mx-auto max-w-4xl text-4xl tracking-tight sm:text-5xl md:text-6xl">
+          ESLint Plugin for <span className="text-royal-texture">Baseline</span> JavaScript
+        </h1>
+        <p className="text-pretty mx-auto mt-4 max-w-2xl text-sm text-fd-muted-foreground sm:text-base md:text-lg">
+          Make Baseline your default. Ship code that works for everyone.
         </p>
 
-        <div className="mb-10 flex items-center justify-center gap-3">
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/docs"
             className={buttonVariants({
-              color: "primary",
-              size: "icon",
-              className: "group gap-2 px-5 py-2.5 shadow-sm transition-all hover:shadow-md",
+              variant: "outline",
+              className:
+                "btn-outline-noise group gap-2 px-5 py-2.5 md:px-6 hover:bg-transparent text-[#0b1215]",
             })}
           >
             Get Started
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
+          <a
+            href="https://github.com/3ru/eslint-plugin-baseline-js"
+            target="_blank"
+            rel="noreferrer noopener"
+            className={buttonVariants({
+              variant: "outline",
+              className: "gap-2 px-5 py-2.5 md:px-6",
+            })}
+          >
+            <Github className="h-4 w-4" /> GitHub
+          </a>
         </div>
+      </section>
 
-        {/* Code demo */}
-        <div className="mx-auto max-w-sm md:max-w-4xl overflow-hidden rounded-2xl border bg-fd-card text-left  ring-1 ring-white/5 [box-shadow:0_30px_100px_-10px_rgba(99,102,241,0.25)]">
-          <div className="border-b px-4 md:px-6 py-3 text-xs md:text-base text-fd-muted-foreground">
-            example.ts
+      {/* Code demo */}
+      <section className="relative mt-10 w-full max-w-3xl">
+        <div className="panel-royal baseline-lined mx-auto overflow-hidden rounded-lg ring-1 ring-white/5">
+          <div className="baseline-rails" />
+          {/* Header bar */}
+          <div className="demo-header px-4 sm:px-6 text-xs sm:text-sm">
+            <div className="flex items-center gap-2">
+              <span className="demo-dot bg-rose-500" />
+              <span className="demo-dot bg-amber-500" />
+              <span className="demo-dot bg-emerald-500" />
+            </div>
+            <span className="font-mono">example.ts</span>
           </div>
-          <pre className="overflow-auto p-4 md:p-6 text-sm md:text-lg leading-8 mb-2">
+
+          <pre className="overflow-auto p-4 text-sm leading-7 sm:px-6 sm:py-7 sm:text-base md:text-lg md:leading-8 bg-transparent">
             <code>
               {"const date = new Date();\n"}
               {"const year = "}
@@ -46,18 +64,20 @@ export default function HomePage() {
               </span>
             </code>
           </pre>
-          <div className="border-t bg-fd-card px-4 md:px-6 py-4 text-xs md:text-base">
-            <p className="flex items-start gap-1 md:gap-3 text-rose-500">
-              <span className="mt-1 inline-block h-2.5 w-2.5 md:h-3 md:w-3 rounded-full bg-rose-500" />
+          <div className="demo-footer px-4 py-3 text-xs sm:px-6 sm:text-sm md:text-base">
+            <p className="flex items-start gap-2 text-rose-500">
+              <span className="mt-1.5 inline-block h-2.5 w-2.5 rounded-full bg-rose-500 sm:h-3 sm:w-3" />
               <span>
                 Feature{" "}
-                <code className="font-mono bg-fd-muted px-2 py-1 rounded border">getYear()</code> is
-                not a widely available Baseline feature.
+                <code className="font-mono rounded border bg-fd-muted px-1.5 py-0.5">
+                  getYear()
+                </code>{" "}
+                is not a widely available Baseline feature.
               </span>
             </p>
           </div>
         </div>
-      </div>
+      </section>
     </main>
   );
 }
