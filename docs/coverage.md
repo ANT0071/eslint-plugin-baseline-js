@@ -59,10 +59,10 @@
 
 ## Web APIs (api.*)
 
-- total: `492`
+- total: `493`
 - excluded (out-of-scope): `21`
-- included (in-scope): `471`
-- mapped: `470`
+- included (in-scope): `472`
+- mapped: `471`
 - coverage: `99.8%`
 
 | Feature ID | Name | Baseline | Year | Mapped | Patterns | Descriptors | Memo |
@@ -106,7 +106,7 @@
 | beforeinstallprompt | ` beforeinstallprompt ` | limited | - | ✅ | ` safe `, ` typed ` | 6 | - |
 | beforeunload | ` beforeunload ` | limited | - | ✅ | ` safe `, ` typed ` | 2 | - |
 | bfcache-blocking-reasons | ` Back/forward cache blocking reasons ` | limited | - | ✅ | ` typed ` | 10 | - |
-| blocking-render | ` blocking=\ ` | limited | - | ✅ | ` typed ` | 3 | - |
+| blocking-render | ` blocking-render ` | limited | - | ✅ | ` typed ` | 3 | - |
 | body | ` <body> ` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | br | ` <br> ` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | broadcast-channel | ` BroadcastChannel ` | widely | 2022 | ✅ | ` safe `, ` typed ` | 6 | - |
@@ -146,7 +146,7 @@
 | content-index | ` Content Index ` | limited | - | ✅ | ` safe `, ` typed ` | 7 | - |
 | content-visibility | ` content-visibility ` | newly | 2025 | ✅ | ` safe `, ` typed ` | 3 | - |
 | contenteditable | ` contenteditable ` | widely | 2015 | ✅ | ` typed ` | 2 | - |
-| contenteditable-plaintextonly | ` contenteditable=\ ` | newly | 2025 | ❌ | - | - | HTML attribute — use `html-eslint` |
+| contenteditable-plaintextonly | ` contenteditable-plaintextonly ` | newly | 2025 | ❌ | - | - | HTML attribute — use `html-eslint` |
 | controls-list | ` controlslist ` | limited | - | ✅ | ` typed ` | 1 | - |
 | cookie-enabled | ` cookieEnabled ` | newly | 2024 | ✅ | ` safe ` | 1 | - |
 | cookie-store | ` Cookie store ` | limited | - | ✅ | ` safe `, ` typed ` | 18 | - |
@@ -249,7 +249,7 @@
 | hashchange | ` hashchange ` | widely | 2015 | ✅ | ` safe `, ` typed ` | 4 | - |
 | head | ` <head> ` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | headings | ` <h1> through <h6> ` | widely | 2015 | ❌ | - | - | HTML headings — use `html-eslint` |
-| hidden-until-found | ` hidden=\ ` | limited | - | ✅ | ` typed ` | 1 | - |
+| hidden-until-found | ` hidden-until-found ` | limited | - | ✅ | ` typed ` | 1 | - |
 | highlight | ` Custom highlights ` | limited | - | ✅ | ` safe `, ` typed ` | 25 | - |
 | highlightsfrompoint | ` Custom highlights from point ` | limited | - | ✅ | ` typed ` | 1 | - |
 | history | ` History ` | widely | 2015 | ✅ | ` safe `, ` typed ` | 13 | - |
@@ -269,13 +269,13 @@
 | inert | ` inert ` | widely | 2023 | ✅ | ` typed ` | 1 | - |
 | ink | ` Ink ` | limited | - | ✅ | ` safe `, ` typed ` | 4 | - |
 | input | ` <input> ` | widely | 2015 | ✅ | ` typed ` | 36 | - |
-| input-checkbox | ` <input type=\ ` | widely | 2015 | ✅ | ` typed ` | 2 | - |
+| input-checkbox | ` input-checkbox ` | widely | 2015 | ✅ | ` typed ` | 2 | - |
 | input-color-alpha | `` `alpha` and `colorspace` attributes for `<input type=color>` `` | limited | - | ✅ | ` typed ` | 2 | - |
 | input-date-time | ` Date and time <input> types ` | widely | 2021 | ✅ | ` typed ` | 1 | - |
 | input-event | ` input (event) ` | widely | 2020 | ✅ | ` safe `, ` typed ` | 8 | - |
-| input-file | ` <input type=\ ` | widely | 2015 | ✅ | ` typed ` | 1 | - |
-| input-image | ` <input type=\ ` | widely | 2015 | ✅ | ` typed ` | 1 | - |
-| input-number | ` <input type=\ ` | widely | 2015 | ✅ | ` typed ` | 6 | - |
+| input-file | ` input-file ` | widely | 2015 | ✅ | ` typed ` | 1 | - |
+| input-image | ` input-image ` | widely | 2015 | ✅ | ` typed ` | 1 | - |
+| input-number | ` input-number ` | widely | 2015 | ✅ | ` typed ` | 6 | - |
 | inputmode | ` inputmode ` | widely | 2021 | ✅ | ` typed ` | 1 | - |
 | insertable-streams | ` Insertable streams for MediaStreamTrack ` | limited | - | ✅ | ` safe `, ` typed ` | 6 | - |
 | intersection-observer | ` Intersection observer ` | widely | 2019 | ✅ | ` safe `, ` typed ` | 20 | - |
@@ -296,7 +296,7 @@
 | largest-contentful-paint | ` Largest contentful paint (LCP) ` | limited | - | ✅ | ` typed ` | 7 | - |
 | layout-instability | ` Layout instability ` | limited | - | ✅ | ` typed ` | 9 | - |
 | link | ` <link> ` | widely | 2015 | ✅ | ` typed ` | 11 | - |
-| link-rel-prefetch | ` <link rel=\ ` | limited | - | ❌ | - | - | HTML link rel — use `html-eslint` |
+| link-rel-prefetch | ` link-rel-prefetch ` | limited | - | ❌ | - | - | HTML link rel — use `html-eslint` |
 | list-elements | ` <ol>, <ul>, and <li> ` | widely | 2015 | ✅ | ` typed ` | 4 | - |
 | loading-lazy | ` Lazy-loading images and iframes ` | newly | 2023 | ✅ | ` typed ` | 2 | - |
 | local-fonts | ` Local fonts ` | limited | - | ✅ | ` safe `, ` typed ` | 7 | - |
@@ -374,7 +374,7 @@
 | pointer-events-api | ` Pointer Events ` | widely | 2020 | ✅ | ` safe `, ` typed ` | 31 | - |
 | pointer-lock | ` Pointer lock ` | limited | - | ✅ | ` typed ` | 5 | - |
 | popover | ` Popover ` | newly | 2025 | ✅ | ` safe `, ` typed ` | 12 | - |
-| popover-hint | ` popover=\ ` | limited | - | ❌ | - | - | HTML attribute — use `html-eslint` |
+| popover-hint | ` popover-hint ` | limited | - | ❌ | - | - | HTML attribute — use `html-eslint` |
 | postmessage | ` postMessage ` | widely | 2015 | ✅ | ` safe `, ` typed ` | 11 | - |
 | pre | ` <pre> ` | widely | 2015 | ❌ | - | - | HTML element — use `html-eslint` |
 | preloading-responsive-images | ` Preloading responsive images ` | newly | 2023 | ✅ | ` typed ` | 2 | - |
@@ -559,6 +559,7 @@
 | xhr | ` XMLHttpRequest ` | widely | 2015 | ✅ | ` safe `, ` typed ` | 54 | - |
 | xml-serializer | ` XMLSerializer ` | widely | 2015 | ✅ | ` safe `, ` typed ` | 2 | - |
 | xpath | ` XPath ` | widely | 2015 | ✅ | ` safe `, ` typed ` | 15 | - |
+| xslt | ` XSLT ` | widely | 2015 | ✅ | ` safe `, ` typed ` | 9 | - |
 
 ## JavaScript Builtins (javascript.*)
 

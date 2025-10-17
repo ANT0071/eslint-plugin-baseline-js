@@ -1,3 +1,18 @@
+# [0.4.0](https://github.com/3ru/eslint-plugin-baseline-js/compare/v0.3.0...v0.4.0) (2025-10-17)
+
+
+### Bug Fixes
+
+* **ci:** coverage gate script ([b77518a](https://github.com/3ru/eslint-plugin-baseline-js/commit/b77518a9a5e68f7e6597db84c205366aef9de2fe))
+* **coverage:** enhance parsing to accept both quoted and unquoted property keys ([9a54e8f](https://github.com/3ru/eslint-plugin-baseline-js/commit/9a54e8f64e4c745cf5fe3bca4b3a139babddaec8))
+* **package:** let TS resolve .d.mts/.d.cts via extension substitution ([32a5beb](https://github.com/3ru/eslint-plugin-baseline-js/commit/32a5bebe404e3c8c835b7c92b3bd6e9b27f1703f))
+* **release:** npm provenance release ([c4b9e0b](https://github.com/3ru/eslint-plugin-baseline-js/commit/c4b9e0b9e65f1bc2da200f670a84d87aafe1910d))
+
+
+### Features
+
+* **jsbi,typed:** add typed-only detection for SharedArrayBuffer resizable buffers ([05a3d5a](https://github.com/3ru/eslint-plugin-baseline-js/commit/05a3d5ac008c3985f844f5ddf3ded876f6270a26))
+
 # [0.3.0](https://github.com/3ru/eslint-plugin-baseline-js/compare/v0.2.0...v0.3.0) (2025-09-20)
 
 
