@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export function createMetadata(override: Metadata): Metadata {
-  const defaultImage = "/eslint-plugin-baseline-js.jpg"; // public/eslint-plugin-baseline-js.jpg
+  const defaultImage = "/og.jpg";
   return {
     ...override,
     openGraph: {
