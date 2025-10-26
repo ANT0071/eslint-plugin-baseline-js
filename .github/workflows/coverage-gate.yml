@@ -5,6 +5,10 @@ on:
     branches: [ "**" ]
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   coverage:
     runs-on: ubuntu-latest
