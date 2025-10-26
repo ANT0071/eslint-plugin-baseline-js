@@ -249,7 +249,8 @@ for (const id of jsbiIds.sort()) {
 const covJsbi = pct1(mappedJsbi, includedJsbiTotal);
 
 function mdEscape(s) {
-  return String(s).replace(/\|/g, "\\|");
+  // Escape backslashes first, then pipes used as table delimiters
+  return String(s).replace(/\\/g, "\\\\").replace(/\|/g, "\\|");
 }
 // Produce a fenced inline code span that safely contains backticks.
 // If the content includes backticks, choose a fence length greater than any
@@ -342,8 +343,9 @@ try {
   const mdxDir = resolve(root, "docs/website/content/docs/meta");
   mkdirSync(mdxDir, { recursive: true });
   const mdxPath = resolve(mdxDir, "coverage.mdx");
-  // Remove HTML comment and top-level H1 from markdown for MDX embedding
-  let mdxBody = md.replace(/<!--[\s\S]*?-->/, "");
+  // Remove HTML comments (all occurrences) and top-level H1 from markdown for MDX embedding
+  // Use a global regex to ensure multiple comment blocks are removed
+  let mdxBody = md.replace(/<!--[\s\S]*?-->/g, "");
   mdxBody = mdxBody.replace(/^# [^\n]+\n+/, "");
   const mdxSummary =
     `### Summary\n\n` +
