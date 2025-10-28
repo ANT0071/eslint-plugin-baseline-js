@@ -5,7 +5,7 @@ description: Key rule options and presets, with copy‑pasteable examples.
 
 ### Options (overview)
 
-Quick reference（all options）
+Quick reference (all options)
 
 ```ts title="UseBaselineOptions (minimal)"
 type BaselineName = 'widely' | 'newly';
@@ -253,7 +253,7 @@ We currently provide three presets; start here in most cases.
 
 ## Use with .eslintrc.* (non‑Flat Config)
 
-Flat Config を使わない場合の等価設定です。引数・オプションはすべて <code>available</code> に統一しています。
+Equivalent setup when not using Flat Config. For consistency, all arguments/options are unified under <code>available</code>.
 
 ```js title="baseline equivalent (JS Syntax only)"
 // .eslintrc.js
@@ -311,7 +311,7 @@ const baselineJs = require('eslint-plugin-baseline-js');
 
 module.exports = {
   plugins: ['baseline-js'],
-  // baseline / recommended のいずれか
+  // Use either 'baseline' or 'recommended'
   baselineJs.configs.recommended({ available: 'widely' }),
 };
 ```

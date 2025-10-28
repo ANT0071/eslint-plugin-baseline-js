@@ -58,8 +58,8 @@ describe("typed mode (TypeScript-aware) integration", () => {
     // Import built plugin
     const plugin = (await import("../dist/index.mjs")).default;
 
-    // ESLint v9 expects a config file path when overrideConfigFile is provided. Create minimal flat config.
-    // 最小の Flat Config を書き、overrideConfigFile に渡す（ESLint v9対応）
+    // ESLint v9 expects a config file path when overrideConfigFile is provided.
+    // Minimal Flat Config and pass it via overrideConfigFile (ESLint v9 compatibility).
     const flatConfigPath = join(tmpRoot, "eslint.config.mjs");
     await fs.writeFile(flatConfigPath, "export default [{}]\n", "utf8");
 

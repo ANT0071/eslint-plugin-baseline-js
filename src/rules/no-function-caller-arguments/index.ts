@@ -5,7 +5,8 @@ import type { Rule } from "eslint";
 // - Avoid false positives on arbitrary `.caller`/`.arguments` on non-function objects.
 // - Consider ReferenceTracker to detect Function.prototype aliases.
 
-// NOTE: 初期版では `.caller`/`.arguments` アクセスそのものを検出し、型解決は今後の改善で対応します。
+// NOTE: Currently, this rule reports any `.caller`/`.arguments` member access;
+//       type-aware narrowing is planned and not implemented yet.
 
 const rule: Rule.RuleModule = {
   meta: {
